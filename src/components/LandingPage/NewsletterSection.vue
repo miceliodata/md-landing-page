@@ -13,7 +13,7 @@
           class="w-full border border-gray-300 rounded px-4 py-2 focus:outline-none focus:ring focus:border-blue-400"
         />
       </div>
-      <button type="submit" class="bg-black text-white px-6 py-2 rounded hover:bg-gray-800 font-semibold">
+      <button type="submit" class="bg-primary text-white px-6 py-2 rounded hover:bg-primary-dark font-semibold rounded-md shadow-md transition-colors duration-300">
         Subscribe
       </button>
     </form>

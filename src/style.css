@@ -13,6 +13,10 @@
     background-color: #267a6aff;
   }
 
+  .bg-secondary {
+    background-color: #025b46ff;
+  }
+
   .hover\:bg-primary-dark:hover {
     background-color: #025b46ff;
   }

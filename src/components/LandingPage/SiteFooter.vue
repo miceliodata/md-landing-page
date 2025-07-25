@@ -2,7 +2,7 @@
 </script>
 
 <template>
-  <footer class="bg-gray-900 text-gray-100 py-12 px-6">
+  <footer class="bg-secondary text-white py-12 px-6">
     <div class="max-w-6xl mx-auto flex flex-wrap gap-8 justify-between">
       <div>
         <h3 class="font-semibold mb-2">Company</h3>
