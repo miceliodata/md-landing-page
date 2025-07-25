@@ -2,7 +2,7 @@
 </script>
 
 <template>
-  <section class="py-16 px-6 max-w-4xl mx-auto">
+  <section id="use-cases-section" class="py-16 px-6 max-w-4xl mx-auto">
     <div class="mb-10">
       <h2 class="text-2xl font-bold mb-4">Platform</h2>
       <ul class="list-disc list-inside space-y-1 text-gray-700">

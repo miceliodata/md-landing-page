@@ -2,11 +2,10 @@
 </script>
 
 <template>
-  <section class="py-16 px-6 bg-white text-center">
+  <section id="newsletter-section" class="py-16 px-6 bg-white text-center">
     <h2 class="text-2xl font-bold mb-6">Contact Us</h2>
     <form class="max-w-md mx-auto space-y-4">
       <div class="flex flex-col items-start text-left">
-        <label for="email" class="mb-1 font-medium">EMAIL</label>
         <input
           type="email"
           id="email"
