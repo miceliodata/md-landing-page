@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import HeroSection from '@/components/HeroSection.vue'
-import FeaturesSection from '@/components/FeaturesSection.vue'
-import UseCasesSection from '@/components/UseCasesSection.vue'
-import CaseStudiesSection from '@/components/CaseStudiesSection.vue'
-import PartnersSection from '@/components/PartnersSection.vue'
-import NewsletterSection from '@/components/NewsletterSection.vue'
-import SiteFooter from '@/components/SiteFooter.vue'
+import HeroSection from '@/components/LandingPage/HeroSection.vue'
+import FeaturesSection from '@/components/LandingPage/FeaturesSection.vue'
+import UseCasesSection from '@/components/LandingPage/UseCasesSection.vue'
+import CaseStudiesSection from '@/components/LandingPage/CaseStudiesSection.vue'
+import PartnersSection from '@/components/LandingPage/PartnersSection.vue'
+import NewsletterSection from '@/components/LandingPage/NewsletterSection.vue'
+import SiteFooter from '@/components/LandingPage/SiteFooter.vue'
 </script>
 
 <template>

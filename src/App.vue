@@ -3,7 +3,7 @@
 </script>
 
 <template>
-  <div class="font-sans text-gray-900 scroll-smooth">
+  <div class="font-sans text-gray-900">
     <SiteHeader />
     <router-view />
   </div>
