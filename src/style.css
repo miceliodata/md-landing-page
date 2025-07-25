@@ -1,1 +1,19 @@
 @import 'tailwindcss';
+
+@layer utilities {
+  .text-primary {
+    color: #267a6aff;
+  }
+
+  .hover\:text-primary:hover {
+    color: #267a6aff;
+  }
+
+  .bg-primary {
+    background-color: #267a6aff;
+  }
+
+  .hover\:bg-primary-dark:hover {
+    background-color: #025b46ff;
+  }
+}
