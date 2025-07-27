@@ -17,6 +17,10 @@
     background-color: #025b46ff;
   }
 
+  .bg-dark {
+    background-color: #081424;
+  }
+
   .hover\:bg-primary-dark:hover {
     background-color: #025b46ff;
   }

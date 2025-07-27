@@ -15,7 +15,7 @@
       </p>
 
       <a
-        href="#features-section"
+        href="#suppliers-section"
         class="inline-block bg-primary hover:bg-primary-dark text-white font-semibold py-3 px-6 rounded-md shadow-md transition-colors duration-300"
       >
         Learn more

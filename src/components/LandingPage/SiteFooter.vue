@@ -2,7 +2,7 @@
 </script>
 
 <template>
-  <footer class="bg-secondary text-white py-12 px-6">
+  <footer class="bg-dark text-white py-12 px-6">
     <div class="max-w-6xl mx-auto flex flex-wrap gap-8 justify-between">
       <div>
         <h3 class="font-semibold mb-2">Company</h3>
@@ -35,6 +35,9 @@
         <li><a href="#" class="hover:underline">Cookie Policy</a></li>
       </ul>
       <p>© 2025 MicelioData</p>
+      <div class="flex justify-center mt-6">
+        <img class="h-10 w-auto" src="/src/assets/micelio-white.png" alt="miceliogo-white">
+      </div>
     </div>
   </footer>
 </template>
