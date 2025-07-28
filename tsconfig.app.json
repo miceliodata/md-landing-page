@@ -22,7 +22,7 @@
     "src/**/*.tsx",
     "src/**/*.vue",
     "src/router/index.ts"
-  ],
+, "src/composables/useScrollAnimations.js"  ],
   "vueCompilerOptions": {
     "strictTemplates": true,
     "globalTypesPath": "./src/global.d.ts"

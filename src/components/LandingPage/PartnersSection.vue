@@ -18,34 +18,37 @@
   >
     <div class="max-w-6xl mx-auto w-full">
       <div class="text-center mb-12">
-        <h2 class="text-3xl font-bold mb-4">Project Partners</h2>
-        <p class="text-gray-300 text-lg">
+        <h2 class="text-5xl font-bold mb-4">Project Partners</h2>
+        <p class="text-gray-300 text-xl">
           Backed by institutions and initiatives supporting sustainable and transparent supply chains.
         </p>
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div class="bg-[#2f3033] border border-gray-800 rounded-lg p-6 shadow hover:shadow-lg transition">
+        <div class=" p-6">
           <h3 class="text-xl font-semibold mb-2">Business Council Bangladesh</h3>
           <p class="text-gray-400">
             Facilitates collaboration between textile exporters and international buyers focused on traceability.
           </p>
         </div>
 
-        <div class="bg-[#2f3033] border border-gray-800 rounded-lg p-6 shadow hover:shadow-lg transition">
+        <div class=" p-6">
           <h3 class="text-xl font-semibold mb-2">ITMF & EOG Initiatives</h3>
           <p class="text-gray-400">
             Provides access to aligned formats and industry-wide sustainability metrics.
           </p>
         </div>
 
-        <div class="bg-[#2f3033] border border-gray-800 rounded-lg p-6 shadow hover:shadow-lg transition">
+        <div class=" p-6">
           <h3 class="text-xl font-semibold mb-2">EU Compliance Networks</h3>
           <p class="text-gray-400">
             Ensures conformity with evolving digital product passport legislation and best practices.
           </p>
         </div>
       </div>
+    </div>
+    <div class="absolute -bottom-10 left-0">
+      <p class="text-[10rem] opacity-0 md:opacity-[0.5]">3</p>
     </div>
   </section>
 </template>
