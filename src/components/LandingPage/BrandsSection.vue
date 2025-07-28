@@ -1,41 +1,49 @@
 <script setup lang="ts">
 </script>
 
+
 <template>
-  <section id="brands-section">
-    <div class="py-16 px-6 max-w-6xl mx-auto grid gap-8 grid-cols-1 md:grid-cols-3">
-      <div class="bg-white border border-gray-200 rounded p-6 shadow-sm">
-        <h3 class="text-xl font-semibold mb-2">Brand 1</h3>
-        <p>Traceable products through Digital ID...</p>
-      </div>
-      <div class="bg-white border border-gray-200 rounded p-6 shadow-sm">
-        <h3 class="text-xl font-semibold mb-2">Brand 2</h3>
-        <p>Complete manufacturing information through QR codes...</p>
-      </div>
-      <div class="bg-white border border-gray-200 rounded p-6 shadow-sm">
-        <h3 class="text-xl font-semibold mb-2">Brand 3</h3>
-        <p>Access to entire textile industry sectors from Asian producers...</p>
-      </div>
+  <section id="brands-section" class="h-[90dvh] bg-white py-20 px-6 flex items-center">
+    <div class="max-w-4xl mx-auto text-center mb-16">
+      <h2 class="text-3xl font-bold text-gray-900 mb-4">For Brands</h2>
+      <p class="text-gray-700 text-lg">
+        Find compliant suppliers, review product passport data, and ensure your sourcing meets EU regulations.
+      </p>
     </div>
-    
-    <div class="py-16 px-6 max-w-4xl mx-auto">
-      <div class="mb-10">
-        <h2 class="text-2xl font-bold mb-4">Platform</h2>
-        <ul class="list-disc list-inside space-y-1 text-gray-700">
-          <li>Our Approach</li>
-          <li>MicelioData</li>
-        </ul>
+
+    <div class="relative border-l-2 border-gray-200 ml-4 pl-6 space-y-12 max-w-3xl mx-auto">
+      <div class="group relative">
+        <div class="absolute -left-[1.1rem] top-1.5 w-5 h-5 bg-primary rounded-full border-4 border-white shadow"></div>
+        <h3 class="text-xl font-semibold text-gray-900">1. Search Verified Suppliers</h3>
+        <p class="text-gray-600 mt-2">
+          Discover exporters from Turkey, Bangladesh and beyond who meet EU DPP requirements out of the box.
+        </p>
       </div>
 
-      <div>
-        <h2 class="text-2xl font-bold mb-4">Advantages</h2>
-        <ul class="list-disc list-inside space-y-1 text-gray-700">
-          <li>Guarantee Product Sustainability to Customers and Institutions</li>
-          <li>Provide Manufacturing Data to Brands</li>
-          <li>Ensure Regulatory Compliance</li>
-          <li>Digital Partnership</li>
-        </ul>
+      <div class="group relative">
+        <div class="absolute -left-[1.1rem] top-1.5 w-5 h-5 bg-primary rounded-full border-4 border-white shadow"></div>
+        <h3 class="text-xl font-semibold text-gray-900">2. Review Passport Data</h3>
+        <p class="text-gray-600 mt-2">
+          Access standardized data on materials, processes, and certifications for every product.
+        </p>
+      </div>
+
+      <div class="group relative">
+        <div class="absolute -left-[1.1rem] top-1.5 w-5 h-5 bg-primary rounded-full border-4 border-white shadow"></div>
+        <h3 class="text-xl font-semibold text-gray-900">3. Connect & Collaborate</h3>
+        <p class="text-gray-600 mt-2">
+          Request samples or initiate partnerships with traceable, future-ready manufacturers.
+        </p>
       </div>
     </div>
+
+    <!-- <div class="mt-16 text-center">
+      <a
+        href="#newsletter-section"
+        class="inline-block bg-primary text-white font-semibold px-6 py-3 rounded-md hover:bg-primary-dark transition"
+      >
+        Get Started
+      </a>
+    </div> -->
   </section>
 </template>

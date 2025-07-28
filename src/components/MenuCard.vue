@@ -11,8 +11,8 @@ const props = defineProps <{
 </script>
 
 <template>
-    <div class="grid grid-cols-24 gap-4 py-12">
-      <div class="col-span-full md:col-start-6 md:col-end-16 lg:col-start-5 lg:col-end-23 row-start-3">
+    <div>
+      <div>
         <div class="w-8 h-8 bg-white text-black flex items-center justify-center font-bold rotate-45 mb-4 border border-black">
           <span class="-rotate-45">{{ props.number }}</span>
         </div>
