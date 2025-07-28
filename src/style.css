@@ -4,6 +4,7 @@
   .text-primary {
     color: #267a6aff;
   }
+  
 
   .hover\:text-primary:hover {
     color: #267a6aff;
@@ -18,7 +19,7 @@
   }
 
   .bg-dark {
-    background-color: #081424;
+    background-color: #393a3d;
   }
 
   .hover\:bg-primary-dark:hover {
