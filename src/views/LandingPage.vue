@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { ScrollTrigger } from "gsap/ScrollTrigger"
+import gsap from "gsap"
 import { onMounted, onBeforeUnmount } from "vue"
 import HeroSection from '@/components/LandingPage/HeroSection.vue'
 import MenuSection from '@/components/LandingPage/MenuSection.vue'
@@ -7,13 +9,13 @@ import PartnersSection from '@/components/LandingPage/PartnersSection.vue'
 import NewsletterSection from '@/components/LandingPage/NewsletterSection.vue'
 import SiteFooter from '@/components/LandingPage/SiteFooter.vue'
 import SuppliersSection from '@/components/LandingPage/SuppliersSection.vue'
-
-import useScrollAnimations from "../composables/useScrollAnimations"
+import useScrollAnimations from "@/composables/useScrollAnimations"
 
 const { setupStackedCards } = useScrollAnimations();
 
+gsap.registerPlugin(ScrollTrigger)
 onBeforeUnmount(() => {
-  ScrollTrigger.getAll().forEach(trigger => trigger.kill());
+  ScrollTrigger.getAll().forEach((trigger: ScrollTrigger) => trigger.kill());
 });
 
 onMounted(() => {
@@ -43,5 +45,4 @@ onMounted(() => {
   <div>
     <SiteFooter />
   </div>
-  <!-- ... -->
 </template>

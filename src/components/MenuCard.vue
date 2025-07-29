@@ -5,7 +5,7 @@ const props = defineProps <{
     number : String
     title: String
     content: String
-    address: String
+    address: string 
 }>()
 
 </script>
