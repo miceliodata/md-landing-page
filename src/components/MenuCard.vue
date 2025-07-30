@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { defineProps } from 'vue';
+import { defineProps, type FunctionalComponent } from 'vue';
 
 const props = defineProps <{
-    number : String
+    icon : object | FunctionalComponent
     title: String
     content: String
     address: string 
@@ -14,14 +14,17 @@ const props = defineProps <{
     <div>
       <div>
         <div class="w-8 h-8 bg-white text-black flex items-center justify-center font-bold rotate-45 mb-4 border border-black">
-          <span class="-rotate-45">{{ props.number }}</span>
+          <span class="-rotate-45">
+            <component :is="icon" class="w-5 h-5" />
+          </span>
+          <!-- <span class="-rotate-45">{{ props.number }}</span> -->
         </div>
 
         <div class="space-y-4">
           <h3 class="text-black text-lg font-semibold">{{ title }}</h3>
 
           <h4 class="text-black text-2xl font-bold leading-tight">
-            {{ content }}
+            {{ props.content }}
           </h4>
 
           <a :href="address" class="flex items-center text-black font-medium group space-x-2 hover:underline">

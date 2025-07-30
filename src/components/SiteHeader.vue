@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted, watch } from 'vue'
+import Navicon from '@/assets/navicon-black.svg'
 
 const isBarHidden = ref(false)
 const isMobileMenuOpen = ref(false)
@@ -40,26 +41,28 @@ onUnmounted(() => {
 watch(isMobileMenuOpen, (isOpen) => {
   document.body.classList.toggle('overflow-hidden', isOpen)
 })
+
 </script>
 
 <template>
 <header
   :class="[
-    'bg-slate-200 fixed top-0 left-0 w-full z-50 transition-transform duration-500 ease-in-out backdrop-blur-md',
-    { '-translate-y-full': isBarHidden }
+    'fixed top-2 left-1/2 -translate-x-1/2 z-50 px-6 py-1 w-[calc(100%-1rem)] sm:w-[calc(100%-2rem)] md:w-[80%]',
+    'bg-slate-200/90 backdrop-blur-md rounded-xl shadow-md transition-opacity duration-500 ease-in-out',
+    { 'opacity-0 pointer-events-none': isBarHidden, 'opacity-100': !isBarHidden }
   ]"
 >
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
     <div class="flex items-center space-x-3">
-      <img class="h-10 w-auto" src="../assets/micelio-color.png" alt="miceliogo" />
-      <span class="text-lg font-bold tracking-tight text-gray-800">MICELIO DATA</span>
+      <img class="h-14 w-auto" src="../assets/micelio-newcolor-tr-bg.png" alt="miceliogo" />
+      <span class="text-lg font-bold tracking-tight text-gray-800">Micelio Data</span>
     </div>
 
-    <nav class="hidden md:flex space-x-6 text-sm font-medium text-gray-700">
-      <a href="#hero-section" class="hover:text-black transition-colors">Home</a>
-      <a href="#suppliers-section" class="hover:text-black transition-colors">Suppliers</a>
-      <a href="#brands-section" class="hover:text-black transition-colors">Brands</a>
-      <a href="#partners-section" class="hover:text-black transition-colors">Partners</a>
+    <nav class="hidden md:flex space-x-6 text-sm font-semibold text-gray-700">
+      <a href="#hero-section" class="hover:text-sky-700 transition-colors">Home</a>
+      <a href="#suppliers-section" class="hover:text-sky-700 transition-colors">Suppliers</a>
+      <a href="#brands-section" class="hover:text-sky-700 transition-colors">Brands</a>
+      <a href="#partners-section" class="hover:text-sky-700 transition-colors">Partners</a>
     </nav>
 
     <a
@@ -70,7 +73,7 @@ watch(isMobileMenuOpen, (isOpen) => {
     </a>
 
     <button @click="toggleMobileMenu" class="md:hidden focus:outline-none">
-      <img class="h-10 w-auto" src="/src/assets/navicon-black.svg" alt="navicon" />
+      <Navicon class="h-10 w-auto" src="/src/assets/navicon-black.svg" />
     </button>
   </div>
 
@@ -88,7 +91,6 @@ watch(isMobileMenuOpen, (isOpen) => {
     v-if="isMobileMenuOpen"
     class="fixed top-0 left-0 w-full h-screen bg-slate-200 z-40 flex flex-col justify-between"
   >
-    <!-- LOGO SECTION -->
     <div class="px-4 pt-4">
       <div class="flex items-center space-x-3">
         <img class="h-10 w-auto" src="../assets/micelio-color.png" alt="miceliogo" />
@@ -105,7 +107,6 @@ watch(isMobileMenuOpen, (isOpen) => {
       </button>
     </div>
 
-    <!-- NAVIGATION -->
     <nav>
       <ul class="text-center space-y-4 text-lg font-medium">
         <li><a @click="toggleMobileMenu" href="#hero-section">Home</a></li>
@@ -115,7 +116,6 @@ watch(isMobileMenuOpen, (isOpen) => {
       </ul>
     </nav>
 
-    <!-- LEGAL SECTION -->
     <div class="px-6 pb-10 space-y-4 text-sm text-gray-600 border-t border-gray-300 pt-6 text-center">
       <a href="#newsletter-section" class="block text-black font-semibold">Contact</a>
       <a href="/privacy-policy" class="block">Privacy policy</a>

@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { BuildingOfficeIcon } from '@heroicons/vue/24/outline' 
+
 const features = [
   {
     title: 'No Tech Setup',
@@ -35,9 +37,9 @@ const features = [
           <p class="text-gray-300">{{ feature.description }}</p>
         </div>
       </div>    
-      <div class="absolute -bottom-10 left-0">
-        <p class="text-[10rem] text-gray-300 opacity-0 md:opacity-[0.5]">1</p>
-        </div>  
+      <div class="absolute bottom-0 left-0">
+        <BuildingOfficeIcon class="w-[10rem] h-[10rem] text-white opacity-0 md:opacity-[0.5]" />
+      </div>  
     </div>
   </section>
 </template>

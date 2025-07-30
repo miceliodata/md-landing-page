@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { UserPlusIcon } from '@heroicons/vue/24/outline'
 </script>
 
 <template>
@@ -47,8 +48,8 @@
         </div>
       </div>
     </div>
-    <div class="absolute -bottom-10 left-0">
-      <p class="text-[10rem] opacity-0 md:opacity-[0.5]">3</p>
+    <div class="absolute bottom-0 left-0">
+      <UserPlusIcon class="w-[10rem] h-[10rem] opacity-0 md:opacity-[0.5]" />
     </div>
   </section>
 </template>

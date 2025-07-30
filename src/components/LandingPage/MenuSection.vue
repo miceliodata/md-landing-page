@@ -1,6 +1,8 @@
 <script setup lang="ts">
-import MenuCard from '@/components/MenuCard.vue';
-
+import MenuCard from '@/components/MenuCard.vue'
+import { BuildingOfficeIcon } from '@heroicons/vue/24/outline'
+import { ShoppingBagIcon } from '@heroicons/vue/24/outline'
+import { UserPlusIcon } from '@heroicons/vue/24/outline'
 </script>
 
 <template>
@@ -10,21 +12,21 @@ import MenuCard from '@/components/MenuCard.vue';
   >
     <div class="w-full grid gap-10 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
       <MenuCard
-        :number="'1'"
+        :icon="BuildingOfficeIcon"
         :title="'Suppliers'"
         :content="'Easily share product data and reach EU buyers—no technical setup needed.'"
         :address="'#suppliers-section'"
       />
 
       <MenuCard
-        :number="'2'"
+        :icon="ShoppingBagIcon"
         :title="'Brands'"
         :content="'Verify supplier data and ensure DPP compliance across global supply chains.'"
         :address="'#brands-section'"
       />
 
       <MenuCard
-        :number="'3'"
+        :icon="UserPlusIcon"
         :title="'Partners'"
         :content="'Support scalable product compliance as a verifier, advisor, or integrator.'"
         :address="'#partners-section'"
