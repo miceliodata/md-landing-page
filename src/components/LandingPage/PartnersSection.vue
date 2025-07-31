@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { UserPlusIcon } from '@heroicons/vue/24/outline'
+import { UserGroupIcon } from '@heroicons/vue/24/outline'
 </script>
 
 <template>
@@ -15,7 +15,7 @@ import { UserPlusIcon } from '@heroicons/vue/24/outline'
 
   <section
     id="partners-section"
-    class="md:h-[90dvh] bg-[#393a3d] px-6 text-gray-100 flex flex-col justify-center py-6"
+    class="md:h-[100dvh] bg-[#393a3d] px-6 text-gray-100 flex flex-col justify-center py-6"
   >
     <div class="max-w-6xl mx-auto w-full">
       <div class="text-center mb-12">
@@ -49,7 +49,7 @@ import { UserPlusIcon } from '@heroicons/vue/24/outline'
       </div>
     </div>
     <div class="absolute bottom-0 left-0">
-      <UserPlusIcon class="w-[10rem] h-[10rem] opacity-0 md:opacity-[0.5]" />
+      <UserGroupIcon class="w-[10rem] h-[10rem] opacity-0 md:opacity-[0.5]" />
     </div>
   </section>
 </template>

@@ -67,7 +67,7 @@ watch(isMobileMenuOpen, (isOpen) => {
 
     <a
       href="#newsletter-section"
-      class="ml-6 hidden md:inline-block bg-primary text-white px-4 py-2 rounded-md hover:bg-primary-dark text-sm font-semibold transition-colors"
+      class="ml-6 hidden md:inline-block bg-gradient-to-r from-sky-700 to-emerald-500 hover:from-teal-400 hover:to-teal-400 text-white px-4 py-2 rounded-md shadow-md text-sm font-semibold transition-colors"
     >
       Contact us
     </a>

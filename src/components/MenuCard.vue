@@ -1,12 +1,18 @@
 <script setup lang="ts">
-import { defineProps, type FunctionalComponent } from 'vue';
+import { defineProps, type FunctionalComponent, computed } from 'vue';
+import { getTextColorClass } from '@/utils/colorClasses'
 
-const props = defineProps <{
+const props = withDefaults(defineProps <{
     icon : object | FunctionalComponent
-    title: String
-    content: String
+    color?: string
+    title: string
+    content: string
     address: string 
-}>()
+}>(), {
+  color: 'black'
+})
+
+const iconClass = computed(() => getTextColorClass(props.color))
 
 </script>
 
@@ -15,7 +21,7 @@ const props = defineProps <{
       <div>
         <div class="w-8 h-8 bg-white text-black flex items-center justify-center font-bold rotate-45 mb-4 border border-black">
           <span class="-rotate-45">
-            <component :is="icon" class="w-5 h-5" />
+            <component :is="icon" :class="`w-5 h-5 ${iconClass}`" />
           </span>
           <!-- <span class="-rotate-45">{{ props.number }}</span> -->
         </div>
