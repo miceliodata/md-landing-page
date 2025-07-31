@@ -22,6 +22,10 @@
     background-color: #393a3d;
   }
 
+  .bg-light {
+    background-color: #e5e7efff;
+  }
+
   .hover\:bg-primary-dark:hover {
     background-color: #025b46ff;
   }

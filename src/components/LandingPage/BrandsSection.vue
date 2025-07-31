@@ -4,7 +4,7 @@ import { ShoppingBagIcon } from '@heroicons/vue/24/outline'
 
 
 <template>
-  <section id="brands-section" class="h-[90dvh] bg-white py-20 px-6 flex items-center">
+  <section id="brands-section" class="scroll-mt-[7rem] h-[102dvh] bg-white py-20 px-6 flex items-center">
     <div class="max-w-4xl mx-auto text-center mb-16">
       <h2 class="text-5xl font-bold text-gray-900 mb-4">For Brands</h2>
       <p class="text-gray-700 text-lg">

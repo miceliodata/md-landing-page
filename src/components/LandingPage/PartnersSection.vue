@@ -3,7 +3,9 @@ import { UserGroupIcon } from '@heroicons/vue/24/outline'
 </script>
 
 <template>
-  <!-- <section id="partners-section" class="py-12 px-6 bg-gray-50">
+  <!-- Carousel section
+
+  <section id="partners-section" class="py-12 px-6 bg-gray-50">
     <div class="max-w-4xl mx-auto text-center">
       <div class="flex flex-wrap justify-center gap-4">
         <span class="bg-gray-200 px-6 py-3 rounded text-sm font-medium">Partner 1</span>
@@ -15,7 +17,7 @@ import { UserGroupIcon } from '@heroicons/vue/24/outline'
 
   <section
     id="partners-section"
-    class="md:h-[100dvh] bg-[#393a3d] px-6 text-gray-100 flex flex-col justify-center py-6"
+    class="scroll-mt-[7rem] h-[102dvh] bg-dark px-6 text-gray-100 flex flex-col justify-center py-6"
   >
     <div class="max-w-6xl mx-auto w-full">
       <div class="text-center mb-12">

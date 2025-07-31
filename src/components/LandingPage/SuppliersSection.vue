@@ -18,7 +18,7 @@ const features = [
 </script>
 
 <template>
-  <section id="suppliers-section" class="bg-dark h-[100dvh] py-20 px-4 sm:px-6 lg:px-8 flex items-center">
+  <section id="suppliers-section" class="scroll-mt-[7rem] bg-dark h-[102dvh] py-20 px-4 sm:px-6 lg:px-8 flex items-center">
     <div class="max-w-7xl mx-auto text-center">
       <h2 class="text-3xl md:text-5xl font-bold text-gray-100 mb-4">
         For Suppliers

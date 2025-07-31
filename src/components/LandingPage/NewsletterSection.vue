@@ -20,7 +20,7 @@
 
         <button
           type="submit"
-          class="w-full bg-primary text-white px-6 py-3 rounded hover:bg-primary-dark font-semibold shadow transition-colors"
+          class="w-full bg-gradient-to-r from-sky-700 to-emerald-500 hover:from-teal-400 hover:to-teal-400 text-white px-6 py-3 rounded hover:bg-primary-dark font-semibold shadow transition-colors"
         >
           Join the List
         </button>
