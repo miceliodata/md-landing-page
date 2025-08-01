@@ -8,7 +8,7 @@
   >
     <div class="text-center px-6">
       <h1 class="text-5xl md:text-6xl font-extrabold tracking-tight text-slate-100 mb-6 max-w-4xl mx-auto">
-        <span class="text-green-300">Ecosystem Orchestrator</span> for Global Supply Chains
+        <span class="text-emerald-400" style="text-shadow: 0 2px 4px rgba(153, 255, 242, 0.35);">Ecosystem Orchestrator</span> for Global Supply Chains
       </h1> 
       <p class="text-lg md:text-xl text-slate-200 mb-10 max-w-xl mx-auto">
         Partnering with suppliers, brands, and ecosystem partners to transform supply chain transparency through digital product passports.
