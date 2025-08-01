@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { defineProps, type FunctionalComponent, computed } from 'vue';
+import { type FunctionalComponent, computed } from 'vue';
 import { getTextColorClass } from '@/utils/colorClasses'
 
 const props = withDefaults(defineProps <{
@@ -23,7 +23,6 @@ const iconClass = computed(() => getTextColorClass(props.color))
           <span class="-rotate-45">
             <component :is="icon" :class="`w-5 h-5 ${iconClass}`" />
           </span>
-          <!-- <span class="-rotate-45">{{ props.number }}</span> -->
         </div>
 
         <div class="space-y-4">

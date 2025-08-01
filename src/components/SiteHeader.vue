@@ -48,7 +48,7 @@ watch(isMobileMenuOpen, (isOpen) => {
 <header
   :class="[
     'fixed top-2 left-1/2 -translate-x-1/2 z-50 px-6 py-1 w-[calc(100%-1rem)] sm:w-[calc(100%-2rem)] md:w-[80%]',
-    'bg-slate-100/80 backdrop-blur-md rounded-xl shadow-md transition-opacity duration-500 ease-in-out',
+    'bg-slate-200/80 backdrop-blur-md rounded-xl shadow-md transition-opacity duration-500 ease-in-out',
     { 'opacity-0 pointer-events-none': isBarHidden, 'opacity-100': !isBarHidden }
   ]"
 >
