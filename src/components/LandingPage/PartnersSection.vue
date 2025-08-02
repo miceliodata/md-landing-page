@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { UserGroupIcon } from '@heroicons/vue/24/outline'
 </script>
 
 <template>
@@ -49,9 +48,6 @@ import { UserGroupIcon } from '@heroicons/vue/24/outline'
           </p>
         </div>
       </div>
-    </div>
-    <div class="absolute bottom-0 left-0">
-      <UserGroupIcon class="w-[10rem] h-[10rem] opacity-0 md:opacity-[0.5]" />
     </div>
   </section>
 </template>

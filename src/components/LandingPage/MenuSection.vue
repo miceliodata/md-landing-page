@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import MenuCard from '@/components/MenuCard.vue'
+import MenuCard from '@/components/cards/MenuCard.vue'
 import { BuildingOfficeIcon } from '@heroicons/vue/24/outline'
 import { ShoppingBagIcon } from '@heroicons/vue/24/outline'
 import { UserGroupIcon } from '@heroicons/vue/24/outline'

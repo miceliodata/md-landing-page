@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { ShoppingBagIcon } from '@heroicons/vue/24/outline'
 </script>
 
 
@@ -36,9 +35,6 @@ import { ShoppingBagIcon } from '@heroicons/vue/24/outline'
           Request samples or initiate partnerships with traceable, future-ready manufacturers.
         </p>
       </div>
-    </div>
-    <div class="absolute bottom-0 right-0">
-      <ShoppingBagIcon class="w-[10rem] h-[10rem] opacity-0 md:opacity-[0.5]" />
     </div>
 
     <!-- <div class="mt-16 text-center">
