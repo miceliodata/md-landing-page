@@ -1,18 +1,27 @@
 <script setup lang="ts">
+import FactoryIcon from '@/assets/factory.svg'
 import { BoltIcon } from '@heroicons/vue/24/outline'
+import { BuildingStorefrontIcon } from '@heroicons/vue/24/outline'
+import { UserIcon } from '@heroicons/vue/24/outline'
 
 const tiers = [
   {
+    icon:FactoryIcon,
+    color:'text-emerald-500',
     title: 'Tier 1 Manufacturers',
     subtitle: 'Large-scale operations with advanced systems',
     description: ['API Integration','Real-time data sync','ERP connectivity','Automated compliance'],
   },
   {
+    icon:BuildingStorefrontIcon,
+    color:'text-blue-500',
     title: 'Tier 2-3 Suppliers',
     subtitle: 'Mid-scale operations with structured processes',
     description: ['CSV Upload','Batch processing','Template-based entry','Quality verification'],
   },
   {
+    icon:UserIcon,
+    color:'text-indigo-500',
     title: 'Tier 4 Artisans',
     subtitle: 'Small-scale craftspeople and workshops',
     description: ['Mobile capture','Photo documentation','Voice notes','Simple interfaces'],
@@ -49,12 +58,15 @@ const features = [
         Whether you're a large manufacturer or a small artisan, we have the right solution for your data collection needs.
       </p>
 
-      <div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 text-left">
+      <div class="grid gap-12 sm:grid-cols-2 lg:grid-cols-3 text-left">
         <div
           v-for="(tier, index) in tiers"
           :key="index"
           class="p-6 bg-mid rounded-md shadow-lg hover:-translate-y-1 transition"
         >
+          <div class="flex justify-center mb-4">
+            <component :is="tier.icon" :class="`w-12 h-12 ${tier.color}`" />
+          </div>
           <h3 class="text-xl text-center font-semibold text-gray-200 mb-2">{{ tier.title }}</h3>
           <h4 class="text-center text-gray-200 mt-4 mb-6">{{ tier.subtitle }}</h4>
            <div 

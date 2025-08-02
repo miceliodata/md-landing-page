@@ -3,39 +3,60 @@
 
 
 <template>
-  <section id="brands-section" class="scroll-mt-[7rem] h-[102dvh] bg-white py-20 px-6 flex items-center">
-    <div class="max-w-4xl mx-auto text-center mb-16">
-      <h2 class="text-5xl font-bold text-gray-900 mb-4">For Brands</h2>
-      <p class="text-gray-700 text-lg">
-        Find compliant suppliers, review product passport data, and ensure your sourcing meets EU regulations.
-      </p>
-    </div>
+  <section id="brands-section" class="scroll-mt-[7rem] h-auto bg-white py-20 px-6 flex flex-col justify-center items-center">
 
-    <div class="relative border-l-2 border-gray-200 ml-4 pl-6 space-y-12 max-w-3xl mx-auto">
-      <div class="group relative">
-        <div class="absolute -left-[1.1rem] top-1.5 w-5 h-5 bg-primary rounded-full border-4 border-white"></div>
-        <h3 class="text-xl font-semibold text-gray-900 pl-2">1. Search Verified Suppliers</h3>
-        <p class="text-gray-600 mt-2">
-          Discover exporters from Turkey, Bangladesh and beyond who meet EU DPP requirements out of the box.
-        </p>
-      </div>
-
-      <div class="group relative">
-        <div class="absolute -left-[1.1rem] top-1.5 w-5 h-5 bg-primary rounded-full border-4 border-white"></div>
-        <h3 class="text-xl font-semibold text-gray-900 pl-2">2. Review Passport Data</h3>
-        <p class="text-gray-600 mt-2">
-          Access standardized data on materials, processes, and certifications for every product.
-        </p>
-      </div>
-
-      <div class="group relative">
-        <div class="absolute -left-[1.1rem] top-1.5 w-5 h-5 bg-primary rounded-full border-4 border-white"></div>
-        <h3 class="text-xl font-semibold text-gray-900 pl-2">3. Connect & Collaborate</h3>
-        <p class="text-gray-600 mt-2">
-          Request samples or initiate partnerships with traceable, future-ready manufacturers.
+    <div>
+      <div class="max-w-4xl mx-auto text-center mb-16">
+        <h2 class="text-5xl font-bold text-gray-900 mb-4">Everything You Need for DPP</h2>
+        <p class="text-gray-700 text-lg">
+          Our platform provides complete visibility into your Asian supply chain, ensuring full compliance with EU Digital Product Passport regulations.
         </p>
       </div>
     </div>
+
+    <div class="md:flex md:items-center">
+      <div class="max-w-4xl mx-auto text-center mb-8">
+        <h2 class="text-3xl font-bold text-gray-900 mb-4">Your Path to Compliance</h2>
+        <p class="text-gray-700 text-md">
+          Simple, step-by-step process to achieve DPP compliance
+        </p>
+      </div>
+  
+      <div class="relative border-l-2 border-gray-200 ml-4 pl-6 space-y-12 max-w-3xl mx-auto">
+        <div class="group relative">
+          <div class="absolute -left-[1.1rem] top-1.5 w-5 h-5 bg-primary rounded-full border-4 border-white"></div>
+          <h3 class="text-xl font-semibold text-gray-900 pl-2">1. Connect Your Supply Chain</h3>
+          <p class="text-gray-600 mt-2">
+            Integrate with your existing Asian suppliers
+          </p>
+        </div>
+  
+        <div class="group relative">
+          <div class="absolute -left-[1.1rem] top-1.5 w-5 h-5 bg-primary rounded-full border-4 border-white"></div>
+          <h3 class="text-xl font-semibold text-gray-900 pl-2">2. Verify Data Quality</h3>
+          <p class="text-gray-600 mt-2">
+            Our ecosystem ensures accurate, traceable information
+          </p>
+        </div>
+  
+        <div class="group relative">
+          <div class="absolute -left-[1.1rem] top-1.5 w-5 h-5 bg-primary rounded-full border-4 border-white"></div>
+          <h3 class="text-xl font-semibold text-gray-900 pl-2">3. Generate DPP</h3>
+          <p class="text-gray-600 mt-2">
+            Automated Digital Product Passport creation
+          </p>
+        </div>
+  
+        <div class="group relative">
+          <div class="absolute -left-[1.1rem] top-1.5 w-5 h-5 bg-primary rounded-full border-4 border-white"></div>
+          <h3 class="text-xl font-semibold text-gray-900 pl-2">4. EU Market Ready</h3>
+          <p class="text-gray-600 mt-2">
+            Full compliance with 2026 regulations
+          </p>
+        </div>
+      </div>
+    </div>
+
 
     <!-- <div class="mt-16 text-center">
       <a

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import MenuCard from '@/components/cards/MenuCard.vue'
+import BulletPointCard from '@/components/cards/BulletPointCard.vue'
 import { BuildingOfficeIcon } from '@heroicons/vue/24/outline'
 import { ShoppingBagIcon } from '@heroicons/vue/24/outline'
 import { UserGroupIcon } from '@heroicons/vue/24/outline'
@@ -12,7 +12,7 @@ import { UserGroupIcon } from '@heroicons/vue/24/outline'
   >
     <div class="w-full grid gap-10 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
 
-      <MenuCard
+      <BulletPointCard
         :icon="BuildingOfficeIcon"
         color="blue"
         title="For Suppliers"
@@ -25,9 +25,9 @@ import { UserGroupIcon } from '@heroicons/vue/24/outline'
             <li>Compliance with EU regulations</li>
           </ul>
         </template>
-      </MenuCard>
+      </BulletPointCard>
 
-      <MenuCard
+      <BulletPointCard
         :icon="ShoppingBagIcon"
         color="cyan"
         title="For Brands"
@@ -40,9 +40,9 @@ import { UserGroupIcon } from '@heroicons/vue/24/outline'
             <li>Consumer trust through transparency</li>
           </ul>
         </template>
-      </MenuCard>
+      </BulletPointCard>
 
-      <MenuCard
+      <BulletPointCard
         :icon="UserGroupIcon"
         color="emerald"
         title="For Partners"
@@ -55,7 +55,7 @@ import { UserGroupIcon } from '@heroicons/vue/24/outline'
             <li>Shared innovation ecosystem</li>
           </ul>
         </template>
-      </MenuCard>
+      </BulletPointCard>
 
     </div>
   </section>
