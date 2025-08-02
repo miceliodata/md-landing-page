@@ -5,6 +5,7 @@ const email = ref('')
 const message = ref('')
 const success = ref<boolean | null>(null)
 const loading = ref(false)
+const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
 const submitForm = async (e: Event) => {
   e.preventDefault()
@@ -12,11 +13,18 @@ const submitForm = async (e: Event) => {
   success.value = null
   loading.value = true
 
+  if (!emailPattern.test(email.value.trim())) {
+    message.value = 'Please enter a valid email address.'
+    success.value = false
+    loading.value = false
+    return
+  }
+
   try {
     const res = await fetch('/api/newsletter', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email: email.value }),
+      body: JSON.stringify({ email: email.value.trim() }),
     })
 
     const data = await res.json()

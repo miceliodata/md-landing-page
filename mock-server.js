@@ -2,6 +2,7 @@ import express from 'express'
 import cors from 'cors'
 
 const app = express()
+const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
 app.use(cors())
 app.use(express.json())
@@ -9,7 +10,7 @@ app.use(express.json())
 app.post('/api/newsletter', (req, res) => {
     const { email } = req.body
 
-    if (!email || !email.includes('@')) {
+    if (!email || !emailRegex.test(email)) {
         return res.status(400).json({ message: 'Invalid email' })
     }
 
