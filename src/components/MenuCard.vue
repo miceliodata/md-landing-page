@@ -1,41 +1,40 @@
 <script setup lang="ts">
 import { type FunctionalComponent, computed } from 'vue';
-import { getTextColorClass } from '@/utils/colorClasses'
+import { getBGColorClass } from '@/utils/colorClasses'
 
 const props = withDefaults(defineProps <{
     icon : object | FunctionalComponent
     color?: string
     title: string
-    content: string
     address: string 
 }>(), {
   color: 'black'
 })
 
-const iconClass = computed(() => getTextColorClass(props.color))
+const iconBGColor = computed(() => getBGColorClass(props.color))
 
 </script>
 
 <template>
-    <div>
-      <div>
-        <div class="w-8 h-8 bg-white text-black flex items-center justify-center font-bold rotate-45 mb-4 border border-black">
-          <span class="-rotate-45">
-            <component :is="icon" :class="`w-5 h-5 ${iconClass}`" />
-          </span>
+      <div class="rounded-md shadow-lg p-2">
+        <div class="flex justify-center pb-4">
+          <div :class="`${iconBGColor} w-12 h-12 text-black flex items-center justify-center font-bold rotate-45 mb-4`">
+            <span class="-rotate-45">
+              <component :is="icon" :class="`w-7 h-7 text-white`" />
+            </span>
+          </div>
         </div>
 
         <div class="space-y-4">
-          <h3 class="text-black text-lg font-semibold">{{ title }}</h3>
+          <h3 class="text-center text-gray-800 text-lg font-semibold">{{ title }}</h3>
 
-          <h4 class="text-black text-2xl font-bold leading-tight">
-            {{ props.content }}
+          <h4 class="text-gray-700 text-md font-medium leading-tight">
+            <slot name="content"></slot>
           </h4>
 
-          <a :href="address" class="flex items-center text-black font-medium group space-x-2 hover:underline">
+          <a :href="address" class="py-4 flex items-center justify-center text-black font-medium group space-x-2 hover:underline">
             <span>See More</span>
 
-            <!-- Down Chevron -->
             <svg
               class="w-4 h-4 transform transition-transform group-hover:translate-y-1"
               xmlns="http://www.w3.org/2000/svg"
@@ -47,5 +46,4 @@ const iconClass = computed(() => getTextColorClass(props.color))
           </a>
         </div>
       </div>
-    </div>
 </template>

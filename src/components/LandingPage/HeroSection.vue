@@ -4,7 +4,7 @@
 <template>
   <section
     id="hero-section"
-    class="relative bg-[linear-gradient(135deg,_#267a6aff,_#312e81)] h-[98dvh] flex items-center justify-center overflow-hidden"
+    class="relative bg-[linear-gradient(135deg,_#267a6aff,_#312e81)] h-auto pt-48 pb-24 flex items-center justify-center overflow-hidden"
   >
     <div class="text-center px-6">
       <h1 class="text-5xl md:text-6xl font-extrabold tracking-tight text-slate-100 mb-6 max-w-4xl mx-auto">

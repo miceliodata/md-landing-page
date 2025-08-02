@@ -53,13 +53,13 @@ watch(isMobileMenuOpen, (isOpen) => {
   ]"
 >
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
-    <div class="flex items-center space-x-3">
-      <img class="h-14 w-auto" src="../assets/micelio-newcolor-tr-bg.png" alt="miceliogo" />
-      <span class="text-lg font-bold tracking-tight text-gray-800">Micelio Data</span>
-    </div>
+    <a href="#hero-section" class="flex items-center space-x-3">
+        <img class="h-14 w-auto" src="../assets/micelio-newcolor-tr-bg.png" alt="miceliogo" />
+        <span class="text-lg font-bold tracking-tight text-gray-800">Micelio Data</span>
+    </a>
 
     <nav class="hidden md:flex space-x-6 text-sm font-semibold text-gray-700">
-      <a href="#hero-section" class="hover:text-sky-700 transition-colors">Home</a>
+      <!-- <a href="#hero-section" class="hover:text-sky-700 transition-colors">Home</a> -->
       <a href="#suppliers-section" class="hover:text-sky-700 transition-colors">Suppliers</a>
       <a href="#brands-section" class="hover:text-sky-700 transition-colors">Brands</a>
       <a href="#partners-section" class="hover:text-sky-700 transition-colors">Partners</a>
