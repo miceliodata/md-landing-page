@@ -8,21 +8,24 @@ const tiers = [
   {
     icon:FactoryIcon,
     color:'text-emerald-500',
-    title: 'Tier 1 Manufacturers',
+    tier: '1',
+    title: 'Manufacturers',
     subtitle: 'Large-scale operations with advanced systems',
     description: ['API Integration','Real-time data sync','ERP connectivity','Automated compliance'],
   },
   {
     icon:BuildingStorefrontIcon,
     color:'text-blue-500',
-    title: 'Tier 2-3 Suppliers',
+    tier: '2-3',
+    title: 'Suppliers',
     subtitle: 'Mid-scale operations with structured processes',
     description: ['CSV Upload','Batch processing','Template-based entry','Quality verification'],
   },
   {
     icon:UserIcon,
     color:'text-indigo-500',
-    title: 'Tier 4 Artisans',
+    tier: '4',
+    title: 'Artisans',
     subtitle: 'Small-scale craftspeople and workshops',
     description: ['Mobile capture','Photo documentation','Voice notes','Simple interfaces'],
   },
@@ -49,7 +52,7 @@ const features = [
 </script>
 
 <template>
-  <section id="suppliers-section" class="scroll-mt-[5rem] bg-dark h-auto py-20 px-4 sm:px-6 lg:px-8 flex flex-col items-center">
+  <section id="suppliers-section" class="scroll-mt-[7rem] bg-dark h-auto py-20 px-4 sm:px-6 lg:px-8 flex flex-col items-center">
     <div class="max-w-7xl mx-auto text-center">
       <h2 class="text-5xl md:text-4xl font-bold text-gray-100 mb-4">
         Data Collection for Every Scale
@@ -67,7 +70,8 @@ const features = [
           <div class="flex justify-center mb-4">
             <component :is="tier.icon" :class="`w-12 h-12 ${tier.color}`" />
           </div>
-          <h3 class="text-xl text-center font-semibold text-gray-200 mb-2">{{ tier.title }}</h3>
+          <h2 class="text-2xl text-center font-semibold text-gray-200">Tier {{ tier.tier }}</h2>
+          <h3 class="text-lg text-center font-light text-gray-200 mb-2">{{ tier.title }}</h3>
           <h4 class="text-center text-gray-200 mt-4 mb-6">{{ tier.subtitle }}</h4>
            <div 
             v-for="(desc, index) in tier.description"

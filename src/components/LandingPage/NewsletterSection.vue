@@ -1,4 +1,35 @@
 <script setup lang="ts">
+import { ref } from 'vue'
+
+const email = ref('')
+const message = ref('')
+const success = ref<boolean | null>(null)
+const loading = ref(false)
+
+const submitForm = async (e: Event) => {
+  e.preventDefault()
+  message.value = ''
+  success.value = null
+  loading.value = true
+
+  try {
+    const res = await fetch('/api/newsletter', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email: email.value }),
+    })
+
+    const data = await res.json()
+    success.value = res.ok
+    message.value = data.message || 'Submission complete'
+    if (res.ok) email.value = ''
+  } catch (error) {
+    success.value = false
+    message.value = 'Something went wrong. Please try again later.'
+  } finally {
+    loading.value = false
+  }
+}
 </script>
 
 <template>
@@ -9,8 +40,9 @@
         Get notified about regulatory updates, product launches, and new supplier listings.
       </p>
 
-      <form class="space-y-4">
+      <form @submit="submitForm" class="space-y-4">
         <input
+          v-model="email"
           type="email"
           id="email"
           placeholder="you@example.com"
@@ -20,14 +52,16 @@
 
         <button
           type="submit"
+          :disabled="loading"
           class="w-full bg-gradient-to-r from-sky-700 to-emerald-500 hover:from-teal-400 hover:to-teal-400 text-white px-6 py-3 rounded hover:bg-primary-dark font-semibold shadow transition-colors"
         >
-          Join the List
+          <span v-if="loading">Joining...</span>
+          <span v-else>Join the List</span>
         </button>
       </form>
 
-      <p class="text-xs text-gray-400 mt-4">
-        We’ll never share your email. Unsubscribe anytime.
+      <p v-if="message" :class="{'text-green-600': success, 'text-red-600': success === false}" class="mt-4 text-sm">
+        {{ message }}
       </p>
     </div>
   </section>
