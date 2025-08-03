@@ -20,9 +20,9 @@
   >
     <div class="max-w-6xl mx-auto w-full">
       <div class="text-center mb-12">
-        <h2 class="text-5xl font-bold mb-4">Project Partners</h2>
+        <h2 class="text-5xl font-bold mb-4">Partnership Opportunities</h2>
         <p class="text-gray-300 text-xl">
-          Backed by institutions and initiatives supporting sustainable and transparent supply chains.
+          We're building a comprehensive ecosystem that requires diverse expertise. Find your role in the future of supply chain transparency.
         </p>
       </div>
 

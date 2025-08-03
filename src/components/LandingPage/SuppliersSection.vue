@@ -7,6 +7,7 @@ import { UserIcon } from '@heroicons/vue/24/outline'
 const tiers = [
   {
     icon:FactoryIcon,
+    bullet: BoltIcon,
     color:'text-emerald-500',
     tier: '1',
     title: 'Manufacturers',
@@ -14,7 +15,8 @@ const tiers = [
     description: ['API Integration','Real-time data sync','ERP connectivity','Automated compliance'],
   },
   {
-    icon:BuildingStorefrontIcon,
+    icon:BuildingStorefrontIcon,  
+    bullet: BoltIcon,
     color:'text-blue-500',
     tier: '2-3',
     title: 'Suppliers',
@@ -23,6 +25,7 @@ const tiers = [
   },
   {
     icon:UserIcon,
+    bullet: BoltIcon,
     color:'text-indigo-500',
     tier: '4',
     title: 'Artisans',
@@ -65,21 +68,30 @@ const features = [
         <div
           v-for="(tier, index) in tiers"
           :key="index"
-          class="p-6 bg-mid rounded-md shadow-lg hover:-translate-y-1 transition"
         >
-          <div class="flex justify-center mb-4">
-            <component :is="tier.icon" :class="`w-12 h-12 ${tier.color}`" />
+          <div class="p-6 bg-mid rounded-md shadow-lg hover:-translate-y-1 transition">
+            <div class="flex justify-center mb-4">
+              <component :is="tier.icon" :class="`w-12 h-12 ${tier.color}`" />
+            </div>
+            <h2 class="text-2xl text-center font-semibold text-gray-200">Tier {{ tier.tier }}</h2>
+            <h3 class="text-lg text-center font-light text-gray-200 mb-2">{{ tier.title }}</h3>
+            <h4 class="text-center text-gray-200 mt-4 mb-6">{{ tier.subtitle }}</h4>
+            <div 
+              v-for="(desc, index) in tier.description"
+              :key="index"
+              class="flex items-start"
+            >
+              <div class="mr-2 mt-[2px]">
+                <component
+                  v-if="tier.bullet"
+                  :is="tier.bullet"
+                  class="w-5 h-5 text-sky-500"
+                />
+                <span v-else class="text-gray-300">•</span>
+              </div>
+              <p class="text-gray-300">{{ desc }}</p>
+            </div>
           </div>
-          <h2 class="text-2xl text-center font-semibold text-gray-200">Tier {{ tier.tier }}</h2>
-          <h3 class="text-lg text-center font-light text-gray-200 mb-2">{{ tier.title }}</h3>
-          <h4 class="text-center text-gray-200 mt-4 mb-6">{{ tier.subtitle }}</h4>
-           <div 
-            v-for="(desc, index) in tier.description"
-            :key="index"
-            class="flex items-center">
-            <component :is="BoltIcon" class="w-5 h-5 mr-2 text-sky-500"/>
-            <p class="text-gray-300">{{ desc }}</p>
-           </div>
         </div>
       </div>
     </div>
