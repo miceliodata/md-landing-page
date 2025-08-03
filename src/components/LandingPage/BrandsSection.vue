@@ -1,4 +1,28 @@
 <script setup lang="ts">
+import { ChartBarIcon } from '@heroicons/vue/24/outline'
+import { ClipboardDocumentListIcon } from '@heroicons/vue/24/outline'
+import { CheckCircleIcon } from '@heroicons/vue/24/outline'
+
+const brandFeatures = [
+  {
+    icon: ChartBarIcon,
+    color: 'text-blue-500',
+    title: 'Real-time Dashboard',
+    description: 'Monitor your entire supply chain in one place'
+  },
+  {
+    icon: ClipboardDocumentListIcon,
+    color: 'text-indigo-500',
+    title: 'Compliance Tracking',
+    description: 'Automated DPP regulation compliance monitoring'
+  },
+  {
+    icon: CheckCircleIcon,
+    color: 'text-teal-500',
+    title: 'Verified Data',
+    description: 'All supplier data verified through our network'
+  }
+]
 </script>
 
 
@@ -11,6 +35,20 @@
         <p class="text-gray-700 text-lg">
           Our platform provides complete visibility into your Asian supply chain, ensuring full compliance with EU Digital Product Passport regulations.
         </p>
+      </div>
+
+      <div class="grid gap-12 sm:grid-cols-1 md:grid-cols-3 mb-24">
+        <div 
+          v-for="(feature, index) in brandFeatures"
+          :key="index"
+          class="flex"
+        >
+          <div class="p-6 rounded-md shadow-lg bg-gray-50 flex flex-col flex-1 h-full items-center">
+            <component :is="feature.icon" :class="`${feature.color} w-10 h-10 mb-4`" />
+            <h2 class="text-xl font-semibold text-center mb-4">{{ feature.title }}</h2>
+            <p class="font-light text-gray-800 text-center">{{ feature.description }}</p>
+          </div>
+        </div>
       </div>
     </div>
 
