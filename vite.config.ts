@@ -16,7 +16,7 @@ export default defineConfig({
       '@': path.resolve(__dirname, 'src'),
     },
   },
-  base: '/md-landing-page',
+  base: '/',
   server: {
     proxy: {
       '/api': 'http://localhost:3001',

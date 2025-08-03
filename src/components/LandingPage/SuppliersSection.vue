@@ -57,7 +57,7 @@ const features = [
 <template>
   <section id="suppliers-section" class="scroll-mt-[7rem] bg-dark h-auto py-20 px-4 sm:px-6 lg:px-8 flex flex-col items-center">
     <div class="max-w-7xl mx-auto text-center">
-      <h2 class="text-5xl md:text-4xl font-bold text-gray-100 mb-4">
+      <h2 class="text-4xl md:text-5xl font-bold text-gray-100 mb-4">
         Data Collection for Every Scale
       </h2>
       <p class="text-lg text-gray-300 max-w-2xl mx-auto mb-12">
@@ -69,7 +69,7 @@ const features = [
           v-for="(tier, index) in tiers"
           :key="index"
         >
-          <div class="p-6 bg-mid rounded-md shadow-lg hover:-translate-y-1 transition">
+          <div class="p-6 bg-mid rounded-md shadow-lg hover:-translate-y-1 transition h-full">
             <div class="flex justify-center mb-4">
               <component :is="tier.icon" :class="`w-12 h-12 ${tier.color}`" />
             </div>
