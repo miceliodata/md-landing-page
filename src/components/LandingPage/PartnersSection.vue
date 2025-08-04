@@ -132,7 +132,7 @@ const collabModels = [
 
       <div class="w-full mx-auto text-center py-6 mt-20">
         <h2 class="text-4xl md:text-3xl font-bold text-gray-100 mb-10">
-          Our Partners
+          Trusted by Global Leaders
         </h2>
 
         <div class="relative">
@@ -145,18 +145,16 @@ const collabModels = [
             style="background: linear-gradient(to left, #393a3d, transparent);"
           ></div>
 
-          <div class="bg-light py-8 rounded-md relative z-0 overflow-hidden">
+          <div class="bg-light py-10 rounded-xl shadow-inner shadow-black/10 border border-gray-300/60 relative z-0 overflow-hidden">
             <div class="max-w-6xl mx-auto flex flex-wrap justify-center items-center gap-8 px-4">
-              <img src="@/assets/BRACU.png" alt="brac-logo" class="h-20 w-auto opacity-80 hover:opacity-100 transition" />
-              <img src="@/assets/CIRPASS-2.png" alt="cirpass2-logo" class="h-20 w-auto opacity-80 hover:opacity-100 transition" />
-              <img src="@/assets/Gaia-X.webp" alt="gaiax-logo" class="h-20 w-auto opacity-80 hover:opacity-100 transition" />
-              <img src="@/assets/GS1.png" alt="gs1-logo" class="h-20 w-auto opacity-80 hover:opacity-100 transition" />
+              <img src="@/assets/BRACU.png" alt="brac-logo" class="h-20 max-h-24 w-auto opacity-70 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" />
+              <img src="@/assets/CIRPASS-2.png" alt="cirpass2-logo" class="h-20 max-h-24 w-auto opacity-70 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" />
+              <img src="@/assets/Gaia-X.webp" alt="gaiax-logo" class="h-20 max-h-24 w-auto opacity-70 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" />
+              <img src="@/assets/GS1.png" alt="gs1-logo" class="h-20 max-h-24 w-auto opacity-70 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" />
             </div>
           </div>
         </div>
       </div>
-
-
     </div>
   </section>
 </template>
