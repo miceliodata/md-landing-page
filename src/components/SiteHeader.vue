@@ -92,10 +92,10 @@ watch(isMobileMenuOpen, (isOpen) => {
     class="fixed top-0 left-0 w-full h-screen bg-slate-200 z-40 flex flex-col rounded-md justify-between"
   >
     <div class="px-4 pt-4">
-      <div class="flex items-center space-x-3">
-        <img class="h-10 w-auto" src="../assets/micelio-color.png" alt="miceliogo" />
+      <a @click="toggleMobileMenu" href="#hero-section" class="flex items-center space-x-3">
+        <img class="h-10 w-auto" src="../assets/micelio-newcolor-tr-bg.png" alt="miceliogo" />
         <span class="text-lg font-bold tracking-tight text-gray-800">MICELIO DATA</span>
-      </div>
+      </a>
       <button
         @click="toggleMobileMenu"
         class="absolute top-6 right-6 text-gray-700 hover:text-black transition"
@@ -109,7 +109,7 @@ watch(isMobileMenuOpen, (isOpen) => {
 
     <nav>
       <ul class="text-center space-y-4 text-lg font-medium">
-        <li><a @click="toggleMobileMenu" href="#hero-section">Home</a></li>
+        <!-- <li><a @click="toggleMobileMenu" href="#hero-section">Home</a></li> -->
         <li><a @click="toggleMobileMenu" href="#suppliers-section">Suppliers</a></li>
         <li><a @click="toggleMobileMenu" href="#brands-section">Brands</a></li>
         <li><a @click="toggleMobileMenu" href="#partners-section">Partners</a></li>
@@ -117,9 +117,10 @@ watch(isMobileMenuOpen, (isOpen) => {
     </nav>
 
     <div class="px-6 pb-10 space-y-4 text-sm text-gray-600 border-t border-gray-300 pt-6 text-center">
-      <a href="#newsletter-section" class="block text-black font-semibold">Contact</a>
+      <p>© 2025 MicelioData. All Rights Reserved.</p>
+      <!-- <a href="#newsletter-section" class="block text-black font-semibold">Contact</a>
       <a href="/privacy-policy" class="block">Privacy policy</a>
-      <a href="/terms-of-use" class="block">Terms of use</a>
+      <a href="/terms-of-use" class="block">Terms of use</a> -->
     </div>
   </div>
 </transition>

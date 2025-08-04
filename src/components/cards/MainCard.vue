@@ -2,12 +2,12 @@
 import type { Component } from 'vue'
 
 const props = withDefaults(defineProps <{
-    icon : Component
-    bullet: Component
-    product: string
+    icon? : Component
+    bullet?: Component
+    product?: string
     color?: string
     title: string
-    subtitle: string
+    subtitle?: string
     description: string[]
     titleSize?: string
     titleWeight?: string
