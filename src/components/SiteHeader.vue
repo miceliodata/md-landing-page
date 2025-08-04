@@ -48,7 +48,7 @@ watch(isMobileMenuOpen, (isOpen) => {
 <header
   :class="[
     'fixed top-2 left-1/2 -translate-x-1/2 z-50 px-6 py-1 w-[calc(100%-1rem)] sm:w-[calc(100%-2rem)] md:w-[80%]',
-    'bg-slate-200/80 backdrop-blur-md rounded-xl shadow-md transition-opacity duration-500 ease-in-out',
+    'bg-slate-100/80 backdrop-blur-md rounded-xl shadow-md transition-opacity duration-500 ease-in-out',
     { 'opacity-0 pointer-events-none': isBarHidden, 'opacity-100': !isBarHidden }
   ]"
 >
@@ -89,7 +89,7 @@ watch(isMobileMenuOpen, (isOpen) => {
 >
   <div
     v-if="isMobileMenuOpen"
-    class="fixed top-0 left-0 w-full h-screen bg-slate-200 z-40 flex flex-col rounded-md justify-between"
+    class="fixed top-0 left-0 w-full h-screen bg-slate-100 z-40 flex flex-col rounded-md justify-between"
   >
     <div class="px-4 pt-4">
       <a @click="toggleMobileMenu" href="#hero-section" class="flex items-center space-x-3">

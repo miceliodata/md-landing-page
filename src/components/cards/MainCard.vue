@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { Component } from 'vue'
+import { computed } from 'vue';
 
 const props = withDefaults(defineProps <{
     icon? : Component
@@ -11,15 +12,30 @@ const props = withDefaults(defineProps <{
     description: string[]
     titleSize?: string
     titleWeight?: string
+    hoverEffect: 'lift' | 'highlight' | 'none'
 }>(), {
     color: 'black',
     titleSize: 'text-lg',
-    titleWeight: 'font-light'
+    titleWeight: 'font-light',
+    hoverEffect: 'none'
+})
+
+const cardClass = computed(() => {
+  const base = "p-6 pb-7 bg-mid rounded-md shadow-lg shadow-blue-950/20 h-full flex flex-col"
+
+  if (props.hoverEffect === 'lift') {
+    return `${base} hover:-translate-y-1 transition duration-300`
+  }
+  else if (props.hoverEffect === 'highlight') {
+    return `${base} hover:shadow-xl hover:shadow-indigo-800/40 transition-all duration-300`
+  }
+  else if (props.hoverEffect === 'none')
+    return base
 })
 </script>
 
 <template>
-  <div class="p-6 bg-mid rounded-md shadow-lg hover:-translate-y-1 transition h-full flex flex-col">
+  <div :class="cardClass">
     
     <div>
       <div v-if="props.icon" class="flex justify-center mb-4">

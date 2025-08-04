@@ -71,7 +71,7 @@ const features = [
           v-for="(tier, index) in tiers"
           :key="index"
         >
-          <MainCard :product="tier.tier" :bullet="tier.bullet" :color="tier.color" :icon="tier.icon" :title="tier.title" :subtitle="tier.subtitle" :description="tier.description" />
+          <MainCard :hoverEffect="'highlight'" :product="tier.tier" :bullet="tier.bullet" :color="tier.color" :icon="tier.icon" :title="tier.title" :subtitle="tier.subtitle" :description="tier.description" />
         </div>
       </div>
     </div>
@@ -84,7 +84,7 @@ const features = [
           v-for="(feature, index) in features"
           :key="index"
         >
-          <MainCard :title="feature.title" :titleSize="'text-xl'" :titleWeight="'font-semibold'" :description="feature.description" />
+          <MainCard :hoverEffect="'lift'" :title="feature.title" :titleSize="'text-xl'" :titleWeight="'font-semibold'" :description="feature.description" />
         </div>
       </div>
     </div>
