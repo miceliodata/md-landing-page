@@ -54,8 +54,8 @@ const brandFeatures = [
 
     <div class="md:flex md:items-center">
       <div class="max-w-4xl mx-auto text-center mb-8">
-        <h2 class="text-3xl font-bold text-gray-900 px-24">Your Path to Compliance</h2>
-        <p class="text-gray-700 text-md">
+        <h2 class="text-3xl font-bold text-gray-900 px-12 mb-4">Your Path to Compliance</h2>
+        <p class="text-gray-700 text-md mb-12">
           Simple, step-by-step process to achieve DPP compliance
         </p>
       </div>
