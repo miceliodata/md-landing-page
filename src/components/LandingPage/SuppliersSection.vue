@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import MainCard from '@/components/cards/MainCard.vue'
+
 import FactoryIcon from '@/assets/factory.svg'
 import { BoltIcon } from '@heroicons/vue/24/outline'
 import { BuildingStorefrontIcon } from '@heroicons/vue/24/outline'
@@ -9,7 +11,7 @@ const tiers = [
     icon:FactoryIcon,
     bullet: BoltIcon,
     color:'text-emerald-500',
-    tier: '1',
+    tier: 'Tier 1',
     title: 'Manufacturers',
     subtitle: 'Large-scale operations with advanced systems',
     description: ['API Integration','Real-time data sync','ERP connectivity','Automated compliance'],
@@ -18,7 +20,7 @@ const tiers = [
     icon:BuildingStorefrontIcon,  
     bullet: BoltIcon,
     color:'text-blue-500',
-    tier: '2-3',
+    tier: 'Tier 2-3',
     title: 'Suppliers',
     subtitle: 'Mid-scale operations with structured processes',
     description: ['CSV Upload','Batch processing','Template-based entry','Quality verification'],
@@ -27,7 +29,7 @@ const tiers = [
     icon:UserIcon,
     bullet: BoltIcon,
     color:'text-indigo-500',
-    tier: '4',
+    tier: 'Tier 4',
     title: 'Artisans',
     subtitle: 'Small-scale craftspeople and workshops',
     description: ['Mobile capture','Photo documentation','Voice notes','Simple interfaces'],
@@ -37,19 +39,19 @@ const tiers = [
 const features = [
   {
     title:'Direct EU Market Access',
-    description:'Connect with European brands seeking DPP compliance',
+    description:['Connect with European brands seeking DPP compliance'],
   },
   {
     title:'Streamlined Data Collection',
-    description:'Efficient systems tailored to your operational capacity',
+    description:['Efficient systems tailored to your operational capacity'],
   },
   {
     title:'Quality Certification',
-    description:'Verified data increases trust and premium pricing',
+    description:['Verified data increases trust and premium pricing'],
   },
   {
     title:'Network Growth',
-    description:'Join a growing ecosystem of verified suppliers',
+    description:['Join a growing ecosystem of verified suppliers'],
   }
 ]
 </script>
@@ -69,29 +71,7 @@ const features = [
           v-for="(tier, index) in tiers"
           :key="index"
         >
-          <div class="p-6 bg-mid rounded-md shadow-lg hover:-translate-y-1 transition h-full">
-            <div class="flex justify-center mb-4">
-              <component :is="tier.icon" :class="`w-12 h-12 ${tier.color}`" />
-            </div>
-            <h2 class="text-2xl text-center font-semibold text-gray-200">Tier {{ tier.tier }}</h2>
-            <h3 class="text-lg text-center font-light text-gray-200 mb-2">{{ tier.title }}</h3>
-            <h4 class="text-center text-gray-200 mt-4 mb-6">{{ tier.subtitle }}</h4>
-            <div 
-              v-for="(desc, index) in tier.description"
-              :key="index"
-              class="flex items-start"
-            >
-              <div class="mr-2 mt-[2px]">
-                <component
-                  v-if="tier.bullet"
-                  :is="tier.bullet"
-                  class="w-5 h-5 text-sky-500"
-                />
-                <span v-else class="text-gray-300">•</span>
-              </div>
-              <p class="text-gray-300">{{ desc }}</p>
-            </div>
-          </div>
+          <MainCard :product="tier.tier" :bullet="tier.bullet" :color="tier.color" :icon="tier.icon" :title="tier.title" :subtitle="tier.subtitle" :description="tier.description" />
         </div>
       </div>
     </div>
@@ -103,10 +83,8 @@ const features = [
         <div
           v-for="(feature, index) in features"
           :key="index"
-          class="bg-mid rounded-md shadow-lg p-6"
         >
-          <h3 class="text-xl font-semibold text-gray-200 mb-4">{{ feature.title }}</h3>
-          <h4 class="text-gray-300">{{ feature.description }}</h4>
+          <MainCard :title="feature.title" :titleSize="'text-xl'" :titleWeight="'font-semibold'" :description="feature.description" />
         </div>
       </div>
     </div>

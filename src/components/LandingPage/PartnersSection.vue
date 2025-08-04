@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import IconBulletPointCard from '@/components/cards/IconBulletPointCard.vue'
+import MainCard from '@/components/cards/MainCard.vue'
 
 import { DocumentTextIcon } from '@heroicons/vue/24/outline'
 import { ChartBarSquareIcon } from '@heroicons/vue/24/outline'
@@ -105,7 +105,7 @@ const collabModels = [
         :key="index"
         class="h-full"
         >
-          <IconBulletPointCard :tier="0" :icon="feature.icon" :bullet="feature.bullet" :color="feature.color" :title="feature.title" :subtitle="feature.subtitle" :description="feature.description" />
+          <MainCard :product="feature.title" :icon="feature.icon" :bullet="feature.bullet" :color="feature.color" :title="''" :subtitle="feature.subtitle" :description="feature.description" />
         </div>
       </div>
 
