@@ -6,7 +6,7 @@ import HeroSection from '@/components/LandingPage/HeroSection.vue'
 import MenuSection from '@/components/LandingPage/MenuSection.vue'
 import BrandsSection from '@/components/LandingPage/BrandsSection.vue'
 import PartnersSection from '@/components/LandingPage/PartnersSection.vue'
-import NewsletterSection from '@/components/LandingPage/NewsletterSection.vue'
+import ContactSection from '@/components/LandingPage/ContactSection.vue'
 import SiteFooter from '@/components/LandingPage/SiteFooter.vue'
 import SuppliersSection from '@/components/LandingPage/SuppliersSection.vue'
 import useScrollAnimations from "@/composables/useScrollAnimations"
@@ -40,7 +40,7 @@ onMounted(() => {
     <PartnersSection />
   </div>
   <div class="stacked-section">
-    <NewsletterSection />
+    <ContactSection />
   </div>
   <div>
     <SiteFooter />
