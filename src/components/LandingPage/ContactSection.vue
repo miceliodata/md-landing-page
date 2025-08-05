@@ -65,7 +65,7 @@ const submitForm = async (e: Event) => {
     <div class="max-w-xl mx-auto">
       <h2 class="text-3xl font-bold mb-4">Let's Connect</h2>
       <p class="text-gray-600 mb-8">
-        Whether you're a supplier, partner, or just curious about what we do — we'd love to hear from you.
+        Whether you're a supplier, partner, or just curious about what we do, we'd love to hear from you.
       </p>
 
       <form @submit="submitForm" class="space-y-4">
