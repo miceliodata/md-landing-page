@@ -23,3 +23,12 @@ export function getBGColorClass(color: string): string {
         gray: 'bg-gray-500'
     }[color] ?? 'bg-black'
 }
+
+export function getGradientColors(color: string): { from: string; to: string } {
+    const map: Record<string, { from: string; to: string }> = {
+        emerald: { from: 'from-emerald-300', to: 'to-emerald-700' },
+        teal: { from: 'from-teal-300', to: 'to-teal-700' },
+        sky: { from: 'from-sky-300', to: 'to-sky-700' },
+    }
+    return map[color] ?? { from: 'from-gray-300', to: 'to-gray-500' }
+}

@@ -105,7 +105,7 @@ const submitForm = async (e: Event) => {
         <button
           type="submit"
           :disabled="loading"
-          class="w-full bg-gradient-to-r from-sky-700 to-emerald-500 text-white px-6 py-3 rounded shadow transition"
+          class="w-full bg-gradient-to-r from-sky-700 to-emerald-500 hover:from-teal-400 hover:to-teal-400 text-white px-6 py-3 rounded shadow-md transition duration-300"
         >
           <span v-if="loading">Sending...</span>
           <span v-else>Submit</span>

@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { getGradientColors } from '@/utils/colorClasses'
+
 import MainCard from '@/components/cards/MainCard.vue'
 
 import { DocumentTextIcon } from '@heroicons/vue/24/outline'
@@ -67,23 +69,28 @@ const partnerFeatures = [
 const collabModels = [
   {
     icon: ShoppingCartIcon,
-    color: 'bg-emerald-500/40',
+    color: 'emerald',
     title: 'Service Provider',
     desc: 'Offer your specialized services directly through our platform'  
   },
   {
     icon: ArrowsPointingInIcon,
-    color: 'bg-teal-500/40',
+    color: 'teal',
     title: 'Integration Partner',
     desc: 'Integrate your systems with our ecosystem for seamless operations'  
   },
   {
     icon: SquaresPlusIcon,
-    color: 'bg-sky-500/40',
+    color: 'sky',
     title: 'Strategic Alliance',
     desc: 'Long-term partnership for mutual growth and market expansion'
   }
 ]
+
+const iconClass = (color: string) => {
+  const { from, to } = getGradientColors(color)
+  return `rounded-full bg-radial ${from} ${to} w-16 h-16 flex items-center justify-center`
+}
 </script>
 
 <template>
@@ -120,7 +127,7 @@ const collabModels = [
             class="p-6"
           >
             <div class="flex justify-center mb-4">
-              <div :class="`${model.color} rounded-full w-16 h-16 flex items-center justify-center`">
+              <div :class=iconClass(model.color)>
                 <component :is="model.icon" class="w-8 h-8 text-white" />
               </div>
             </div>
@@ -147,26 +154,34 @@ const collabModels = [
 
           <div class="bg-dark py-10 rounded-xl shadow-inner shadow-black/10 border border-gray-300/60 relative z-0 overflow-hidden">
             <div class="max-w-6xl mx-auto flex flex-wrap justify-center items-center gap-8 px-4">
-              <img 
-                src="@/assets/BRACU.png" 
-                alt="brac-logo" 
-                class="h-20 max-h-24 w-auto opacity-80 brightness-200 grayscale invert hover:grayscale-0 hover:invert-0 hover:brightness-100 hover:opacity-100 transition duration-300"
-                />
-              <img 
-                src="@/assets/CIRPASS-2.png" 
-                alt="cirpass2-logo" 
-                class="h-20 max-h-24 w-auto opacity-80 brightness-200 grayscale invert hover:grayscale-0 hover:invert-0 hover:brightness-100 hover:opacity-100 transition duration-300"
-                />
-              <img 
-                src="@/assets/Gaia-X.webp" 
-                alt="gaiax-logo" 
-                class="h-20 max-h-24 w-auto opacity-80 brightness-200 grayscale hover:grayscale-0 hover:brightness-100 hover:opacity-100 transition duration-300"
-                />
-              <img 
-                src="@/assets/GS1.png"
-                alt="gs1-logo" 
-                class="h-20 max-h-24 w-auto opacity-80 brightness-200 grayscale hover:grayscale-0 hover:brightness-100 hover:opacity-100 transition duration-300"
-                />
+              <a href="https://www.bracu.ac.bd/" target="_blank" rel="noopener noreferrer">
+                <img 
+                  src="@/assets/BRACU.png" 
+                  alt="brac-logo" 
+                  class="h-20 max-h-24 w-auto opacity-80 brightness-200 grayscale invert hover:grayscale-0 hover:invert-0 hover:brightness-100 hover:opacity-100 transition duration-300"
+                  />
+              </a>
+              <a href="https://cirpass2.eu/" target="_blank" rel="noopener noreferrer">
+                <img 
+                  src="@/assets/CIRPASS-2.png" 
+                  alt="cirpass2-logo" 
+                  class="h-20 max-h-24 w-auto opacity-80 brightness-200 grayscale invert hover:grayscale-0 hover:invert-0 hover:brightness-100 hover:opacity-100 transition duration-300"
+                  />
+              </a>
+              <a href="https://gaia-x.eu/" target="_blank" rel="noopener noreferrer">
+                <img 
+                  src="@/assets/Gaia-X.webp" 
+                  alt="gaiax-logo" 
+                  class="h-20 max-h-24 w-auto opacity-80 brightness-200 grayscale hover:grayscale-0 hover:brightness-100 hover:opacity-100 transition duration-300"
+                  />
+              </a>
+              <a href="https://www.gs1.org/" target="_blank" rel="noopener noreferrer">
+                <img 
+                  src="@/assets/GS1.png"
+                  alt="gs1-logo" 
+                  class="h-20 max-h-24 w-auto opacity-80 brightness-200 grayscale hover:grayscale-0 hover:brightness-100 hover:opacity-100 transition duration-300"
+                  />
+              </a>
             </div>
           </div>
         </div>
