@@ -1,11 +1,22 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 
+const name = ref('')
+const surname = ref('')
 const email = ref('')
+const userMessage = ref('')
 const message = ref('')
 const success = ref<boolean | null>(null)
 const loading = ref(false)
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+
+const googleFormUrl = 'https://docs.google.com/forms/d/e/1FAIpQLSfVqp-s-tflusW__pGrFBoLlF54G4N0Cwva-D_LHQ0uyIpRBw/formResponse'
+const fields = {
+  name: 'entry.320585220',
+  surname: 'entry.818511890',
+  email: 'entry.448781571',
+  message: 'entry.1405688489',
+}
 
 const submitForm = async (e: Event) => {
   e.preventDefault()
@@ -21,16 +32,24 @@ const submitForm = async (e: Event) => {
   }
 
   try {
-    const res = await fetch('/api/newsletter', {
+    const formData = new FormData()
+    formData.append(fields.name, name.value.trim())
+    formData.append(fields.surname, surname.value.trim())
+    formData.append(fields.email, email.value.trim())
+    formData.append(fields.message, userMessage.value.trim())
+
+    await fetch(googleFormUrl, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email: email.value.trim() }),
+      mode: 'no-cors',
+      body: formData,
     })
 
-    const data = await res.json()
-    success.value = res.ok
-    message.value = data.message || 'Submission complete'
-    if (res.ok) email.value = ''
+    success.value = true
+    message.value = 'Thanks! Your message has been sent.'
+    name.value = ''
+    surname.value = ''
+    email.value = ''
+    userMessage.value = ''
   } catch (error) {
     success.value = false
     message.value = 'Something went wrong. Please try again later.'
@@ -38,6 +57,7 @@ const submitForm = async (e: Event) => {
     loading.value = false
   }
 }
+
 </script>
 
 <template>
@@ -49,22 +69,46 @@ const submitForm = async (e: Event) => {
       </p>
 
       <form @submit="submitForm" class="space-y-4">
+        <div class="flex">
+          <input
+            v-model="name"
+            type="text"
+            placeholder="First Name"
+            required
+            class="w-full border border-gray-300 rounded px-4 py-3 mr-1"
+          />
+  
+          <input
+            v-model="surname"
+            type="text"
+            placeholder="Last Name"
+            required
+            class="w-full border border-gray-300 rounded px-4 py-3 ml-1"
+          />
+        </div>
+
         <input
           v-model="email"
           type="email"
-          id="email"
           placeholder="you@example.com"
-          class="w-full border border-gray-300 rounded px-4 py-3 focus:outline-none focus:ring-2 focus:ring-primary"
           required
+          class="w-full border border-gray-300 rounded px-4 py-3"
         />
+
+        <textarea
+          v-model="userMessage"
+          placeholder="Your message..."
+          rows="4"
+          class="w-full border border-gray-300 rounded px-4 py-3"
+        ></textarea>
 
         <button
           type="submit"
           :disabled="loading"
-          class="w-full bg-gradient-to-r from-sky-700 to-emerald-500 hover:from-teal-400 hover:to-teal-400 text-white px-6 py-3 rounded hover:bg-primary-dark font-semibold shadow transition-colors"
+          class="w-full bg-gradient-to-r from-sky-700 to-emerald-500 text-white px-6 py-3 rounded shadow transition"
         >
-          <span v-if="loading">Joining...</span>
-          <span v-else>Join the List</span>
+          <span v-if="loading">Sending...</span>
+          <span v-else>Submit</span>
         </button>
       </form>
 

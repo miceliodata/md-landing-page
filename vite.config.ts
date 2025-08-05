@@ -17,9 +17,9 @@ export default defineConfig({
     },
   },
   base: '/',
-  server: {
-    proxy: {
-      '/api': 'http://localhost:3001',
-    },
-  },
+  // server: {
+  //   proxy: {
+  //     '/api': 'http://localhost:3001',
+  //   },
+  // },
 })
