@@ -1,19 +1,20 @@
 <script setup lang="ts">
-import { ScrollTrigger } from "gsap/ScrollTrigger"
-import gsap from "gsap"
-import { onMounted, onBeforeUnmount } from "vue"
-import HeroSection from '@/components/LandingPage/HeroSection.vue'
-import MenuSection from '@/components/LandingPage/MenuSection.vue'
-import BrandsSection from '@/components/LandingPage/BrandsSection.vue'
-import PartnersSection from '@/components/LandingPage/PartnersSection.vue'
-import ContactSection from '@/components/LandingPage/ContactSection.vue'
-import SiteFooter from '@/components/LandingPage/SiteFooter.vue'
-import SuppliersSection from '@/components/LandingPage/SuppliersSection.vue'
-import useScrollAnimations from "@/composables/useScrollAnimations"
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import gsap from "gsap";
+import { onMounted, onBeforeUnmount } from "vue";
+import HeroSection from "@/components/LandingPage/HeroSection.vue";
+import AboutSection from "@/components/LandingPage/AboutSection.vue";
+import MenuSection from "@/components/LandingPage/MenuSection.vue";
+import BrandsSection from "@/components/LandingPage/BrandsSection.vue";
+import PartnersSection from "@/components/LandingPage/PartnersSection.vue";
+import ContactSection from "@/components/LandingPage/ContactSection.vue";
+import SiteFooter from "@/components/LandingPage/SiteFooter.vue";
+import SuppliersSection from "@/components/LandingPage/SuppliersSection.vue";
+import useScrollAnimations from "@/composables/useScrollAnimations";
 
 const { setupStackedCards } = useScrollAnimations();
 
-gsap.registerPlugin(ScrollTrigger)
+gsap.registerPlugin(ScrollTrigger);
 onBeforeUnmount(() => {
   ScrollTrigger.getAll().forEach((trigger: ScrollTrigger) => trigger.kill());
 });
@@ -26,6 +27,9 @@ onMounted(() => {
 <template>
   <div class="stacked-section">
     <HeroSection />
+  </div>
+  <div class="stacked-section">
+    <AboutSection />
   </div>
   <div class="stacked-section">
     <MenuSection />

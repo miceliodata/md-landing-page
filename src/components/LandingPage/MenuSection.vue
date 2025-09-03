@@ -1,62 +1,39 @@
 <script setup lang="ts">
-import MenuCard from '@/components/cards/MenuCard.vue'
-import { BuildingOfficeIcon } from '@heroicons/vue/24/outline'
-import { ShoppingBagIcon } from '@heroicons/vue/24/outline'
-import { UserGroupIcon } from '@heroicons/vue/24/outline'
+import MenuCard from "@/components/cards/MenuCard.vue";
 </script>
 
 <template>
-  <section
-    id="menu-section"
-    class="py-20 px-6 max-w-6xl mx-auto flex items-center"
-  >
-    <div class="w-full grid gap-10 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+  <section id="menu-section" class="py-20">
+    <h1 class="text-4xl text-center md:text-5xl font-bold text-gray-900 mb-12">
+      What We Offer
+    </h1>
 
-      <MenuCard
-        :icon="BuildingOfficeIcon"
-        color="blue"
-        title="For Suppliers"
-        address="#suppliers-section"
-      >
-        <template #content>
-          <ul class="list-disc pl-10 pr-4 space-y-1">
-            <li>Digital product passport creation</li>
-            <li>Supply chain transparency tools</li>
-            <li>Compliance with EU regulations</li>
-          </ul>
-        </template>
-      </MenuCard>
+    <div class="px-6 max-w-6xl mx-auto flex items-center">
+      <div class="w-full grid gap-10 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+        <MenuCard
+          icon="suppliers-menu-icon"
+          color="blue"
+          title="For Suppliers"
+          address="#suppliers-section"
+        >
+        </MenuCard>
 
-      <MenuCard
-        :icon="ShoppingBagIcon"
-        color="cyan"
-        title="For Brands"
-        address="#brands-section"
-      >
-        <template #content>
-          <ul class="list-disc pl-10 pr-4 space-y-1">
-            <li>End-to-end supply chain visibility</li>
-            <li>Sustainability reporting automation</li>
-            <li>Consumer trust through transparency</li>
-          </ul>
-        </template>
-      </MenuCard>
+        <MenuCard
+          icon="brands-menu-icon"
+          color="cyan"
+          title="For Brands"
+          address="#brands-section"
+        >
+        </MenuCard>
 
-      <MenuCard
-        :icon="UserGroupIcon"
-        color="emerald"
-        title="For Partners"
-        address="#partners-section"
-      >
-        <template #content>
-          <ul class="list-disc pl-10 pr-4 space-y-1">
-            <li>Technology integration opportunities</li>
-            <li>Joint market development</li>
-            <li>Shared innovation ecosystem</li>
-          </ul>
-        </template>
-      </MenuCard>
-
+        <MenuCard
+          icon="partners-menu-icon"
+          color="emerald"
+          title="For Partners"
+          address="#partners-section"
+        >
+        </MenuCard>
+      </div>
     </div>
   </section>
 </template>

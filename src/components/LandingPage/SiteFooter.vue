@@ -1,5 +1,4 @@
-<script setup lang="ts">
-</script>
+<script setup lang="ts"></script>
 
 <template>
   <footer class="bg-dark text-white py-6 px-6">
@@ -37,7 +36,11 @@
       </ul> -->
       <p class="pt-2">© 2025 MicelioData. All Rights Reserved.</p>
       <div class="flex justify-center mt-6">
-        <img class="h-10 w-auto" src="/src/assets/micelio-white.png" alt="miceliogo-white">
+        <img
+          class="h-18 w-auto"
+          src="/src/assets/micelio-white.png"
+          alt="miceliogo-white"
+        />
       </div>
     </div>
   </footer>
