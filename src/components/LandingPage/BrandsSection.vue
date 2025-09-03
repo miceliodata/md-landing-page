@@ -57,7 +57,52 @@
       </div> -->
     </div>
 
-    <div class="md:flex md:items-center">
+    <ul
+      class="list-disc list-outside pl-6 text-gray-700 marker:text-emerald-700 text-lg marker:text-2xl space-y-3 max-w-3xl mx-auto mb-18"
+    >
+      <li>
+        Ensure end-to-end supply chain visibility with single source of data
+      </li>
+      <li>Enhance consumer trust through greater transparency</li>
+      <li>Have access to verified supplier network</li>
+    </ul>
+
+    <div class="max-w-6xl mx-auto">
+      <div class="flex flex-col md:flex-row">
+        <div class="flex-1 flex flex-col items-center">
+          <div
+            class="max-h-24 flex-1 bg-gradient-to-r from-blue-700 to-sky-500 text-white py-8 px-16 relative rounded-lg hover:bg-gradient-to-r hover:from-blue-500 hover:to-sky-300 duration-300 transition-colors clip-chevron-start"
+          >
+            <h3 class="text-2xl font-bold mb-2">Connect</h3>
+          </div>
+          <p class="font-light text-center my-3 max-w-50">
+            Connect your supply chain and suppliers
+          </p>
+        </div>
+        <div class="flex-1 flex flex-col items-center">
+          <div
+            class="max-h-24 flex-1 bg-gradient-to-r from-sky-500 to-cyan-600 text-white py-8 px-20 relative hover:bg-gradient-to-r hover:from-sky-300 hover:to-cyan-400 duration-300 transition-colors clip-chevron-next"
+          >
+            <h3 class="text-2xl font-bold mb-3">Verify</h3>
+          </div>
+          <p class="font-light text-center my-2 max-w-50">
+            Verify data quality of suppliers via accurate, traceable information
+          </p>
+        </div>
+        <div class="flex-1 flex flex-col items-center">
+          <div
+            class="max-h-24 flex-1 bg-gradient-to-r from-cyan-600 to-emerald-500 text-white py-8 px-16 relative hover:bg-gradient-to-r hover:from-cyan-400 hover:to-emerald-300 duration-300 transition-colors clip-chevron-next"
+          >
+            <h3 class="text-2xl font-bold mb-2">Generate</h3>
+          </div>
+          <p class="font-light text-center my-3 max-w-50">
+            Generate Digital Product Passport via an automated system
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- <div class="md:flex md:items-center">
       <div class="max-w-4xl mx-auto text-center mb-8">
         <h2 class="text-3xl font-bold text-gray-900 px-12 mb-4">
           Your Path to Compliance
@@ -118,7 +163,7 @@
           </p>
         </div>
       </div>
-    </div>
+    </div> -->
 
     <!-- <div class="mt-16 text-center">
       <a
@@ -130,3 +175,25 @@
     </div> -->
   </section>
 </template>
+
+<style scoped>
+.clip-chevron-start {
+  clip-path: polygon(
+    0 0,
+    calc(100% - 20px) 0,
+    100% 50%,
+    calc(100% - 20px) 100%,
+    0 100%
+  );
+}
+.clip-chevron-next {
+  clip-path: polygon(
+    0 0,
+    calc(100% - 20px) 0,
+    100% 50%,
+    calc(100% - 20px) 100%,
+    0 100%,
+    calc(0% + 20px) 50%
+  );
+}
+</style>

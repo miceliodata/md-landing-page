@@ -120,6 +120,17 @@ const iconClass = (color: string) => {
         </p>
       </div>
 
+      <ul
+        class="list-disc list-outside pl-6 text-gray-300 marker:text-gray-500 text-lg marker:text-2xl space-y-3 max-w-3xl mx-auto mb-18"
+      >
+        <li>Integrate to the platform</li>
+        <li>Be part of market development</li>
+        <li>
+          Join to a shared innovation ecosystem to co-create scalable solutions
+        </li>
+        <li>Reliable and verified data ecosystem</li>
+      </ul>
+
       <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
         <div
           v-for="(feature, index) in partnerFeatures"

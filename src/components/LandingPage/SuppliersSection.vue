@@ -76,14 +76,32 @@ const tiers = [
     id="suppliers-section"
     class="scroll-mt-[7rem] bg-dark h-auto py-20 px-4 sm:px-6 lg:px-8 flex flex-col items-center"
   >
-    <div class="max-w-7xl mx-auto text-center">
-      <h2 class="text-4xl md:text-5xl font-bold text-gray-100 mb-4">
+    <div class="max-w-7xl mx-auto">
+      <h2 class="text-4xl md:text-5xl font-bold text-gray-100 mb-4 text-center">
         Data Collection for Every Scale
       </h2>
-      <p class="text-lg text-gray-300 max-w-2xl mx-auto mb-12">
+      <p class="text-lg text-gray-300 max-w-2xl mx-auto mb-18 text-center">
         Whether you're a large manufacturer or a small artisan, we have the
         right solution for your data collection needs.
       </p>
+
+      <ul
+        class="list-disc list-outside pl-6 text-gray-300 marker:text-gray-500 text-lg marker:text-2xl space-y-3 max-w-3xl mx-auto mb-18"
+      >
+        <li>
+          Integrate sustainability data with systems tailored to your
+          operational capacity
+        </li>
+        <li>
+          Generate Digital Product Passports and ensure compliance with evolving
+          EU regulations
+        </li>
+        <li>Connect with EU brands seeking DPP compliance</li>
+        <li>
+          Semantic interoperability allowing to connect with different service
+          providers
+        </li>
+      </ul>
 
       <div class="grid gap-12 sm:grid-cols-2 lg:grid-cols-3 text-left">
         <div v-for="(tier, index) in tiers" :key="index">

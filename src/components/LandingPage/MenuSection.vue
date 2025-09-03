@@ -3,7 +3,7 @@ import MenuCard from "@/components/cards/MenuCard.vue";
 </script>
 
 <template>
-  <section id="menu-section" class="py-20">
+  <section id="menu-section" class="py-20 scroll-mt-24">
     <h1 class="text-4xl text-center md:text-5xl font-bold text-gray-900 mb-12">
       What We Offer
     </h1>
