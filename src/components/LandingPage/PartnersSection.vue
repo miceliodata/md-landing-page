@@ -121,7 +121,7 @@ const iconClass = (color: string) => {
       </div>
 
       <ul
-        class="list-disc list-outside pl-6 text-gray-300 marker:text-gray-500 text-lg marker:text-2xl space-y-3 max-w-3xl mx-auto mb-18"
+        class="list-disc list-outside pl-6 text-gray-300 marker:text-gray-500 text-lg marker:text-2xl space-y-3 max-w-xl mx-auto mb-18"
       >
         <li>Integrate to the platform</li>
         <li>Be part of market development</li>

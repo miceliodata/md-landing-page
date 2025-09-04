@@ -71,7 +71,7 @@
       <div class="flex flex-col md:flex-row">
         <div class="flex-1 flex flex-col items-center">
           <div
-            class="max-h-24 flex-1 bg-gradient-to-r from-blue-700 to-sky-500 text-white py-8 px-16 relative rounded-lg hover:bg-gradient-to-r hover:from-blue-500 hover:to-sky-300 duration-300 transition-colors clip-chevron-start"
+            class="max-h-24 flex-1 bg-gradient-to-r from-blue-700 to-sky-500 text-white py-8 px-16 relative rounded-lg clip-chevron-start"
           >
             <h3 class="text-2xl font-bold mb-2">Connect</h3>
           </div>
@@ -81,7 +81,7 @@
         </div>
         <div class="flex-1 flex flex-col items-center">
           <div
-            class="max-h-24 flex-1 bg-gradient-to-r from-sky-500 to-cyan-600 text-white py-8 px-20 relative hover:bg-gradient-to-r hover:from-sky-300 hover:to-cyan-400 duration-300 transition-colors clip-chevron-next"
+            class="max-h-24 flex-1 bg-gradient-to-r from-sky-500 to-cyan-600 text-white py-8 px-20 relative clip-chevron-next"
           >
             <h3 class="text-2xl font-bold mb-3">Verify</h3>
           </div>
@@ -91,7 +91,7 @@
         </div>
         <div class="flex-1 flex flex-col items-center">
           <div
-            class="max-h-24 flex-1 bg-gradient-to-r from-cyan-600 to-emerald-500 text-white py-8 px-16 relative hover:bg-gradient-to-r hover:from-cyan-400 hover:to-emerald-300 duration-300 transition-colors clip-chevron-next"
+            class="max-h-24 flex-1 bg-gradient-to-r from-cyan-600 to-emerald-500 text-white py-8 px-16 relative clip-chevron-next"
           >
             <h3 class="text-2xl font-bold mb-2">Generate</h3>
           </div>

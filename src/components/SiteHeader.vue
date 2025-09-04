@@ -113,7 +113,7 @@ watch(isMobileMenuOpen, (isOpen) => {
     >
       <div
         v-if="isMobileMenuOpen"
-        class="fixed top-0 left-0 w-full h-screen bg-slate-100 z-40 flex flex-col rounded-md justify-between"
+        class="fixed top-0 left-0 w-full h-[99vh] bg-slate-100 z-40 flex flex-col rounded-md justify-between"
       >
         <div class="px-4 pt-4">
           <a

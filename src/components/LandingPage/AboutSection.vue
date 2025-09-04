@@ -6,7 +6,7 @@
     class="scroll-mt-[7rem] bg-dark h-auto py-20 px-4 sm:px-6 lg:px-8"
   >
     <h1 class="text-4xl text-center md:text-5xl font-bold text-gray-100 mb-4">
-      About MicelioData
+      About Us
     </h1>
 
     <div
