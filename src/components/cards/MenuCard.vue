@@ -6,7 +6,8 @@ import { getBGColorClass } from "@/utils/colorClasses";
 const props = withDefaults(
   defineProps<{
     //icon: object | FunctionalComponent;
-    icon: string;
+    src: string;
+    alt?: string;
     color?: string;
     title: string;
     address: string;
@@ -28,11 +29,7 @@ const iconBGColor = computed(() => getBGColorClass(props.color));
       >
         <span class="-rotate-45">
           <!-- <component :is="icon" :class="`w-7 h-7 text-white`" /> -->
-          <img
-            class="w-16 h-16 invert"
-            :src="`/src/assets/${icon}.png`"
-            :alt="`${icon}`"
-          />
+          <img class="w-16 h-16 invert" :src="src" :alt="alt" />
         </span>
       </a>
     </div>
