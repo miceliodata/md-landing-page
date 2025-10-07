@@ -61,14 +61,14 @@ const submitForm = async (e: Event) => {
 </script>
 
 <template>
-  <section id="newsletter-section" class="py-16 px-6 bg-white text-center">
+  <section id="newsletter-section" class="py-16 px-6 text-center">
     <div class="max-w-xl mx-auto">
-      <h2 class="text-3xl font-bold mb-4">Let's Connect</h2>
-      <p class="text-gray-600 mb-8">
+      <h2 class="text-3xl font-bold mb-4 text-gray-100 animate-word-reveal">Let's Connect</h2>
+      <p class="text-gray-300 mb-8 animate-fade-up">
         Whether you're a supplier, partner, or just curious about what we do, we'd love to hear from you.
       </p>
 
-      <form @submit="submitForm" class="space-y-4">
+      <form @submit="submitForm" class="space-y-4 animate-scale">
         <div class="flex">
           <input
             v-model="name"

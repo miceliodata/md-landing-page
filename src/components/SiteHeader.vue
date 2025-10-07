@@ -46,58 +46,53 @@ watch(isMobileMenuOpen, (isOpen) => {
 <template>
   <header
     :class="[
-      'fixed top-2 left-1/2 -translate-x-1/2 z-50 px-6 py-1 w-[calc(100%-1rem)] sm:w-[calc(100%-2rem)] md:w-[80%]',
-      'bg-slate-100/80 backdrop-blur-md rounded-xl shadow-md transition-opacity duration-500 ease-in-out',
+      'fixed top-4 left-1/2 -translate-x-1/2 z-50',
+      'bg-white/90 backdrop-blur-md rounded-2xl shadow-lg border border-gray-200/50',
+      'px-6 py-3 transition-all duration-300 ease-out',
+      'w-[calc(100%-2rem)] sm:w-[calc(100%-4rem)] md:w-[90%] lg:w-[80%] xl:w-[70%]',
       {
-        'opacity-0 pointer-events-none': isBarHidden,
-        'opacity-100': !isBarHidden,
+        '-translate-y-20 opacity-0 pointer-events-none scale-95': isBarHidden,
+        'translate-y-0 opacity-100 scale-100': !isBarHidden,
       },
     ]"
   >
     <div
-      class="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8 py-2 flex items-center justify-between relative"
+      class="flex items-center justify-between relative w-full"
     >
       <a href="#hero-section" class="flex items-center">
         <img
-          class="h-16 md:h-24 w-auto"
+          class="h-8 md:h-10 w-auto"
           src="../assets/micelio-newcolor-tr-bg.png"
           alt="miceliogo"
         />
         <span
-          class="hidden md:inline md:text-2xl font-bold tracking-tight text-gray-800"
+          class="hidden md:inline md:text-lg font-medium tracking-tight text-gray-900"
           >MicelioData</span
         >
       </a>
 
       <nav
-        class="hidden xl:flex space-x-6 text-sm font-semibold text-gray-700 absolute left-1/2 transform -translate-x-1/2"
+        class="hidden xl:flex space-x-6 text-sm font-normal text-gray-700 absolute left-1/2 transform -translate-x-1/2"
       >
-        <!-- <a href="#hero-section" class="hover:text-sky-700 transition-colors">Home</a> -->
-        <a href="#about-section" class="hover:text-sky-700 transition-colors"
-          >About Us</a
-        >
-        <a
-          href="#suppliers-section"
-          class="hover:text-sky-700 transition-colors"
-          >Suppliers</a
-        >
-        <a href="#brands-section" class="hover:text-sky-700 transition-colors"
-          >Brands</a
-        >
-        <a href="#partners-section" class="hover:text-sky-700 transition-colors"
-          >Partners</a
-        >
+        <a href="#about-section" class="hover:text-gray-900 transition-colors duration-150 py-2"
+          >About Us</a>
+        <a href="#suppliers-section" class="hover:text-gray-900 transition-colors duration-150 py-2"
+          >Suppliers</a>
+        <a href="#brands-section" class="hover:text-gray-900 transition-colors duration-150 py-2"
+          >Brands</a>
+        <a href="#partners-section" class="hover:text-gray-900 transition-colors duration-150 py-2"
+          >Partners</a>
       </nav>
 
       <a
         href="#newsletter-section"
-        class="ml-6 hidden xl:inline-block bg-gradient-to-r from-sky-700 to-emerald-500 hover:from-teal-400 hover:to-teal-400 text-white px-4 py-2 rounded-md shadow-md text-sm font-semibold transition-colors"
+        class="ml-4 hidden xl:inline-block bg-gray-900 hover:bg-gray-800 text-white px-3 py-1.5 rounded text-xs font-medium transition-colors duration-150"
       >
-        Contact us
+        Contact
       </a>
 
-      <button @click="toggleMobileMenu" class="xl:hidden focus:outline-none">
-        <Navicon class="h-10 w-auto" src="/src/assets/navicon-black.svg" />
+      <button @click="toggleMobileMenu" class="xl:hidden focus:outline-none p-1">
+        <Navicon class="h-6 w-auto opacity-70 hover:opacity-100 transition-opacity" src="/src/assets/navicon-black.svg" />
       </button>
     </div>
 

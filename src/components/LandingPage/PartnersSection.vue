@@ -109,33 +109,33 @@ const iconClass = (color: string) => {
 <template>
   <section
     id="partners-section"
-    class="scroll-mt-[7rem] h-auto bg-dark px-6 text-gray-100 flex flex-col justify-center py-20"
+    class="scroll-mt-[7rem] h-auto px-12 sm:px-16 lg:px-20 text-gray-100 flex flex-col justify-center py-20"
   >
     <div class="max-w-6xl mx-auto w-full">
       <div class="text-center mb-12">
-        <h2 class="text-5xl font-bold mb-4">Partnership Opportunities</h2>
-        <p class="text-gray-300 text-xl">
+        <h2 class="text-5xl font-bold mb-4 animate-char-reveal">Partnership Opportunities</h2>
+        <p class="text-gray-300 text-xl animate-fade-up">
           We're building a comprehensive ecosystem that requires diverse
           expertise. Find your role in the future of supply chain transparency.
         </p>
       </div>
 
       <ul
-        class="list-disc list-outside pl-6 text-gray-300 marker:text-gray-500 text-lg marker:text-2xl space-y-3 max-w-xl mx-auto mb-18"
+        class="list-disc list-outside pl-6 text-gray-300 marker:text-gray-500 text-lg marker:text-2xl space-y-3 max-w-xl mx-auto mb-18 animate-stagger-group"
       >
-        <li>Integrate to the platform</li>
-        <li>Be part of market development</li>
-        <li>
+        <li class="animate-stagger">Integrate to the platform</li>
+        <li class="animate-stagger">Be part of market development</li>
+        <li class="animate-stagger">
           Join to a shared innovation ecosystem to co-create scalable solutions
         </li>
-        <li>Reliable and verified data ecosystem</li>
+        <li class="animate-stagger">Reliable and verified data ecosystem</li>
       </ul>
 
-      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 animate-stagger-group">
         <div
           v-for="(feature, index) in partnerFeatures"
           :key="index"
-          class="h-full"
+          class="h-full animate-stagger"
         >
           <MainCard
             :hoverEffect="'highlight'"
@@ -149,13 +149,13 @@ const iconClass = (color: string) => {
       </div>
 
       <div
-        class="max-w-4xl mx-auto text-center p-6 mt-20 rounded-md bg-mid shadow-lg shadow-blue-950/20"
+        class="max-w-4xl mx-auto text-center p-6 mt-20 rounded-md bg-mid shadow-lg shadow-blue-950/20 animate-fade-up"
       >
-        <h2 class="text-4xl md:text-3xl font-bold text-gray-100 mt-4">
+        <h2 class="text-4xl md:text-3xl font-bold text-gray-100 mt-4 animate-word-reveal">
           Collaboration Models
         </h2>
-        <div class="grid gap-4 grid-cols-1 sm:grid-cols-3 pt-8">
-          <div v-for="(model, index) in collabModels" :key="index" class="p-6">
+        <div class="grid gap-4 grid-cols-1 sm:grid-cols-3 pt-8 animate-stagger-group">
+          <div v-for="(model, index) in collabModels" :key="index" class="p-6 animate-stagger">
             <div class="flex justify-center mb-4">
               <div :class="iconClass(model.color)">
                 <component :is="model.icon" class="w-8 h-8 text-white" />
@@ -169,8 +169,8 @@ const iconClass = (color: string) => {
         </div>
       </div>
 
-      <div class="w-full mx-auto text-center py-6 mt-20">
-        <h2 class="text-4xl md:text-3xl font-bold text-gray-100 mb-10">
+      <div class="w-full mx-auto text-center py-6 mt-20 animate-fade-up">
+        <h2 class="text-4xl md:text-3xl font-bold text-gray-100 mb-10 animate-word-reveal">
           Trusted by Global Leaders
         </h2>
 
@@ -185,7 +185,7 @@ const iconClass = (color: string) => {
           ></div>
 
           <div
-            class="bg-dark py-10 rounded-xl shadow-inner shadow-black/10 border border-gray-300/60 relative z-0 overflow-hidden"
+            class="bg-dark py-10 rounded-xl shadow-inner shadow-black/10 border border-gray-300/60 relative z-0 overflow-hidden animate-scale"
           >
             <div
               class="max-w-6xl mx-auto flex flex-wrap justify-center items-center gap-8 px-4"

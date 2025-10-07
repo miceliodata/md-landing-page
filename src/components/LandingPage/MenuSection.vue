@@ -7,38 +7,44 @@ import PartnersIcon from "@/assets/partners-menu-icon.png";
 
 <template>
   <section id="menu-section" class="py-20 scroll-mt-24">
-    <h1 class="text-4xl text-center md:text-5xl font-bold text-gray-900 mb-12">
+    <h1 class="text-4xl text-center md:text-5xl font-bold text-gray-900 mb-12 animate-word-reveal">
       What We Offer
     </h1>
 
-    <div class="px-6 max-w-6xl mx-auto flex items-center">
+    <div class="px-6 max-w-6xl mx-auto flex items-center animate-stagger-group">
       <div class="w-full grid gap-10 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-        <MenuCard
-          :src="SuppliersIcon"
-          alt="suppliers-menu-icon"
-          color="blue"
-          title="For Suppliers"
-          address="#suppliers-section"
-        >
-        </MenuCard>
+        <div class="animate-stagger">
+          <MenuCard
+            :src="SuppliersIcon"
+            alt="suppliers-menu-icon"
+            color="blue"
+            title="For Suppliers"
+            address="#suppliers-section"
+          >
+          </MenuCard>
+        </div>
 
-        <MenuCard
-          :src="BrandsIcon"
-          alt="brands-menu-icon"
-          color="cyan"
-          title="For Brands"
-          address="#brands-section"
-        >
-        </MenuCard>
+        <div class="animate-stagger">
+          <MenuCard
+            :src="BrandsIcon"
+            alt="brands-menu-icon"
+            color="cyan"
+            title="For Brands"
+            address="#brands-section"
+          >
+          </MenuCard>
+        </div>
 
-        <MenuCard
-          :src="PartnersIcon"
-          alt="partners-menu-icon"
-          color="emerald"
-          title="For Partners"
-          address="#partners-section"
-        >
-        </MenuCard>
+        <div class="animate-stagger">
+          <MenuCard
+            :src="PartnersIcon"
+            alt="partners-menu-icon"
+            color="emerald"
+            title="For Partners"
+            address="#partners-section"
+          >
+          </MenuCard>
+        </div>
       </div>
     </div>
   </section>
