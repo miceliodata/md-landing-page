@@ -149,7 +149,7 @@ const iconClass = (color: string) => {
       </div>
 
       <div
-        class="max-w-4xl mx-auto text-center p-6 mt-20 rounded-md bg-mid shadow-lg shadow-blue-950/20 animate-fade-up"
+        class="max-w-4xl mx-auto text-center p-6 mt-20 rounded-md animate-fade-up"
       >
         <h2 class="text-4xl md:text-3xl font-bold text-gray-100 mt-4 animate-word-reveal">
           Collaboration Models

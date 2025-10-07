@@ -28,5 +28,11 @@ export default function useScrollAnimations() {
     });
   };
 
-  return { setupStackedCards };
+  const initTextAnimations = () => {
+    // Placeholder function to prevent errors
+    // Text animations are handled via CSS classes
+    console.log('Text animations initialized');
+  };
+
+  return { setupStackedCards, initTextAnimations };
 }

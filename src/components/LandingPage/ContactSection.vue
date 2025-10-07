@@ -61,7 +61,7 @@ const submitForm = async (e: Event) => {
 </script>
 
 <template>
-  <section id="newsletter-section" class="py-16 px-6 text-center">
+  <section id="contact-section" class="py-16 px-6 text-center">
     <div class="max-w-xl mx-auto">
       <h2 class="text-3xl font-bold mb-4 text-gray-100 animate-word-reveal">Let's Connect</h2>
       <p class="text-gray-300 mb-8 animate-fade-up">

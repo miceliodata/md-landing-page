@@ -461,20 +461,21 @@ const animate = () => {
 // Handle scroll for Earth rotation and camera transitions
 const handleScroll = () => {
   const heroSection = document.getElementById('hero-section')
-  const aboutSection = document.getElementById('about-section')
-  const suppliersSection = document.getElementById('suppliers-section')
+  const infoSection = document.getElementById('info-section')
+  const proposalSection = document.getElementById('proposal-section')
 
-  if (!heroSection || !aboutSection || !suppliersSection || !camera) return
+  if (!heroSection || !infoSection || !proposalSection || !camera) return
 
   const heroHeight = heroSection.offsetHeight
-  const aboutHeight = aboutSection.offsetHeight
-  const suppliersHeight = suppliersSection.offsetHeight
+  const infoHeight = infoSection.offsetHeight
+  const proposalHeight = proposalSection.offsetHeight
 
-  // Start transition at 70% through About section
-  const transitionStartOffset = aboutHeight * 0.7
+  // Start transition at 85% through Info section (nearing the bottom)
+  const transitionStartOffset = infoHeight * 0.85
   const transitionStart = heroHeight + transitionStartOffset
-  const thirdSectionStart = heroHeight + aboutHeight
-  const transitionEnd = thirdSectionStart + (suppliersHeight * 0.5) // End halfway through suppliers
+  const thirdSectionStart = heroHeight + infoHeight
+  // End transition at start of proposal section (zoom out complete by section 3)
+  const transitionEnd = thirdSectionStart + (proposalHeight * 0.1) // End at 10% into proposal section
 
   const currentScroll = window.scrollY
 
@@ -491,7 +492,7 @@ const handleScroll = () => {
     const startZ = 100
 
     const targetX = -30 // Center-left
-    const targetY = 0   // Vertically centered at viewer height
+    const targetY = 50   // Raised to center Earth in middle of viewer height
     const targetZ = 200 // Zoomed out to show full Earth (80-85% of viewport height)
 
     camera.position.x = startX + (targetX - startX) * smoothProgress
@@ -504,7 +505,7 @@ const handleScroll = () => {
     const startLookZ = 0
 
     const targetLookX = 0
-    const targetLookY = 0  // Center Earth at viewer height
+    const targetLookY = 50  // Center Earth at viewer height
     const targetLookZ = 0
 
     camera.lookAt(
@@ -514,11 +515,11 @@ const handleScroll = () => {
     )
   } else if (currentScroll >= transitionEnd) {
     // After transition complete - maintain full Earth view and enable rotation
-    camera.position.set(-30, 0, 200)
-    camera.lookAt(0, 0, 0)
+    camera.position.set(-30, 50, 200)
+    camera.lookAt(0, 50, 0)
 
-    // Only start rotation after suppliers section
-    const fourthSectionStart = thirdSectionStart + suppliersHeight
+    // Only start rotation after proposal section
+    const fourthSectionStart = thirdSectionStart + proposalHeight
     if (currentScroll >= fourthSectionStart) {
       scrollY = currentScroll - fourthSectionStart
     }

@@ -25,12 +25,12 @@ const props = withDefaults(
 
 const cardClass = computed(() => {
   const base =
-    "p-6 pb-7 bg-mid rounded-md shadow-lg shadow-blue-950/20 h-full flex flex-col";
+    "p-6 pb-7 rounded-md h-full flex flex-col";
 
   if (props.hoverEffect === "lift") {
     return `${base} hover:-translate-y-1 transition duration-300`;
   } else if (props.hoverEffect === "highlight") {
-    return `${base} hover:shadow-xl hover:shadow-indigo-800/40 transition-all duration-300`;
+    return `${base} hover:shadow-xl hover:shadow-indigo-500/20 transition-all duration-300`;
   } else if (props.hoverEffect === "none") return base;
 });
 </script>

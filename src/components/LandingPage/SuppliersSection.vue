@@ -73,7 +73,7 @@ const tiers = [
 
 <template>
   <section
-    id="suppliers-section"
+    id="proposal-section"
     class="scroll-mt-[7rem] h-auto py-20 px-4 sm:px-6 lg:px-8 flex flex-col items-center"
   >
     <div class="max-w-7xl mx-auto">

@@ -5,7 +5,6 @@ import { onMounted, onBeforeUnmount } from "vue";
 import ThreeEarth from "@/components/animations/ThreeEarth.vue";
 import HeroSection from "@/components/LandingPage/HeroSection.vue";
 import AboutSection from "@/components/LandingPage/AboutSection.vue";
-import BrandsSection from "@/components/LandingPage/BrandsSection.vue";
 import PartnersSection from "@/components/LandingPage/PartnersSection.vue";
 import ContactSection from "@/components/LandingPage/ContactSection.vue";
 import SiteFooter from "@/components/LandingPage/SiteFooter.vue";
@@ -37,25 +36,33 @@ onMounted(() => {
   <!-- Back to Top Button -->
   <BackToTop />
 
-  <!-- Main Content -->
+  <!-- Main Content - 5 Sections + Footer -->
+  <!-- 1. Hero Section -->
   <div class="stacked-section">
     <HeroSection />
   </div>
+
+  <!-- 2. Info / Who We Are -->
   <div class="stacked-section">
     <AboutSection />
   </div>
+
+  <!-- 3. Proposal / Our Offering -->
   <div class="stacked-section">
     <SuppliersSection />
   </div>
-  <div class="stacked-section">
-    <BrandsSection />
-  </div>
+
+  <!-- 4. Partners -->
   <div class="stacked-section">
     <PartnersSection />
   </div>
+
+  <!-- 5. Contact -->
   <div class="stacked-section">
     <ContactSection />
   </div>
+
+  <!-- Footer -->
   <div>
     <SiteFooter />
   </div>

@@ -8,13 +8,10 @@ interface Section {
 }
 
 const sections = ref<Section[]>([
-  { id: 'hero-section', label: 'Home' },
-  { id: 'about-section', label: 'About Us' },
-  { id: 'menu-section', label: 'How It Works' },
-  { id: 'suppliers-section', label: 'Suppliers' },
-  { id: 'brands-section', label: 'Brands' },
+  { id: 'info-section', label: 'Who We Are' },
+  { id: 'proposal-section', label: 'Our Offering' },
   { id: 'partners-section', label: 'Partners' },
-  { id: 'newsletter-section', label: 'Contact' }
+  { id: 'contact-section', label: 'Contact' }
 ])
 
 const activeSection = ref('')
@@ -49,8 +46,13 @@ const updateActiveSection = () => {
 
   activeSection.value = currentSection
 
-  // Show/hide based on scroll position (hide on hero section)
-  isVisible.value = scrollPosition > window.innerHeight * 0.3
+  // Show when scrolling past hero section (when entering about section)
+  const heroSection = document.getElementById('hero-section')
+  if (heroSection) {
+    const heroHeight = heroSection.offsetHeight
+    // Show when we're 70% through the hero section
+    isVisible.value = window.scrollY > heroHeight * 0.7
+  }
 }
 
 let ticking = false
@@ -100,28 +102,36 @@ onUnmounted(() => {
         <button
           @click="scrollToSection(section.id)"
           :class="[
-            'w-3 h-3 rounded-full border-2 transition-all duration-200',
-            'hover:scale-110',
+            'w-3 h-3 rounded-full border-2 transition-all duration-300',
+            'hover:scale-150 hover:shadow-lg',
+            'relative',
             {
-              'bg-emerald-500 border-emerald-500 shadow-emerald-500/50 shadow-md': activeSection === section.id,
-              'bg-transparent border-gray-400 hover:border-emerald-400': activeSection !== section.id
+              'bg-emerald-500 border-emerald-500 shadow-emerald-500/50 shadow-md scale-125 animate-pulse': activeSection === section.id,
+              'bg-transparent border-slate-400 hover:border-emerald-400 hover:bg-emerald-400/20': activeSection !== section.id
             }
           ]"
           :title="section.label"
-        />
+        >
+          <!-- Ripple effect for active dot -->
+          <span
+            v-if="activeSection === section.id"
+            class="absolute inset-0 rounded-full border-2 border-emerald-500 animate-ping opacity-75"
+          ></span>
+        </button>
 
         <!-- Label (appears on hover) -->
         <span
           :class="[
-            'ml-4 px-3 py-1 bg-gray-900 text-white text-sm rounded-md whitespace-nowrap',
-            'transition-all duration-200 transform',
+            'ml-4 px-3 py-1.5 bg-gray-900/95 backdrop-blur-sm text-white text-sm rounded-lg whitespace-nowrap shadow-lg',
+            'transition-all duration-300 transform',
             'group-hover:opacity-100 group-hover:translate-x-0',
-            'opacity-0 -translate-x-2 pointer-events-none'
+            'opacity-0 -translate-x-2 pointer-events-none',
+            'relative'
           ]"
         >
           {{ section.label }}
           <!-- Arrow pointing to dot -->
-          <div class="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-1 w-0 h-0 border-t-4 border-b-4 border-r-4 border-transparent border-r-gray-900"></div>
+          <div class="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-1.5 w-0 h-0 border-t-[6px] border-b-[6px] border-r-[6px] border-transparent border-r-gray-900/95"></div>
         </span>
       </li>
     </ul>

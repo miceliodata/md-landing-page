@@ -48,7 +48,7 @@
           :key="index"
           class="flex"
         >
-          <div class="p-6 rounded-md shadow-lg bg-gray-50 flex flex-col flex-1 h-full items-center hover:-translate-y-1 hover:transition-all hover:duration-300">
+          <div class="p-6 rounded-md flex flex-col flex-1 h-full items-center hover:-translate-y-1 hover:transition-all hover:duration-300">
             <component :is="feature.icon" :class="`${feature.color} w-10 h-10 mb-4`" />
             <h2 class="text-xl font-semibold text-center mb-4">{{ feature.title }}</h2>
             <p class="font-light text-gray-800 text-center">{{ feature.description }}</p>

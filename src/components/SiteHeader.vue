@@ -4,6 +4,7 @@ import Navicon from "@/assets/navicon-black.svg";
 
 const isBarHidden = ref(false);
 const isMobileMenuOpen = ref(false);
+const headerOpacity = ref(1);
 
 const toggleMobileMenu = () => {
   isMobileMenuOpen.value = !isMobileMenuOpen.value;
@@ -17,11 +18,27 @@ const handleScroll = () => {
 
   if (!ticking) {
     window.requestAnimationFrame(() => {
-      if (currentScroll > lastScroll && currentScroll > 100) {
-        isBarHidden.value = true;
-      } else if (currentScroll < lastScroll - 10) {
+      // Calculate fade out for header (first 300px of scroll)
+      const fadeDistance = 300;
+      const opacity = Math.max(0, 1 - (currentScroll / fadeDistance));
+      headerOpacity.value = opacity;
+
+      // Only apply hide/show behavior after fade out is complete
+      if (currentScroll > fadeDistance) {
+        // Hide navbar when scrolling down (with 5px threshold)
+        if (currentScroll > lastScroll + 5) {
+          isBarHidden.value = true;
+        }
+        // Show navbar when scrolling up (with 5px threshold)
+        else if (currentScroll < lastScroll - 5) {
+          isBarHidden.value = false;
+          headerOpacity.value = 1; // Make it fully visible when scrolling up
+        }
+      } else {
+        // Within fade zone, always show (but let opacity fade)
         isBarHidden.value = false;
       }
+
       lastScroll = currentScroll;
       ticking = false;
     });
@@ -52,9 +69,10 @@ watch(isMobileMenuOpen, (isOpen) => {
       'w-[calc(100%-2rem)] sm:w-[calc(100%-4rem)] md:w-[90%] lg:w-[80%] xl:w-[70%]',
       {
         '-translate-y-20 opacity-0 pointer-events-none scale-95': isBarHidden,
-        'translate-y-0 opacity-100 scale-100': !isBarHidden,
+        'translate-y-0 scale-100': !isBarHidden,
       },
     ]"
+    :style="{ opacity: headerOpacity }"
   >
     <div
       class="flex items-center justify-between relative w-full"
@@ -74,18 +92,16 @@ watch(isMobileMenuOpen, (isOpen) => {
       <nav
         class="hidden xl:flex space-x-6 text-sm font-normal text-gray-700 absolute left-1/2 transform -translate-x-1/2"
       >
-        <a href="#about-section" class="hover:text-gray-900 transition-colors duration-150 py-2"
-          >About Us</a>
-        <a href="#suppliers-section" class="hover:text-gray-900 transition-colors duration-150 py-2"
-          >Suppliers</a>
-        <a href="#brands-section" class="hover:text-gray-900 transition-colors duration-150 py-2"
-          >Brands</a>
+        <a href="#info-section" class="hover:text-gray-900 transition-colors duration-150 py-2"
+          >Who We Are</a>
+        <a href="#proposal-section" class="hover:text-gray-900 transition-colors duration-150 py-2"
+          >Our Offering</a>
         <a href="#partners-section" class="hover:text-gray-900 transition-colors duration-150 py-2"
           >Partners</a>
       </nav>
 
       <a
-        href="#newsletter-section"
+        href="#contact-section"
         class="ml-4 hidden xl:inline-block bg-gray-900 hover:bg-gray-800 text-white px-3 py-1.5 rounded text-xs font-medium transition-colors duration-150"
       >
         Contact
@@ -148,20 +164,19 @@ watch(isMobileMenuOpen, (isOpen) => {
 
         <nav>
           <ul class="text-center space-y-4 text-lg font-medium">
-            <!-- <li><a @click="toggleMobileMenu" href="#hero-section">Home</a></li> -->
             <li>
-              <a @click="toggleMobileMenu" href="#about-section">About Us</a>
+              <a @click="toggleMobileMenu" href="#info-section">Who We Are</a>
             </li>
             <li>
-              <a @click="toggleMobileMenu" href="#suppliers-section"
-                >Suppliers</a
+              <a @click="toggleMobileMenu" href="#proposal-section"
+                >Our Offering</a
               >
             </li>
             <li>
-              <a @click="toggleMobileMenu" href="#brands-section">Brands</a>
+              <a @click="toggleMobileMenu" href="#partners-section">Partners</a>
             </li>
             <li>
-              <a @click="toggleMobileMenu" href="#partners-section">Partners</a>
+              <a @click="toggleMobileMenu" href="#contact-section">Contact</a>
             </li>
           </ul>
         </nav>
