@@ -11,8 +11,8 @@ import PartnersIcon from "@/assets/partners-menu-icon.png";
       What We Offer
     </h1>
 
-    <div class="px-6 max-w-6xl mx-auto flex items-center animate-stagger-group">
-      <div class="w-full grid gap-10 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+    <div class="px-6 max-w-5xl mx-auto flex items-center animate-stagger-group">
+      <div class="w-full grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
         <div class="animate-stagger">
           <MenuCard
             :src="SuppliersIcon"

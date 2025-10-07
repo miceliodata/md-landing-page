@@ -25,25 +25,25 @@ const props = withDefaults(
 
 const cardClass = computed(() => {
   const base =
-    "p-6 pb-7 rounded-md h-full flex flex-col";
+    "p-4 pb-5 rounded-md h-full flex flex-col";
 
   if (props.hoverEffect === "lift") {
     return `${base} hover:-translate-y-1 transition duration-300`;
   } else if (props.hoverEffect === "highlight") {
-    return `${base} hover:shadow-xl hover:shadow-indigo-500/20 transition-all duration-300`;
+    return `${base} transition-all duration-300`;
   } else if (props.hoverEffect === "none") return base;
 });
 </script>
 
 <template>
   <div :class="cardClass">
-    <div class="min-h-[150px] flex flex-col justify-center">
-      <div v-if="props.icon" class="flex justify-center mb-4">
-        <component :is="props.icon" :class="`w-12 h-12 ${props.color}`" />
+    <div class="min-h-[120px] flex flex-col justify-center">
+      <div v-if="props.icon" class="flex justify-center mb-3">
+        <component :is="props.icon" :class="`w-10 h-10 ${props.color}`" />
       </div>
       <h2
         v-if="props.product"
-        class="text-2xl text-center font-semibold text-gray-200"
+        class="text-xl text-center font-semibold text-gray-200"
       >
         {{ props.product }}
       </h2>
@@ -53,12 +53,12 @@ const cardClass = computed(() => {
       >
         {{ props.title }}
       </h3>
-      <h4 v-if="props.subtitle" class="text-center text-gray-200 mt-4 mb-6">
+      <h4 v-if="props.subtitle" class="text-center text-gray-200 mt-3 mb-4">
         {{ props.subtitle }}
       </h4>
     </div>
 
-    <div class="mt-4">
+    <div class="mt-3">
       <div
         v-if="props.description.length > 1"
         v-for="(desc, index) in props.description"

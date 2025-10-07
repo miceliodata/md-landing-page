@@ -131,14 +131,14 @@ const iconClass = (color: string) => {
         <li class="animate-stagger">Reliable and verified data ecosystem</li>
       </ul>
 
-      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 animate-stagger-group">
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 animate-stagger-group">
         <div
           v-for="(feature, index) in partnerFeatures"
           :key="index"
           class="h-full animate-stagger"
         >
           <MainCard
-            :hoverEffect="'highlight'"
+            :hoverEffect="'none'"
             :icon="feature.icon"
             :bullet="feature.bullet"
             :color="feature.color"

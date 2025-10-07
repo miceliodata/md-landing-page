@@ -103,10 +103,10 @@ const tiers = [
         </li>
       </ul>
 
-      <div class="grid gap-12 sm:grid-cols-2 lg:grid-cols-3 text-left animate-stagger-group">
+      <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 text-left animate-stagger-group">
         <div v-for="(tier, index) in tiers" :key="index" class="animate-stagger">
           <MainCard
-            :hoverEffect="'highlight'"
+            :hoverEffect="'none'"
             :product="tier.tier"
             :bullet="tier.bullet"
             :color="tier.color"

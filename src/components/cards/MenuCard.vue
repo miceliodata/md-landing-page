@@ -21,21 +21,21 @@ const iconBGColor = computed(() => getBGColorClass(props.color));
 </script>
 
 <template>
-  <div class="flex flex-col h-full rounded-md shadow-lg px-2 py-8 bg-gray-50">
-    <div class="flex justify-center pb-4 pt-8">
+  <div class="flex flex-col h-full rounded-md shadow-lg px-2 py-6 bg-gray-50">
+    <div class="flex justify-center pb-3 pt-4">
       <a
         :href="`${address}`"
-        :class="`${iconBGColor} w-24 h-24 text-black flex items-center justify-center font-bold rotate-45 mb-4 hover:transform hover:-translate-y-2 transition-all duration-300`"
+        :class="`${iconBGColor} w-20 h-20 text-black flex items-center justify-center font-bold rotate-45 mb-3 hover:transform hover:-translate-y-2 transition-all duration-300`"
       >
         <span class="-rotate-45">
           <!-- <component :is="icon" :class="`w-7 h-7 text-white`" /> -->
-          <img class="w-16 h-16 invert" :src="src" :alt="alt" />
+          <img class="w-14 h-14 invert" :src="src" :alt="alt" />
         </span>
       </a>
     </div>
 
-    <div class="flex-1 space-y-4">
-      <h3 class="text-center text-gray-800 text-2xl font-semibold">
+    <div class="flex-1 space-y-3">
+      <h3 class="text-center text-gray-800 text-xl font-semibold">
         {{ title }}
       </h3>
 
