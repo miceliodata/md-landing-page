@@ -21,25 +21,46 @@ let markers: THREE.Group;
 let dotParticles: THREE.Points;
 let borderPoints: THREE.Points;
 let animationId: number;
-let scrollY = 0;
-let targetRotation = 0;
 
-// Earth configuration per section
+// Animation state for smooth transitions
+let targetEarthPosition = { x: 0, y: 0, z: 0 };
+let targetEarthRotation = { x: 0, y: 0, z: 0 };
+let targetEarthScale = 100;
+let currentEarthPosition = { x: 0, y: 0, z: 0 };
+let currentEarthRotation = { x: 0, y: 0, z: 0 };
+let currentEarthScale = 100;
+
+// Animation smoothing factor (0-1, higher = faster, lower = more elegant/slower)
+const POSITION_SMOOTHING = 0.02;  // Reduced for slower, more elegant movement
+const ROTATION_SMOOTHING = 0.02;  // Slower rotation
+const SCALE_SMOOTHING = 0.02;     // Slower scaling
+
+// Earth configuration per section - ADJUST THESE VALUES TO CONTROL EARTH POSITION
 const earthConfig = {
   hero: {
-    position: { x: -100, y: -65, z: 0 },
+    position: { x: -100, y: -50, z: 0 },     // Earth position (x=left/right, y=up/down, z=forward/back)
+    rotation: { x: 0, y: 0, z: 0 },     // Earth rotation in radians (x=pitch, y=yaw, z=roll)
+    scale: 100,                          // Earth scale (100 = default size)
+  },
+  info: {
+    position: { x: -100, y: 50, z: 0 },
     rotation: { x: 0, y: 0, z: 0 },
     scale: 100,
   },
-  info: {
-    position: { x: -100, y: 0, z: 0 },
+  suppliers: {
+    position: { x: 0, y: 0, z: 0 },
     rotation: { x: 0, y: 0, z: 0 },
-    scale: 60,
+    scale: 40,
   },
-  proposal: {
-    position: { x: 50, y: 0, z: 0 },
+  partners: {
+    position: { x: 0, y: 0, z: 0 },
     rotation: { x: 0, y: 0, z: 0 },
-    scale: 60,
+    scale: 100,
+  },
+  contact: {
+    position: { x: 0, y: 0, z: 0 },
+    rotation: { x: 0, y: 0, z: 0 },
+    scale: 50,
   },
 };
 
@@ -140,9 +161,9 @@ const createCircleTexture = () => {
 const createEarth = () => {
   const textureLoader = new THREE.TextureLoader();
 
-  // Earth sphere - sized to show half in Hero section
+  // Earth sphere - base size at 100 scale
   const earthGeometry = new THREE.SphereGeometry(
-    earthConfig.hero.scale,
+    100,
     64,
     64
   );
@@ -175,21 +196,28 @@ const createEarth = () => {
   });
 
   earth = new THREE.Mesh(earthGeometry, earthMaterial);
-  // Position Earth center in bottom-right quadrant
+  // Initialize position, rotation, scale from hero config
+  currentEarthPosition = { ...earthConfig.hero.position };
+  currentEarthRotation = { ...earthConfig.hero.rotation };
+  currentEarthScale = earthConfig.hero.scale;
+  targetEarthPosition = { ...earthConfig.hero.position };
+  targetEarthRotation = { ...earthConfig.hero.rotation };
+  targetEarthScale = earthConfig.hero.scale;
+
   earth.position.set(
-    earthConfig.hero.position.x,
-    earthConfig.hero.position.y,
-    earthConfig.hero.position.z
+    currentEarthPosition.x,
+    currentEarthPosition.y,
+    currentEarthPosition.z
   );
-  // Rotate Earth to show Asia (rotate around Y-axis to shift longitude)
-  earth.rotation.x = earthConfig.hero.rotation.x;
-  earth.rotation.y = earthConfig.hero.rotation.y; // ~153 degrees - rotated more to the right
-  earth.rotation.z = earthConfig.hero.rotation.z; // Fix tilt
+  earth.rotation.x = currentEarthRotation.x;
+  earth.rotation.y = currentEarthRotation.y;
+  earth.rotation.z = currentEarthRotation.z;
+  earth.scale.set(currentEarthScale / 100, currentEarthScale / 100, currentEarthScale / 100);
   scene.add(earth);
 
   // Add point cloud border for depth effect
   const borderGeometry = new THREE.SphereGeometry(
-    earthConfig.hero.scale + 10,
+    100 + 10, // Base size at 100 scale
     60,
     60
   );
@@ -202,13 +230,14 @@ const createEarth = () => {
   });
   borderPoints = new THREE.Points(borderGeometry, pointMaterial);
   borderPoints.position.set(
-    earthConfig.hero.position.x,
-    earthConfig.hero.position.y,
-    earthConfig.hero.position.z
+    currentEarthPosition.x,
+    currentEarthPosition.y,
+    currentEarthPosition.z
   );
-  borderPoints.rotation.x = earthConfig.hero.rotation.x;
-  borderPoints.rotation.y = earthConfig.hero.rotation.y;
-  borderPoints.rotation.z = earthConfig.hero.rotation.z;
+  borderPoints.rotation.x = currentEarthRotation.x;
+  borderPoints.rotation.y = currentEarthRotation.y;
+  borderPoints.rotation.z = currentEarthRotation.z;
+  borderPoints.scale.set(currentEarthScale / 100, currentEarthScale / 100, currentEarthScale / 100);
   scene.add(borderPoints);
 
   // Create sprite-based glow (like 3d-earth style)
@@ -224,15 +253,16 @@ const createEarth = () => {
   });
 
   earthGlow = new THREE.Sprite(spriteMaterial);
+  const initialGlowScale = (currentEarthScale / 100) * 300; // 3x the Earth size
   earthGlow.scale.set(
-    earthConfig.hero.scale * 3,
-    earthConfig.hero.scale * 3,
+    initialGlowScale,
+    initialGlowScale,
     1
   );
   earthGlow.position.set(
-    earthConfig.hero.position.x,
-    earthConfig.hero.position.y,
-    earthConfig.hero.position.z
+    currentEarthPosition.x,
+    currentEarthPosition.y,
+    currentEarthPosition.z
   );
   scene.add(earthGlow);
 
@@ -248,7 +278,7 @@ const createEarth = () => {
 // Create atmospheric glow (3d-earth style)
 const createAtmosphere = () => {
   const atmosphereGeometry = new THREE.SphereGeometry(
-    earthConfig.hero.scale,
+    100, // Base size at 100 scale
     50,
     50
   );
@@ -292,13 +322,14 @@ const createAtmosphere = () => {
 
   atmosphere = new THREE.Mesh(atmosphereGeometry, atmosphereMaterial);
   atmosphere.position.set(
-    earthConfig.hero.position.x,
-    earthConfig.hero.position.y,
-    earthConfig.hero.position.z
+    currentEarthPosition.x,
+    currentEarthPosition.y,
+    currentEarthPosition.z
   );
-  atmosphere.rotation.x = earthConfig.hero.rotation.x;
-  atmosphere.rotation.y = earthConfig.hero.rotation.y; // Match Earth rotation
-  atmosphere.rotation.z = earthConfig.hero.rotation.z;
+  atmosphere.rotation.x = currentEarthRotation.x;
+  atmosphere.rotation.y = currentEarthRotation.y;
+  atmosphere.rotation.z = currentEarthRotation.z;
+  atmosphere.scale.set(currentEarthScale / 100, currentEarthScale / 100, currentEarthScale / 100);
   scene.add(atmosphere);
 };
 
@@ -333,37 +364,62 @@ const latLonToVector3 = (
 const createMarkers = () => {
   markers = new THREE.Group();
 
-  cities.forEach((city) => {
-    // White dot marker (using local coordinates)
-    const markerGeometry = new THREE.SphereGeometry(0.8, 16, 16);
-    const markerMaterial = new THREE.MeshBasicMaterial({
+  cities.forEach((city, index) => {
+    const markerGroup = new THREE.Group();
+
+    // Create flat disk marker (circle facing camera)
+    const diskGeometry = new THREE.CircleGeometry(1.2, 32);
+    const diskMaterial = new THREE.MeshBasicMaterial({
       color: 0xffffff,
       transparent: true,
-      opacity: 1.0,
+      opacity: 0.9,
+      side: THREE.DoubleSide,
     });
-    const marker = new THREE.Mesh(markerGeometry, markerMaterial);
+    const disk = new THREE.Mesh(diskGeometry, diskMaterial);
+
+    // Create pulsing ring around the disk
+    const ringGeometry = new THREE.RingGeometry(1.5, 1.8, 32);
+    const ringMaterial = new THREE.MeshBasicMaterial({
+      color: 0x00ffff,
+      transparent: true,
+      opacity: 0.6,
+      side: THREE.DoubleSide,
+    });
+    const ring = new THREE.Mesh(ringGeometry, ringMaterial);
+
+    // Store ring reference for pulse animation with unique phase
+    ring.userData.pulsePhase = index * 0.5; // Stagger the pulse animations
 
     const position = latLonToVector3(
       city.lat,
       city.lon,
-      earthConfig.hero.scale + 0.5,
+      100 + 0.5, // Base size at 100 scale
       true
     );
-    marker.position.copy(position);
 
-    markers.add(marker);
+    // Position disk and ring
+    disk.position.copy(position);
+    ring.position.copy(position);
 
-    // Create text label using CSS2DRenderer would be better, but using sprite for simplicity
+    // Make disk and ring face outward from Earth center (billboard effect)
+    const normal = position.clone().normalize();
+    disk.lookAt(normal.multiplyScalar(1000).add(position));
+    ring.lookAt(normal.multiplyScalar(1000).add(position));
+
+    markerGroup.add(disk);
+    markerGroup.add(ring);
+
+    // Create larger text label positioned to the right of the disk
     const canvas = document.createElement("canvas");
     const context = canvas.getContext("2d")!;
-    canvas.width = 256;
-    canvas.height = 64;
+    canvas.width = 512;
+    canvas.height = 128;
 
     context.fillStyle = "rgba(255, 255, 255, 1)";
-    context.font = "bold 32px Arial";
+    context.font = "bold 48px Arial";
     context.textAlign = "left";
     context.textBaseline = "middle";
-    context.fillText(city.name, 10, 32);
+    context.fillText(city.name, 10, 64);
 
     const texture = new THREE.CanvasTexture(canvas);
     const spriteMaterial = new THREE.SpriteMaterial({
@@ -372,28 +428,31 @@ const createMarkers = () => {
     });
     const sprite = new THREE.Sprite(spriteMaterial);
 
-    // Position label next to the marker
-    const labelPos = latLonToVector3(
-      city.lat,
-      city.lon,
-      earthConfig.hero.scale + 5,
-      true
+    // Position label to the right of the disk
+    const labelOffset = new THREE.Vector3(1, 0, 0).applyAxisAngle(
+      new THREE.Vector3(0, 0, 1),
+      Math.atan2(position.y, position.x)
     );
+    const labelPos = position.clone().add(labelOffset.multiplyScalar(8));
     sprite.position.copy(labelPos);
-    sprite.scale.set(10, 2.5, 1);
 
-    markers.add(sprite);
+    // Scale label based on distance from Earth center (will auto-scale with Earth)
+    sprite.scale.set(15, 3.75, 1);
+
+    markerGroup.add(sprite);
+    markers.add(markerGroup);
   });
 
   // Position and rotate markers group to match Earth
   markers.position.set(
-    earthConfig.hero.position.x,
-    earthConfig.hero.position.y,
-    earthConfig.hero.position.z
+    currentEarthPosition.x,
+    currentEarthPosition.y,
+    currentEarthPosition.z
   );
-  markers.rotation.x = earthConfig.hero.rotation.x;
-  markers.rotation.y = earthConfig.hero.rotation.y;
-  markers.rotation.z = earthConfig.hero.rotation.z;
+  markers.rotation.x = currentEarthRotation.x;
+  markers.rotation.y = currentEarthRotation.y;
+  markers.rotation.z = currentEarthRotation.z;
+  markers.scale.set(currentEarthScale / 100, currentEarthScale / 100, currentEarthScale / 100);
   scene.add(markers);
 };
 
@@ -404,7 +463,7 @@ const createDotParticles = () => {
   const dotCount = 1500;
 
   for (let i = 0; i < dotCount; i++) {
-    const radius = earthConfig.hero.scale + 6 + Math.random() * 12; // Around the Earth
+    const radius = 100 + 6 + Math.random() * 12; // Base size at 100 scale
     const theta = Math.random() * Math.PI * 2;
     const phi = Math.random() * Math.PI;
 
@@ -435,57 +494,103 @@ const createDotParticles = () => {
 
   // Position and rotate dots to match Earth
   dotParticles.position.set(
-    earthConfig.hero.position.x,
-    earthConfig.hero.position.y,
-    earthConfig.hero.position.z
+    currentEarthPosition.x,
+    currentEarthPosition.y,
+    currentEarthPosition.z
   );
-  dotParticles.rotation.x = earthConfig.hero.rotation.x;
-  dotParticles.rotation.y = earthConfig.hero.rotation.y;
-  dotParticles.rotation.z = earthConfig.hero.rotation.z;
+  dotParticles.rotation.x = currentEarthRotation.x;
+  dotParticles.rotation.y = currentEarthRotation.y;
+  dotParticles.rotation.z = currentEarthRotation.z;
+  dotParticles.scale.set(currentEarthScale / 100, currentEarthScale / 100, currentEarthScale / 100);
 
   scene.add(dotParticles);
 };
 
 // Flight lines removed - now just showing city markers
 
+// Update Earth position/rotation/scale with smooth interpolation
+const updateEarthTransform = () => {
+  if (!earth) return;
+
+  // Smoothly interpolate position
+  currentEarthPosition.x += (targetEarthPosition.x - currentEarthPosition.x) * POSITION_SMOOTHING;
+  currentEarthPosition.y += (targetEarthPosition.y - currentEarthPosition.y) * POSITION_SMOOTHING;
+  currentEarthPosition.z += (targetEarthPosition.z - currentEarthPosition.z) * POSITION_SMOOTHING;
+
+  // Smoothly interpolate rotation
+  currentEarthRotation.x += (targetEarthRotation.x - currentEarthRotation.x) * ROTATION_SMOOTHING;
+  currentEarthRotation.y += (targetEarthRotation.y - currentEarthRotation.y) * ROTATION_SMOOTHING;
+  currentEarthRotation.z += (targetEarthRotation.z - currentEarthRotation.z) * ROTATION_SMOOTHING;
+
+  // Smoothly interpolate scale
+  currentEarthScale += (targetEarthScale - currentEarthScale) * SCALE_SMOOTHING;
+
+  // Apply transforms to Earth
+  earth.position.set(currentEarthPosition.x, currentEarthPosition.y, currentEarthPosition.z);
+  earth.rotation.x = currentEarthRotation.x;
+  earth.rotation.y = currentEarthRotation.y;
+  earth.rotation.z = currentEarthRotation.z;
+  earth.scale.set(currentEarthScale / 100, currentEarthScale / 100, currentEarthScale / 100);
+
+  // Sync all other elements with Earth
+  if (borderPoints) {
+    borderPoints.position.copy(earth.position);
+    borderPoints.rotation.copy(earth.rotation);
+    borderPoints.scale.copy(earth.scale);
+  }
+  if (atmosphere) {
+    atmosphere.position.copy(earth.position);
+    atmosphere.rotation.copy(earth.rotation);
+    atmosphere.scale.copy(earth.scale);
+  }
+  if (earthGlow) {
+    earthGlow.position.copy(earth.position);
+    const glowScale = (currentEarthScale / 100) * 300; // Scale proportionally (3x the Earth size)
+    earthGlow.scale.set(glowScale, glowScale, 1);
+  }
+  if (markers) {
+    markers.position.copy(earth.position);
+    markers.rotation.copy(earth.rotation);
+    markers.scale.copy(earth.scale);
+  }
+  if (dotParticles) {
+    dotParticles.position.copy(earth.position);
+    dotParticles.rotation.copy(earth.rotation);
+    dotParticles.scale.copy(earth.scale);
+  }
+};
+
 // Animation loop
 const animate = () => {
   animationId = requestAnimationFrame(animate);
 
-  // Rotate earth based on scroll
-  if (earth) {
-    targetRotation = scrollY * 0.001;
-    earth.rotation.y += (targetRotation - earth.rotation.y) * 0.05;
-
-    // Sync all elements with earth rotation
-    if (borderPoints) {
-      borderPoints.rotation.y = earth.rotation.y;
-    }
-    if (atmosphere) {
-      atmosphere.rotation.y = earth.rotation.y;
-    }
-    if (markers) {
-      markers.rotation.y = earth.rotation.y;
-    }
-  }
+  // Update Earth transform smoothly
+  updateEarthTransform();
 
   // Rotate stars slowly
   if (stars) {
     stars.rotation.y += 0.0001;
   }
 
-  // Rotate dot particles
-  if (dotParticles) {
-    dotParticles.rotation.y += 0.0005;
-  }
-
-  // Animate markers - subtle pulse effect
+  // Animate marker rings - slow pulse effect
   if (markers) {
-    markers.children.forEach((child, index) => {
-      if (child instanceof THREE.Mesh) {
-        // Gentle pulse effect for white dots
-        const scale = 1 + Math.sin(Date.now() * 0.002 + index) * 0.15;
-        child.scale.set(scale, scale, scale);
+    markers.children.forEach((markerGroup) => {
+      if (markerGroup instanceof THREE.Group) {
+        markerGroup.children.forEach((child) => {
+          // Find the ring mesh and animate it
+          if (child instanceof THREE.Mesh && child.geometry instanceof THREE.RingGeometry) {
+            const time = Date.now() * 0.0005; // Slower animation
+            const phase = child.userData.pulsePhase || 0;
+
+            // Slow pulse for scale
+            const pulseScale = 1 + Math.sin(time + phase) * 0.2;
+            child.scale.set(pulseScale, pulseScale, 1);
+
+            // Slow pulse for opacity
+            const pulseMaterial = child.material as THREE.MeshBasicMaterial;
+            pulseMaterial.opacity = 0.4 + Math.sin(time + phase) * 0.3;
+          }
+        });
       }
     });
   }
@@ -494,76 +599,86 @@ const animate = () => {
   renderer.render(scene, camera);
 };
 
-// Handle scroll for Earth rotation and camera transitions
+// Set target Earth config for a section
+const setEarthSection = (sectionName: keyof typeof earthConfig) => {
+  const config = earthConfig[sectionName];
+  targetEarthPosition = { ...config.position };
+  targetEarthRotation = { ...config.rotation };
+  targetEarthScale = config.scale;
+};
+
+// Handle scroll for section detection and Earth transitions with smooth interpolation
 const handleScroll = () => {
-  const heroSection = document.getElementById("hero-section");
-  const infoSection = document.getElementById("info-section");
-  const proposalSection = document.getElementById("proposal-section");
+  const sections = [
+    { id: "hero-section", config: "hero" as const },
+    { id: "info-section", config: "info" as const },
+    { id: "suppliers-section", config: "suppliers" as const },
+    { id: "partners-section", config: "partners" as const },
+    { id: "contact-section", config: "contact" as const },
+  ];
 
-  if (!heroSection || !infoSection || !proposalSection || !camera) return;
+  const viewportCenter = window.scrollY + window.innerHeight * 0.8; // 80% down viewport
 
-  const heroHeight = heroSection.offsetHeight;
-  const infoHeight = infoSection.offsetHeight;
-  const proposalHeight = proposalSection.offsetHeight;
+  // Find current and next sections based on scroll position
+  let currentSectionIndex = 0;
+  let nextSectionIndex = 0;
+  let transitionProgress = 0;
 
-  // Start transition at 85% through Info section (nearing the bottom)
-  const transitionStartOffset = infoHeight * 0.85;
-  const transitionStart = heroHeight + transitionStartOffset;
-  const thirdSectionStart = heroHeight + infoHeight;
-  // End transition at start of proposal section (zoom out complete by section 3)
-  const transitionEnd = thirdSectionStart + proposalHeight * 0.1; // End at 10% into proposal section
+  for (let i = 0; i < sections.length; i++) {
+    const element = document.getElementById(sections[i].id);
+    if (!element) continue;
 
-  const currentScroll = window.scrollY;
+    const rect = element.getBoundingClientRect();
+    const elementTop = rect.top + window.scrollY;
+    const elementBottom = elementTop + rect.height;
 
-  // Calculate scroll progress for transition
-  if (currentScroll >= transitionStart && currentScroll < transitionEnd) {
-    // Transitioning to full Earth view
-    const progress =
-      (currentScroll - transitionStart) / (transitionEnd - transitionStart);
-    const smoothProgress = Math.min(progress, 1);
+    // Extended transition zone - starts at 60% through section and extends into next section
+    const transitionStart = elementTop + rect.height * 0.6; // Start transition at 60% through section
+    const transitionZoneLength = rect.height * 0.8; // Longer transition zone (80% of section height)
+    const transitionEnd = transitionStart + transitionZoneLength;
 
-    // Original position: (50, -80, 100)
-    // Target position: center-left with full view
-    const startX = 50;
-    const startY = -80;
-    const startZ = 100;
+    if (viewportCenter >= elementTop && viewportCenter < elementBottom) {
+      currentSectionIndex = i;
 
-    const targetX = -30; // Center-left
-    const targetY = 50; // Raised to center Earth in middle of viewer height
-    const targetZ = 200; // Zoomed out to show full Earth (80-85% of viewport height)
-
-    camera.position.x = startX + (targetX - startX) * smoothProgress;
-    camera.position.y = startY + (targetY - startY) * smoothProgress;
-    camera.position.z = startZ + (targetZ - startZ) * smoothProgress;
-
-    // Adjust lookAt target to center Earth vertically
-    const startLookX = 50;
-    const startLookY = 30;
-    const startLookZ = 0;
-
-    const targetLookX = 0;
-    const targetLookY = 50; // Center Earth at viewer height
-    const targetLookZ = 0;
-
-    camera.lookAt(
-      startLookX + (targetLookX - startLookX) * smoothProgress,
-      startLookY + (targetLookY - startLookY) * smoothProgress,
-      startLookZ + (targetLookZ - startLookZ) * smoothProgress
-    );
-  } else if (currentScroll >= transitionEnd) {
-    // After transition complete - maintain full Earth view and enable rotation
-    camera.position.set(-30, 50, 200);
-    camera.lookAt(0, 50, 0);
-
-    // Only start rotation after proposal section
-    const fourthSectionStart = thirdSectionStart + proposalHeight;
-    if (currentScroll >= fourthSectionStart) {
-      scrollY = currentScroll - fourthSectionStart;
+      // Calculate transition progress if we're in the transition zone
+      if (viewportCenter >= transitionStart && i < sections.length - 1) {
+        transitionProgress = (viewportCenter - transitionStart) / transitionZoneLength;
+        transitionProgress = Math.max(0, Math.min(1, transitionProgress)); // Clamp between 0 and 1
+        nextSectionIndex = i + 1;
+      }
+      break;
+    } else if (i < sections.length - 1 && viewportCenter >= elementBottom && viewportCenter < transitionEnd) {
+      // We're past the section but still in transition zone
+      currentSectionIndex = i;
+      nextSectionIndex = i + 1;
+      transitionProgress = (viewportCenter - transitionStart) / transitionZoneLength;
+      transitionProgress = Math.max(0, Math.min(1, transitionProgress));
+      break;
     }
+  }
+
+  // Interpolate between current and next section configurations
+  if (transitionProgress > 0 && nextSectionIndex < sections.length) {
+    const currentConfig = earthConfig[sections[currentSectionIndex].config];
+    const nextConfig = earthConfig[sections[nextSectionIndex].config];
+
+    // Ultra-smooth interpolation using cubic ease-in-out for elegant space travel feel
+    const eased = transitionProgress < 0.5
+      ? 4 * transitionProgress * transitionProgress * transitionProgress
+      : 1 - Math.pow(-2 * transitionProgress + 2, 3) / 2;
+
+    targetEarthPosition.x = currentConfig.position.x + (nextConfig.position.x - currentConfig.position.x) * eased;
+    targetEarthPosition.y = currentConfig.position.y + (nextConfig.position.y - currentConfig.position.y) * eased;
+    targetEarthPosition.z = currentConfig.position.z + (nextConfig.position.z - currentConfig.position.z) * eased;
+
+    targetEarthRotation.x = currentConfig.rotation.x + (nextConfig.rotation.x - currentConfig.rotation.x) * eased;
+    targetEarthRotation.y = currentConfig.rotation.y + (nextConfig.rotation.y - currentConfig.rotation.y) * eased;
+    targetEarthRotation.z = currentConfig.rotation.z + (nextConfig.rotation.z - currentConfig.rotation.z) * eased;
+
+    targetEarthScale = currentConfig.scale + (nextConfig.scale - currentConfig.scale) * eased;
   } else {
-    // Before transition - original view
-    camera.position.set(50, -80, 100);
-    camera.lookAt(50, 30, 0);
+    // No transition, just set to current section
+    setEarthSection(sections[currentSectionIndex].config);
   }
 };
 
