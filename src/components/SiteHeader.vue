@@ -18,25 +18,26 @@ const handleScroll = () => {
 
   if (!ticking) {
     window.requestAnimationFrame(() => {
-      // Calculate fade out for header (first 300px of scroll)
       const fadeDistance = 300;
-      const opacity = Math.max(0, 1 - (currentScroll / fadeDistance));
-      headerOpacity.value = opacity;
 
-      // Only apply hide/show behavior after fade out is complete
-      if (currentScroll > fadeDistance) {
-        // Hide navbar when scrolling down (with 5px threshold)
+      // Within the initial fade zone (0-300px)
+      if (currentScroll <= fadeDistance) {
+        // Fade out naturally as user scrolls down
+        headerOpacity.value = Math.max(0, 1 - (currentScroll / fadeDistance));
+        isBarHidden.value = false;
+      }
+      // After fade zone
+      else {
+        // Scrolling down - hide navbar
         if (currentScroll > lastScroll + 5) {
           isBarHidden.value = true;
+          headerOpacity.value = 0;
         }
-        // Show navbar when scrolling up (with 5px threshold)
+        // Scrolling up - show navbar with full opacity
         else if (currentScroll < lastScroll - 5) {
           isBarHidden.value = false;
-          headerOpacity.value = 1; // Make it fully visible when scrolling up
+          headerOpacity.value = 1;
         }
-      } else {
-        // Within fade zone, always show (but let opacity fade)
-        isBarHidden.value = false;
       }
 
       lastScroll = currentScroll;

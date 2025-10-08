@@ -30,6 +30,7 @@ let targetEarthScale = 100;
 let currentEarthPosition = { x: 0, y: 0, z: 0 };
 let currentEarthRotation = { x: 0, y: 0, z: 0 };
 let currentEarthScale = 100;
+let continuousRotationY = 0; // Track continuous rotation separately
 
 // Animation smoothing factor (0-1, higher = faster, lower = more elegant/slower)
 const POSITION_SMOOTHING = 0.02;  // Reduced for slower, more elegant movement
@@ -611,13 +612,16 @@ const updateEarthTransform = () => {
   currentEarthRotation.y += (targetEarthRotation.y - currentEarthRotation.y) * ROTATION_SMOOTHING;
   currentEarthRotation.z += (targetEarthRotation.z - currentEarthRotation.z) * ROTATION_SMOOTHING;
 
+  // Add very subtle continuous rotation to Y axis (almost imperceptible)
+  continuousRotationY += 0.0001; // Extremely slow rotation
+
   // Smoothly interpolate scale
   currentEarthScale += (targetEarthScale - currentEarthScale) * SCALE_SMOOTHING;
 
-  // Apply transforms to Earth
+  // Apply transforms to Earth (add continuous rotation to current rotation)
   earth.position.set(currentEarthPosition.x, currentEarthPosition.y, currentEarthPosition.z);
   earth.rotation.x = currentEarthRotation.x;
-  earth.rotation.y = currentEarthRotation.y;
+  earth.rotation.y = currentEarthRotation.y + continuousRotationY; // Add continuous rotation
   earth.rotation.z = currentEarthRotation.z;
   earth.scale.set(currentEarthScale / 100, currentEarthScale / 100, currentEarthScale / 100);
 

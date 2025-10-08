@@ -8,11 +8,9 @@ interface Section {
 }
 
 const sections = ref<Section[]>([
-  { id: 'hero-section', label: 'Top' },
+  { id: 'hero-section', label: 'Hero' },
   { id: 'info-section', label: 'About Us' },
-  { id: 'menu-section', label: 'What We Offer' },
   { id: 'suppliers-section', label: 'Data Collection' },
-  { id: 'brands-section', label: 'For Brands' },
   { id: 'partners-section', label: 'Partners' },
   { id: 'contact-section', label: 'Contact' }
 ])
@@ -31,45 +29,54 @@ const scrollToSection = (sectionId: string) => {
 }
 
 const updateActiveSection = () => {
-  // Use middle of viewport as reference point for more accurate detection
-  const scrollPosition = window.scrollY + window.innerHeight / 2
-  let currentSection = ''
-  let closestSection = ''
-  let closestDistance = Infinity
+  // Use top of viewport + small offset as reference point
+  const scrollPosition = window.scrollY + 100 // Small offset from top
+  let currentSection = sections.value[0]?.id || '' // Default to first section
 
-  // Find which section the middle of viewport is currently in
-  for (const section of sections.value) {
+  // Find which section we're currently in (from bottom to top to handle overlaps)
+  for (let i = sections.value.length - 1; i >= 0; i--) {
+    const section = sections.value[i]
     const element = document.getElementById(section.id)
     if (element) {
       const elementTop = element.offsetTop
       const elementBottom = elementTop + element.offsetHeight
-      const elementMiddle = elementTop + element.offsetHeight / 2
 
-      // Check if scroll position is within this section
+      // If we've scrolled past this section's start and haven't passed its end, it's active
       if (scrollPosition >= elementTop && scrollPosition < elementBottom) {
         currentSection = section.id
         break
       }
-
-      // Track closest section in case we're between sections
-      const distance = Math.abs(scrollPosition - elementMiddle)
-      if (distance < closestDistance) {
-        closestDistance = distance
-        closestSection = section.id
-      }
     }
   }
 
-  // Use closest section if we didn't find an exact match
-  activeSection.value = currentSection || closestSection
+  // If no section matched, default to the last one if we're past it
+  if (!currentSection) {
+    const lastSection = sections.value[sections.value.length - 1]
+    const lastElement = document.getElementById(lastSection.id)
+    if (lastElement && scrollPosition >= lastElement.offsetTop) {
+      currentSection = lastSection.id
+    }
+  }
 
-  // Show navigation only when fully past hero section (at About Us or below)
+  activeSection.value = currentSection
+
+  // Show navigation when reaching middle of About Us section, hide only when back in Hero
   const heroSection = document.getElementById('hero-section')
   const infoSection = document.getElementById('info-section')
+
   if (heroSection && infoSection) {
     const heroEnd = heroSection.offsetTop + heroSection.offsetHeight
-    // Show only when we've reached the About Us section
-    isVisible.value = window.scrollY >= heroEnd
+    const infoMiddle = infoSection.offsetTop + (infoSection.offsetHeight / 2)
+
+    // Show when scroll reaches middle of About Us section
+    if (window.scrollY >= infoMiddle) {
+      isVisible.value = true
+    }
+    // Hide only when scrolling back up into Hero section
+    else if (window.scrollY < heroEnd) {
+      isVisible.value = false
+    }
+    // Otherwise keep current state (stays visible when between hero end and info middle)
   }
 }
 
@@ -119,22 +126,9 @@ onUnmounted(() => {
         <!-- Indicator dot -->
         <button
           @click="scrollToSection(section.id)"
-          :class="[
-            'w-3 h-3 rounded-full border-2 transition-all duration-300',
-            'hover:scale-150 hover:shadow-lg',
-            'relative',
-            {
-              'bg-emerald-500 border-emerald-500 shadow-emerald-500/50 shadow-md scale-125 animate-pulse': activeSection === section.id,
-              'bg-transparent border-slate-400 hover:border-emerald-400 hover:bg-emerald-400/20': activeSection !== section.id
-            }
-          ]"
+          class="w-3 h-3 rounded-full border-2 transition-all duration-300 bg-transparent border-slate-400 hover:border-emerald-400 hover:bg-emerald-400/20 hover:scale-150 hover:shadow-lg"
           :title="section.label"
         >
-          <!-- Ripple effect for active dot -->
-          <span
-            v-if="activeSection === section.id"
-            class="absolute inset-0 rounded-full border-2 border-emerald-500 animate-ping opacity-75"
-          ></span>
         </button>
 
         <!-- Label (appears on hover) -->
