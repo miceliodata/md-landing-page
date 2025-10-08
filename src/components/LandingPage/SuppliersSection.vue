@@ -52,11 +52,15 @@ const tiers = [
   },
 ];
 
-// Scroll-based opacity controls
+// Scroll-based opacity and position controls
 const introOpacity = ref(1);
+const introTranslateX = ref(0);
 const card1Opacity = ref(0);
+const card1TranslateX = ref(0);
 const card2Opacity = ref(0);
+const card2TranslateX = ref(0);
 const card3Opacity = ref(0);
+const card3TranslateX = ref(0);
 
 // Track scroll position within this section
 const handleScroll = () => {
@@ -74,50 +78,77 @@ const handleScroll = () => {
   const scrollRange = sectionHeight + viewportHeight;
   const progress = Math.max(0, Math.min(1, -scrollStart / scrollRange));
 
-  // Intro fades out in first 12% of section scroll
-  if (progress < 0.12) {
-    introOpacity.value = 1 - (progress / 0.12);
+  // Intro: appears immediately, stays until 30%, then fades out by 35%
+  if (progress < 0.30) {
+    introOpacity.value = 1; // Fully visible
+    introTranslateX.value = 0; // Centered
+  } else if (progress >= 0.30 && progress < 0.35) {
+    const fadeProgress = (progress - 0.30) / 0.05;
+    introOpacity.value = 1 - fadeProgress; // Quick fade out
+    introTranslateX.value = fadeProgress * 50; // Subtle left-to-right motion
   } else {
     introOpacity.value = 0;
+    introTranslateX.value = 50;
   }
 
-  // Card 1: fades in from 18% to 25%, stays visible until 32%, fades out by 38%
-  if (progress < 0.18) {
+  // Card 1: fades in from 33% to 38%, stays visible until 52%, fades out by 58%
+  if (progress < 0.33) {
     card1Opacity.value = 0;
-  } else if (progress >= 0.18 && progress < 0.25) {
-    card1Opacity.value = (progress - 0.18) / 0.07; // Fade in
-  } else if (progress >= 0.25 && progress < 0.32) {
-    card1Opacity.value = 1; // Fully visible
-  } else if (progress >= 0.32 && progress < 0.38) {
-    card1Opacity.value = 1 - ((progress - 0.32) / 0.06); // Fade out
+    card1TranslateX.value = -30; // Start off-screen left
+  } else if (progress >= 0.33 && progress < 0.38) {
+    const fadeProgress = (progress - 0.33) / 0.05;
+    card1Opacity.value = fadeProgress; // Fade in
+    card1TranslateX.value = -30 + (fadeProgress * 30); // Slide in from left
+  } else if (progress >= 0.38 && progress < 0.52) {
+    card1Opacity.value = 1; // Fully visible longer
+    card1TranslateX.value = 0; // Centered
+  } else if (progress >= 0.52 && progress < 0.58) {
+    const fadeProgress = (progress - 0.52) / 0.06;
+    card1Opacity.value = 1 - fadeProgress; // Fade out
+    card1TranslateX.value = fadeProgress * 50; // Slide right while fading
   } else {
     card1Opacity.value = 0;
+    card1TranslateX.value = 50;
   }
 
-  // Card 2: fades in from 44% to 51%, stays visible until 58%, fades out by 64%
-  if (progress < 0.44) {
+  // Card 2: fades in from 56% to 61%, stays visible until 74%, fades out by 80%
+  if (progress < 0.56) {
     card2Opacity.value = 0;
-  } else if (progress >= 0.44 && progress < 0.51) {
-    card2Opacity.value = (progress - 0.44) / 0.07; // Fade in
-  } else if (progress >= 0.51 && progress < 0.58) {
-    card2Opacity.value = 1; // Fully visible
-  } else if (progress >= 0.58 && progress < 0.64) {
-    card2Opacity.value = 1 - ((progress - 0.58) / 0.06); // Fade out
+    card2TranslateX.value = -30;
+  } else if (progress >= 0.56 && progress < 0.61) {
+    const fadeProgress = (progress - 0.56) / 0.05;
+    card2Opacity.value = fadeProgress;
+    card2TranslateX.value = -30 + (fadeProgress * 30);
+  } else if (progress >= 0.61 && progress < 0.74) {
+    card2Opacity.value = 1; // Fully visible longer
+    card2TranslateX.value = 0;
+  } else if (progress >= 0.74 && progress < 0.80) {
+    const fadeProgress = (progress - 0.74) / 0.06;
+    card2Opacity.value = 1 - fadeProgress;
+    card2TranslateX.value = fadeProgress * 50;
   } else {
     card2Opacity.value = 0;
+    card2TranslateX.value = 50;
   }
 
-  // Card 3: fades in from 70% to 77%, stays visible until 84%, fades out by 90%
-  if (progress < 0.70) {
+  // Card 3: fades in from 78% to 83%, stays visible until end (96%), fades out by 100%
+  if (progress < 0.78) {
     card3Opacity.value = 0;
-  } else if (progress >= 0.70 && progress < 0.77) {
-    card3Opacity.value = (progress - 0.70) / 0.07; // Fade in
-  } else if (progress >= 0.77 && progress < 0.84) {
-    card3Opacity.value = 1; // Fully visible
-  } else if (progress >= 0.84 && progress < 0.90) {
-    card3Opacity.value = 1 - ((progress - 0.84) / 0.06); // Fade out
+    card3TranslateX.value = -30;
+  } else if (progress >= 0.78 && progress < 0.83) {
+    const fadeProgress = (progress - 0.78) / 0.05;
+    card3Opacity.value = fadeProgress;
+    card3TranslateX.value = -30 + (fadeProgress * 30);
+  } else if (progress >= 0.83 && progress < 0.96) {
+    card3Opacity.value = 1; // Fully visible longer
+    card3TranslateX.value = 0;
+  } else if (progress >= 0.96 && progress <= 1.0) {
+    const fadeProgress = (progress - 0.96) / 0.04;
+    card3Opacity.value = 1 - fadeProgress;
+    card3TranslateX.value = fadeProgress * 50;
   } else {
     card3Opacity.value = 0;
+    card3TranslateX.value = 50;
   }
 };
 
@@ -135,7 +166,7 @@ onUnmounted(() => {
   <section
     id="suppliers-section"
     class="scroll-mt-[7rem] relative"
-    style="min-height: 400vh;"
+    style="min-height: 500vh;"
   >
     <!-- Fixed container that stays in viewport -->
     <div class="sticky top-0 h-screen flex items-center justify-start px-8 md:px-16 lg:px-20">
@@ -143,25 +174,37 @@ onUnmounted(() => {
       <div class="w-full md:w-1/2 relative">
         <!-- Intro text (fades out first) -->
         <div
-          class="absolute inset-0 flex flex-col justify-center transition-opacity duration-500"
-          :style="{ opacity: introOpacity, pointerEvents: introOpacity > 0 ? 'auto' : 'none' }"
+          class="absolute inset-0 flex flex-col justify-center items-center"
+          :style="{
+            opacity: introOpacity,
+            transform: `translateX(${introTranslateX}px)`,
+            transition: 'opacity 0.3s ease-out, transform 0.3s ease-out',
+            pointerEvents: introOpacity > 0 ? 'auto' : 'none'
+          }"
         >
-          <h2 class="text-4xl md:text-5xl font-bold text-gray-100 mb-6">
-            Data Collection for Every Scale
-          </h2>
-          <p class="text-lg text-gray-300 max-w-xl leading-relaxed">
-            Whether you're a large manufacturer or a small artisan, we have the
-            right solution for your data collection needs. Integrate sustainability
-            data with systems tailored to your operational capacity, generate
-            Digital Product Passports, and ensure compliance with evolving EU
-            regulations while connecting with EU brands seeking DPP compliance.
-          </p>
+          <div class="max-w-xl">
+            <h2 class="text-4xl md:text-5xl font-bold text-gray-100 mb-6">
+              Data Collection for Every Scale
+            </h2>
+            <p class="text-lg text-gray-300 leading-relaxed">
+              Whether you're a large manufacturer or a small artisan, we have the
+              right solution for your data collection needs. Integrate sustainability
+              data with systems tailored to your operational capacity, generate
+              Digital Product Passports, and ensure compliance with evolving EU
+              regulations while connecting with EU brands seeking DPP compliance.
+            </p>
+          </div>
         </div>
 
         <!-- Card 1 - Tier 1 -->
         <div
-          class="absolute inset-0 flex items-center transition-opacity duration-500"
-          :style="{ opacity: card1Opacity, pointerEvents: card1Opacity > 0 ? 'auto' : 'none' }"
+          class="absolute inset-0 flex items-center"
+          :style="{
+            opacity: card1Opacity,
+            transform: `translateX(${card1TranslateX}px)`,
+            transition: 'opacity 0.3s ease-out, transform 0.3s ease-out',
+            pointerEvents: card1Opacity > 0 ? 'auto' : 'none'
+          }"
         >
           <div class="w-full max-w-md">
             <MainCard
@@ -179,8 +222,13 @@ onUnmounted(() => {
 
         <!-- Card 2 - Tier 2-3 -->
         <div
-          class="absolute inset-0 flex items-center transition-opacity duration-500"
-          :style="{ opacity: card2Opacity, pointerEvents: card2Opacity > 0 ? 'auto' : 'none' }"
+          class="absolute inset-0 flex items-center"
+          :style="{
+            opacity: card2Opacity,
+            transform: `translateX(${card2TranslateX}px)`,
+            transition: 'opacity 0.3s ease-out, transform 0.3s ease-out',
+            pointerEvents: card2Opacity > 0 ? 'auto' : 'none'
+          }"
         >
           <div class="w-full max-w-md">
             <MainCard
@@ -198,8 +246,13 @@ onUnmounted(() => {
 
         <!-- Card 3 - Tier 4 -->
         <div
-          class="absolute inset-0 flex items-center transition-opacity duration-500"
-          :style="{ opacity: card3Opacity, pointerEvents: card3Opacity > 0 ? 'auto' : 'none' }"
+          class="absolute inset-0 flex items-center"
+          :style="{
+            opacity: card3Opacity,
+            transform: `translateX(${card3TranslateX}px)`,
+            transition: 'opacity 0.3s ease-out, transform 0.3s ease-out',
+            pointerEvents: card3Opacity > 0 ? 'auto' : 'none'
+          }"
         >
           <div class="w-full max-w-md">
             <MainCard

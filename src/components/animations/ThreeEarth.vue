@@ -48,19 +48,19 @@ const earthConfig = {
     scale: 100,
   },
   suppliers: {
-    position: { x: 0, y: 0, z: 0 },
+    position: { x: -50, y: 0, z: 0 },
     rotation: { x: 0, y: 0, z: 0 },
     scale: 40,
   },
   partners: {
-    position: { x: 0, y: 0, z: 0 },
+    position: { x: 0, y: -50, z: 0 },
     rotation: { x: 0, y: 0, z: 0 },
-    scale: 100,
+    scale: 85,
   },
   contact: {
-    position: { x: 0, y: 0, z: 0 },
+    position: { x: 0, y: -50, z: 0 },
     rotation: { x: 0, y: 0, z: 0 },
-    scale: 50,
+    scale: 85,
   },
 };
 
@@ -632,9 +632,9 @@ const handleScroll = () => {
     const elementTop = rect.top + window.scrollY;
     const elementBottom = elementTop + rect.height;
 
-    // Extended transition zone - starts at 60% through section and extends into next section
-    const transitionStart = elementTop + rect.height * 0.6; // Start transition at 60% through section
-    const transitionZoneLength = rect.height * 0.8; // Longer transition zone (80% of section height)
+    // Extended transition zone - starts at 85% through section and extends into next section
+    const transitionStart = elementTop + rect.height * 0.85; // Start transition at 85% through section
+    const transitionZoneLength = rect.height * 0.5; // Transition zone (50% of section height)
     const transitionEnd = transitionStart + transitionZoneLength;
 
     if (viewportCenter >= elementTop && viewportCenter < elementBottom) {
