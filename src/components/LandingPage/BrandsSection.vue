@@ -28,7 +28,7 @@
 <template>
   <section
     id="brands-section"
-    class="scroll-mt-[7rem] h-auto py-20 px-6 flex flex-col justify-center items-center"
+    class="scroll-mt-[7rem] min-h-screen py-20 px-6 flex flex-col justify-center items-center"
   >
     <div>
       <div class="max-w-4xl mx-auto text-center mb-16">

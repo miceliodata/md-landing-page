@@ -8,8 +8,11 @@ interface Section {
 }
 
 const sections = ref<Section[]>([
-  { id: 'info-section', label: 'Who We Are' },
-  { id: 'proposal-section', label: 'Our Offering' },
+  { id: 'hero-section', label: 'Top' },
+  { id: 'info-section', label: 'About Us' },
+  { id: 'menu-section', label: 'What We Offer' },
+  { id: 'suppliers-section', label: 'Data Collection' },
+  { id: 'brands-section', label: 'For Brands' },
   { id: 'partners-section', label: 'Partners' },
   { id: 'contact-section', label: 'Contact' }
 ])
@@ -28,30 +31,45 @@ const scrollToSection = (sectionId: string) => {
 }
 
 const updateActiveSection = () => {
-  const scrollPosition = window.scrollY + window.innerHeight / 3
+  // Use middle of viewport as reference point for more accurate detection
+  const scrollPosition = window.scrollY + window.innerHeight / 2
   let currentSection = ''
+  let closestSection = ''
+  let closestDistance = Infinity
 
+  // Find which section the middle of viewport is currently in
   for (const section of sections.value) {
     const element = document.getElementById(section.id)
     if (element) {
       const elementTop = element.offsetTop
       const elementBottom = elementTop + element.offsetHeight
+      const elementMiddle = elementTop + element.offsetHeight / 2
 
+      // Check if scroll position is within this section
       if (scrollPosition >= elementTop && scrollPosition < elementBottom) {
         currentSection = section.id
         break
       }
+
+      // Track closest section in case we're between sections
+      const distance = Math.abs(scrollPosition - elementMiddle)
+      if (distance < closestDistance) {
+        closestDistance = distance
+        closestSection = section.id
+      }
     }
   }
 
-  activeSection.value = currentSection
+  // Use closest section if we didn't find an exact match
+  activeSection.value = currentSection || closestSection
 
-  // Show when scrolling past hero section (when entering about section)
+  // Show navigation only when fully past hero section (at About Us or below)
   const heroSection = document.getElementById('hero-section')
-  if (heroSection) {
-    const heroHeight = heroSection.offsetHeight
-    // Show when we're 70% through the hero section
-    isVisible.value = window.scrollY > heroHeight * 0.7
+  const infoSection = document.getElementById('info-section')
+  if (heroSection && infoSection) {
+    const heroEnd = heroSection.offsetTop + heroSection.offsetHeight
+    // Show only when we've reached the About Us section
+    isVisible.value = window.scrollY >= heroEnd
   }
 }
 

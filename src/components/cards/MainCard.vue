@@ -24,8 +24,7 @@ const props = withDefaults(
 );
 
 const cardClass = computed(() => {
-  const base =
-    "p-4 pb-5 rounded-md h-full flex flex-col";
+  const base = "p-4 pb-5 rounded-md h-full flex flex-col";
 
   if (props.hoverEffect === "lift") {
     return `${base} hover:-translate-y-1 transition duration-300`;

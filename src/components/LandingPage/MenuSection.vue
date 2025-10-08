@@ -6,7 +6,7 @@ import PartnersIcon from "@/assets/partners-menu-icon.png";
 </script>
 
 <template>
-  <section id="menu-section" class="py-20 scroll-mt-24">
+  <section id="menu-section" class="min-h-screen py-20 scroll-mt-24 flex flex-col justify-center">
     <h1 class="text-4xl text-center md:text-5xl font-bold text-gray-900 mb-12 animate-word-reveal">
       What We Offer
     </h1>

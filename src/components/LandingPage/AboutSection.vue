@@ -5,7 +5,7 @@
 <template>
   <section
     id="info-section"
-    class="scroll-mt-[7rem] h-auto py-20 px-8 sm:px-12 lg:px-20"
+    class="scroll-mt-[7rem] min-h-screen py-20 px-8 sm:px-12 lg:px-20 flex flex-col justify-center"
   >
     <h1 class="text-4xl md:text-5xl font-bold text-gray-100 mb-16 ml-12 md:ml-16 lg:ml-20 animate-slide-left">
       About Us

@@ -64,7 +64,7 @@ watch(isMobileMenuOpen, (isOpen) => {
   <header
     :class="[
       'fixed top-4 left-1/2 -translate-x-1/2 z-50',
-      'bg-white/90 backdrop-blur-md rounded-2xl shadow-lg border border-gray-200/50',
+      'bg-white/95 backdrop-blur-md rounded-2xl shadow-lg border border-gray-200/50',
       'px-6 py-3 transition-all duration-300 ease-out',
       'w-[calc(100%-2rem)] sm:w-[calc(100%-4rem)] md:w-[90%] lg:w-[80%] xl:w-[70%]',
       {
@@ -90,7 +90,7 @@ watch(isMobileMenuOpen, (isOpen) => {
       </a>
 
       <nav
-        class="hidden xl:flex space-x-6 text-sm font-normal text-gray-700 absolute left-1/2 transform -translate-x-1/2"
+        class="hidden xl:flex space-x-6 text-sm font-semibold text-gray-700 absolute left-1/2 transform -translate-x-1/2"
       >
         <a href="#info-section" class="hover:text-gray-900 transition-colors duration-150 py-2"
           >Who We Are</a>
