@@ -20,6 +20,7 @@ let atmosphere: THREE.Mesh;
 let markers: THREE.Group;
 let dotParticles: THREE.Points;
 let borderPoints: THREE.Points;
+let flightLines: THREE.Group;
 let animationId: number;
 
 // Animation state for smooth transitions
@@ -506,7 +507,95 @@ const createDotParticles = () => {
   scene.add(dotParticles);
 };
 
-// Flight lines removed - now just showing city markers
+// Create animated flight lines from other countries to Spain
+const createFlightLines = () => {
+  flightLines = new THREE.Group();
+
+  // Spain is the destination (index 2 in cities array)
+  const spainCity = cities[2]; // Spain
+  const spainPos = latLonToVector3(spainCity.lat, spainCity.lon, 100 + 0.5, true);
+
+  // Create flight lines from other countries to Spain
+  cities.forEach((city, index) => {
+    if (index === 2) return; // Skip Spain itself
+
+    console.log(`Creating flight line from ${city.name} to Spain`);
+
+    const originPos = latLonToVector3(city.lat, city.lon, 100 + 0.5, true);
+
+    // Create a curved path between two points on the sphere
+    // Calculate control point by finding midpoint and pushing it outward
+    const midpoint = new THREE.Vector3(
+      (originPos.x + spainPos.x) / 2,
+      (originPos.y + spainPos.y) / 2,
+      (originPos.z + spainPos.z) / 2
+    );
+
+    // Normalize and scale outward to create much taller arc above surface
+    const controlPoint = midpoint.clone().normalize().multiplyScalar(130); // Increased from 115 to 130 for taller arc
+
+    const curve = new THREE.QuadraticBezierCurve3(
+      originPos,  // Start at origin country
+      controlPoint, // Arc above surface
+      spainPos    // End at Spain
+    );
+
+    console.log(`Origin: ${city.name}`, originPos);
+    console.log(`Control point:`, controlPoint);
+    console.log(`Destination: Spain`, spainPos);
+
+    // Create geometry from curve
+    const points = curve.getPoints(100);
+    const geometry = new THREE.BufferGeometry().setFromPoints(points);
+
+    // Create material with gradient effect
+    const material = new THREE.LineBasicMaterial({
+      color: 0x00ffff,
+      transparent: true,
+      opacity: 0.7,
+      linewidth: 2,
+      depthTest: true,
+      depthWrite: false,
+    });
+
+    const line = new THREE.Line(geometry, material);
+    console.log(`Created line for ${city.name}, points:`, points.length);
+
+    // Store animation data
+    line.userData.fullGeometry = geometry.clone();
+    line.userData.animationOffset = index * 0.5; // Stagger animations
+    line.userData.totalPoints = points.length;
+
+    flightLines.add(line);
+
+    // Add animated particle traveling along the line (from origin to Spain)
+    const particleGeometry = new THREE.SphereGeometry(0.4, 8, 8);
+    const particleMaterial = new THREE.MeshBasicMaterial({
+      color: 0xffffff,
+      transparent: true,
+      opacity: 0.9,
+    });
+    const particle = new THREE.Mesh(particleGeometry, particleMaterial);
+
+    particle.userData.curve = curve;
+    particle.userData.animationOffset = index * 0.5;
+
+    flightLines.add(particle);
+  });
+
+  // Position and scale flight lines to match Earth
+  flightLines.position.set(
+    currentEarthPosition.x,
+    currentEarthPosition.y,
+    currentEarthPosition.z
+  );
+  flightLines.rotation.x = currentEarthRotation.x;
+  flightLines.rotation.y = currentEarthRotation.y;
+  flightLines.rotation.z = currentEarthRotation.z;
+  flightLines.scale.set(currentEarthScale / 100, currentEarthScale / 100, currentEarthScale / 100);
+
+  scene.add(flightLines);
+};
 
 // Update Earth position/rotation/scale with smooth interpolation
 const updateEarthTransform = () => {
@@ -558,6 +647,11 @@ const updateEarthTransform = () => {
     dotParticles.rotation.copy(earth.rotation);
     dotParticles.scale.copy(earth.scale);
   }
+  if (flightLines) {
+    flightLines.position.copy(earth.position);
+    flightLines.rotation.copy(earth.rotation);
+    flightLines.scale.copy(earth.scale);
+  }
 };
 
 // Animation loop
@@ -591,6 +685,31 @@ const animate = () => {
             pulseMaterial.opacity = 0.4 + Math.sin(time + phase) * 0.3;
           }
         });
+      }
+    });
+  }
+
+  // Animate flight lines and particles
+  if (flightLines) {
+    const time = Date.now() * 0.0003; // Slow animation speed
+
+    flightLines.children.forEach((child) => {
+      // Animate particles traveling along curves
+      if (child instanceof THREE.Mesh && child.userData.curve) {
+        const offset = child.userData.animationOffset || 0;
+        const progress = ((time + offset) % 3) / 3; // Loop every 3 seconds
+        const point = child.userData.curve.getPoint(progress);
+        child.position.copy(point);
+
+        // Fade in/out at start and end
+        const fadeDist = 0.1;
+        if (progress < fadeDist) {
+          child.material.opacity = progress / fadeDist * 0.9;
+        } else if (progress > 1 - fadeDist) {
+          child.material.opacity = (1 - progress) / fadeDist * 0.9;
+        } else {
+          child.material.opacity = 0.9;
+        }
       }
     });
   }
@@ -699,6 +818,7 @@ const init = () => {
   createAtmosphere();
   createMarkers();
   createDotParticles();
+  createFlightLines();
   animate();
 };
 
