@@ -24,6 +24,25 @@ let animationId: number;
 let scrollY = 0;
 let targetRotation = 0;
 
+// Earth configuration per section
+const earthConfig = {
+  hero: {
+    position: { x: -100, y: -65, z: 0 },
+    rotation: { x: 0, y: 0, z: 0 },
+    scale: 100,
+  },
+  info: {
+    position: { x: -100, y: 0, z: 0 },
+    rotation: { x: 0, y: 0, z: 0 },
+    scale: 60,
+  },
+  proposal: {
+    position: { x: 50, y: 0, z: 0 },
+    rotation: { x: 0, y: 0, z: 0 },
+    scale: 60,
+  },
+};
+
 // City locations for markers (lat, lon, name) - only showing target countries
 const cities = [
   { lat: 23.8103, lon: 90.4125, name: "Bangladesh" }, // Dhaka
@@ -47,8 +66,8 @@ const initScene = () => {
     10000
   );
   // Position camera below Earth looking up, to show upper hemisphere
-  camera.position.set(50, -80, 100);
-  camera.lookAt(50, 30, 0); // Look towards upper part of Earth
+  camera.position.set(0, 0, -150);
+  camera.lookAt(0, 0, 0); // Look towards upper part of Earth
 
   // Renderer
   renderer = new THREE.WebGLRenderer({
@@ -122,7 +141,11 @@ const createEarth = () => {
   const textureLoader = new THREE.TextureLoader();
 
   // Earth sphere - sized to show half in Hero section
-  const earthGeometry = new THREE.SphereGeometry(60, 64, 64);
+  const earthGeometry = new THREE.SphereGeometry(
+    earthConfig.hero.scale,
+    64,
+    64
+  );
 
   // Create shader uniforms
   const uniforms = {
@@ -153,14 +176,23 @@ const createEarth = () => {
 
   earth = new THREE.Mesh(earthGeometry, earthMaterial);
   // Position Earth center in bottom-right quadrant
-  earth.position.set(50, -60, 0);
+  earth.position.set(
+    earthConfig.hero.position.x,
+    earthConfig.hero.position.y,
+    earthConfig.hero.position.z
+  );
   // Rotate Earth to show Asia (rotate around Y-axis to shift longitude)
-  earth.rotation.y = Math.PI * 0.85; // ~153 degrees - rotated more to the right
-  earth.rotation.z = 0; // Fix tilt
+  earth.rotation.x = earthConfig.hero.rotation.x;
+  earth.rotation.y = earthConfig.hero.rotation.y; // ~153 degrees - rotated more to the right
+  earth.rotation.z = earthConfig.hero.rotation.z; // Fix tilt
   scene.add(earth);
 
   // Add point cloud border for depth effect
-  const borderGeometry = new THREE.SphereGeometry(70, 60, 60);
+  const borderGeometry = new THREE.SphereGeometry(
+    earthConfig.hero.scale + 10,
+    60,
+    60
+  );
   const pointMaterial = new THREE.PointsMaterial({
     color: 0x81ffff,
     transparent: true,
@@ -169,9 +201,14 @@ const createEarth = () => {
     size: 0.5,
   });
   borderPoints = new THREE.Points(borderGeometry, pointMaterial);
-  borderPoints.position.set(50, -60, 0);
-  borderPoints.rotation.y = Math.PI * 0.85;
-  borderPoints.rotation.z = 0;
+  borderPoints.position.set(
+    earthConfig.hero.position.x,
+    earthConfig.hero.position.y,
+    earthConfig.hero.position.z
+  );
+  borderPoints.rotation.x = earthConfig.hero.rotation.x;
+  borderPoints.rotation.y = earthConfig.hero.rotation.y;
+  borderPoints.rotation.z = earthConfig.hero.rotation.z;
   scene.add(borderPoints);
 
   // Create sprite-based glow (like 3d-earth style)
@@ -187,8 +224,16 @@ const createEarth = () => {
   });
 
   earthGlow = new THREE.Sprite(spriteMaterial);
-  earthGlow.scale.set(180, 180, 1); // 60 * 3.0
-  earthGlow.position.set(50, -60, 0);
+  earthGlow.scale.set(
+    earthConfig.hero.scale * 3,
+    earthConfig.hero.scale * 3,
+    1
+  );
+  earthGlow.position.set(
+    earthConfig.hero.position.x,
+    earthConfig.hero.position.y,
+    earthConfig.hero.position.z
+  );
   scene.add(earthGlow);
 
   // Add lighting
@@ -202,7 +247,11 @@ const createEarth = () => {
 
 // Create atmospheric glow (3d-earth style)
 const createAtmosphere = () => {
-  const atmosphereGeometry = new THREE.SphereGeometry(60, 50, 50);
+  const atmosphereGeometry = new THREE.SphereGeometry(
+    earthConfig.hero.scale,
+    50,
+    50
+  );
 
   // Custom atmospheric shader
   const atmosphereMaterial = new THREE.ShaderMaterial({
@@ -242,9 +291,14 @@ const createAtmosphere = () => {
   });
 
   atmosphere = new THREE.Mesh(atmosphereGeometry, atmosphereMaterial);
-  atmosphere.position.set(50, -60, 0);
-  atmosphere.rotation.y = Math.PI * 0.85; // Match Earth rotation
-  atmosphere.rotation.z = 0;
+  atmosphere.position.set(
+    earthConfig.hero.position.x,
+    earthConfig.hero.position.y,
+    earthConfig.hero.position.z
+  );
+  atmosphere.rotation.x = earthConfig.hero.rotation.x;
+  atmosphere.rotation.y = earthConfig.hero.rotation.y; // Match Earth rotation
+  atmosphere.rotation.z = earthConfig.hero.rotation.z;
   scene.add(atmosphere);
 };
 
@@ -252,7 +306,7 @@ const createAtmosphere = () => {
 const latLonToVector3 = (
   lat: number,
   lon: number,
-  radius: number = 60,
+  radius: number = earthConfig.hero.scale,
   local: boolean = false
 ) => {
   const phi = (90 - lat) * (Math.PI / 180);
@@ -266,9 +320,11 @@ const latLonToVector3 = (
     return new THREE.Vector3(x, y, z);
   } else {
     // World coordinates (with Earth offset)
-    const x = -(radius * Math.sin(phi) * Math.cos(theta)) + 50;
-    const y = radius * Math.cos(phi) - 60;
-    const z = radius * Math.sin(phi) * Math.sin(theta);
+    const x =
+      -(radius * Math.sin(phi) * Math.cos(theta)) + earthConfig.hero.position.x;
+    const y = radius * Math.cos(phi) + earthConfig.hero.position.y;
+    const z =
+      radius * Math.sin(phi) * Math.sin(theta) + earthConfig.hero.position.z;
     return new THREE.Vector3(x, y, z);
   }
 };
@@ -287,7 +343,12 @@ const createMarkers = () => {
     });
     const marker = new THREE.Mesh(markerGeometry, markerMaterial);
 
-    const position = latLonToVector3(city.lat, city.lon, 60.5, true);
+    const position = latLonToVector3(
+      city.lat,
+      city.lon,
+      earthConfig.hero.scale + 0.5,
+      true
+    );
     marker.position.copy(position);
 
     markers.add(marker);
@@ -298,7 +359,7 @@ const createMarkers = () => {
     canvas.width = 256;
     canvas.height = 64;
 
-    context.fillStyle = "rgba(255, 255, 255, 0.9)";
+    context.fillStyle = "rgba(255, 255, 255, 1)";
     context.font = "bold 32px Arial";
     context.textAlign = "left";
     context.textBaseline = "middle";
@@ -312,7 +373,12 @@ const createMarkers = () => {
     const sprite = new THREE.Sprite(spriteMaterial);
 
     // Position label next to the marker
-    const labelPos = latLonToVector3(city.lat, city.lon, 65, true);
+    const labelPos = latLonToVector3(
+      city.lat,
+      city.lon,
+      earthConfig.hero.scale + 5,
+      true
+    );
     sprite.position.copy(labelPos);
     sprite.scale.set(10, 2.5, 1);
 
@@ -320,9 +386,14 @@ const createMarkers = () => {
   });
 
   // Position and rotate markers group to match Earth
-  markers.position.set(50, -60, 0);
-  markers.rotation.y = Math.PI * 0.85;
-  markers.rotation.z = 0;
+  markers.position.set(
+    earthConfig.hero.position.x,
+    earthConfig.hero.position.y,
+    earthConfig.hero.position.z
+  );
+  markers.rotation.x = earthConfig.hero.rotation.x;
+  markers.rotation.y = earthConfig.hero.rotation.y;
+  markers.rotation.z = earthConfig.hero.rotation.z;
   scene.add(markers);
 };
 
@@ -333,7 +404,7 @@ const createDotParticles = () => {
   const dotCount = 1500;
 
   for (let i = 0; i < dotCount; i++) {
-    const radius = 66 + Math.random() * 12; // Around the Earth
+    const radius = earthConfig.hero.scale + 6 + Math.random() * 12; // Around the Earth
     const theta = Math.random() * Math.PI * 2;
     const phi = Math.random() * Math.PI;
 
@@ -363,9 +434,14 @@ const createDotParticles = () => {
   dotParticles = new THREE.Points(dotGeometry, dotMaterial);
 
   // Position and rotate dots to match Earth
-  dotParticles.position.set(50, -60, 0);
-  dotParticles.rotation.y = Math.PI * 0.85;
-  dotParticles.rotation.z = 0;
+  dotParticles.position.set(
+    earthConfig.hero.position.x,
+    earthConfig.hero.position.y,
+    earthConfig.hero.position.z
+  );
+  dotParticles.rotation.x = earthConfig.hero.rotation.x;
+  dotParticles.rotation.y = earthConfig.hero.rotation.y;
+  dotParticles.rotation.z = earthConfig.hero.rotation.z;
 
   scene.add(dotParticles);
 };
