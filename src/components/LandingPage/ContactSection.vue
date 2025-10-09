@@ -61,29 +61,29 @@ const submitForm = async (e: Event) => {
 </script>
 
 <template>
-  <section id="contact-section" class="min-h-screen py-16 px-6 text-center flex flex-col justify-center">
-    <div class="max-w-xl mx-auto">
-      <h2 class="text-3xl font-bold mb-4 text-gray-100 animate-word-reveal">Let's Connect</h2>
-      <p class="text-gray-300 mb-8 animate-fade-up">
+  <section id="contact-section" class="min-h-screen flex items-center justify-center px-6">
+    <div class="max-w-xl w-full text-center">
+      <h2 class="text-4xl md:text-5xl font-bold mb-4 text-gray-100 animate-word-reveal">Let's Connect</h2>
+      <p class="text-lg text-gray-300 mb-8 animate-fade-up">
         Whether you're a supplier, partner, or just curious about what we do, we'd love to hear from you.
       </p>
 
-      <form @submit="submitForm" class="space-y-4 animate-scale">
+      <form @submit="submitForm" class="space-y-4 animate-scale w-full">
         <div class="flex">
           <input
             v-model="name"
             type="text"
             placeholder="First Name"
             required
-            class="w-full border border-gray-300 rounded px-4 py-3 mr-1"
+            class="w-full bg-gray-100 border border-gray-300 rounded px-4 py-3 mr-1 text-gray-900 placeholder-gray-500 focus:bg-white focus:outline-none focus:ring-2 focus:ring-teal-400"
           />
-  
+
           <input
             v-model="surname"
             type="text"
             placeholder="Last Name"
             required
-            class="w-full border border-gray-300 rounded px-4 py-3 ml-1"
+            class="w-full bg-gray-100 border border-gray-300 rounded px-4 py-3 ml-1 text-gray-900 placeholder-gray-500 focus:bg-white focus:outline-none focus:ring-2 focus:ring-teal-400"
           />
         </div>
 
@@ -92,14 +92,14 @@ const submitForm = async (e: Event) => {
           type="email"
           placeholder="you@example.com"
           required
-          class="w-full border border-gray-300 rounded px-4 py-3"
+          class="w-full bg-gray-100 border border-gray-300 rounded px-4 py-3 text-gray-900 placeholder-gray-500 focus:bg-white focus:outline-none focus:ring-2 focus:ring-teal-400"
         />
 
         <textarea
           v-model="userMessage"
           placeholder="Your message..."
           rows="4"
-          class="w-full border border-gray-300 rounded px-4 py-3"
+          class="w-full bg-gray-100 border border-gray-300 rounded px-4 py-3 text-gray-900 placeholder-gray-500 focus:bg-white focus:outline-none focus:ring-2 focus:ring-teal-400"
         ></textarea>
 
         <button

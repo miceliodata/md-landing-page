@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import { getGradientColors } from "@/utils/colorClasses";
-
+import { ref, onMounted, onUnmounted } from 'vue';
 import MainCard from "@/components/cards/MainCard.vue";
 
 import { GlobeAltIcon } from "@heroicons/vue/24/outline";
@@ -10,10 +9,6 @@ import { UsersIcon } from "@heroicons/vue/24/outline";
 import { ChartBarIcon } from "@heroicons/vue/24/outline";
 import { QrCodeIcon } from "@heroicons/vue/24/outline";
 import { BoltIcon } from "@heroicons/vue/24/outline";
-
-import { ShoppingCartIcon } from "@heroicons/vue/24/outline";
-import { ArrowsPointingInIcon } from "@heroicons/vue/24/outline";
-import { SquaresPlusIcon } from "@heroicons/vue/24/outline";
 
 const partnerFeatures = [
   {
@@ -79,164 +74,283 @@ const partnerFeatures = [
   },
 ];
 
-const collabModels = [
-  {
-    icon: ShoppingCartIcon,
-    color: "emerald",
-    title: "Service Provider",
-    desc: "Offer your specialized services directly through our platform",
-  },
-  {
-    icon: ArrowsPointingInIcon,
-    color: "teal",
-    title: "Integration Partner",
-    desc: "Integrate your systems with our ecosystem for seamless operations",
-  },
-  {
-    icon: SquaresPlusIcon,
-    color: "sky",
-    title: "Strategic Alliance",
-    desc: "Long-term partnership for mutual growth and market expansion",
-  },
-];
+// Scroll-based opacity controls for scroll animations
+const titleOpacity = ref(0);
+const titleTranslateY = ref(0);
+const group1Card1Opacity = ref(0);
+const group1Card1TranslateY = ref(0);
+const group1Card2Opacity = ref(0);
+const group1Card2TranslateY = ref(0);
+const group1Card3Opacity = ref(0);
+const group1Card3TranslateY = ref(0);
+const group2Card1Opacity = ref(0);
+const group2Card1TranslateY = ref(0);
+const group2Card2Opacity = ref(0);
+const group2Card2TranslateY = ref(0);
+const group2Card3Opacity = ref(0);
+const group2Card3TranslateY = ref(0);
 
-const iconClass = (color: string) => {
-  const { from, to } = getGradientColors(color);
-  return `rounded-full bg-radial ${from} ${to} w-16 h-16 flex items-center justify-center`;
+// Track scroll position within this section
+const handleScroll = () => {
+  const section = document.getElementById('partners-section');
+  if (!section) return;
+
+  const rect = section.getBoundingClientRect();
+  const sectionTop = rect.top;
+  const sectionHeight = rect.height;
+  const viewportHeight = window.innerHeight;
+
+  const scrollStart = sectionTop - viewportHeight;
+  const scrollRange = sectionHeight + viewportHeight;
+  const progress = Math.max(0, Math.min(1, -scrollStart / scrollRange));
+
+  // Title: fades in early and stays visible throughout
+  if (progress < 0.10) {
+    titleOpacity.value = 0;
+    titleTranslateY.value = -20;
+  } else if (progress >= 0.10 && progress < 0.15) {
+    const fadeProgress = (progress - 0.10) / 0.05;
+    titleOpacity.value = fadeProgress;
+    titleTranslateY.value = -20 + (fadeProgress * 20);
+  } else {
+    titleOpacity.value = 1;
+    titleTranslateY.value = 0;
+  }
+
+  // Group 1 - Card 1: slides in from bottom (like dealing cards)
+  if (progress < 0.25) {
+    group1Card1Opacity.value = 0;
+    group1Card1TranslateY.value = 120;
+  } else if (progress >= 0.25 && progress < 0.30) {
+    const fadeProgress = (progress - 0.25) / 0.05;
+    group1Card1Opacity.value = fadeProgress;
+    group1Card1TranslateY.value = 120 - (fadeProgress * 120);
+  } else {
+    group1Card1Opacity.value = 1;
+    group1Card1TranslateY.value = 0;
+  }
+
+  // Group 1 - Card 2: slides in from bottom, slightly later
+  if (progress < 0.28) {
+    group1Card2Opacity.value = 0;
+    group1Card2TranslateY.value = 120;
+  } else if (progress >= 0.28 && progress < 0.33) {
+    const fadeProgress = (progress - 0.28) / 0.05;
+    group1Card2Opacity.value = fadeProgress;
+    group1Card2TranslateY.value = 120 - (fadeProgress * 120);
+  } else {
+    group1Card2Opacity.value = 1;
+    group1Card2TranslateY.value = 0;
+  }
+
+  // Group 1 - Card 3: slides in from bottom, last of the three
+  if (progress < 0.31) {
+    group1Card3Opacity.value = 0;
+    group1Card3TranslateY.value = 120;
+  } else if (progress >= 0.31 && progress < 0.36) {
+    const fadeProgress = (progress - 0.31) / 0.05;
+    group1Card3Opacity.value = fadeProgress;
+    group1Card3TranslateY.value = 120 - (fadeProgress * 120);
+  } else {
+    group1Card3Opacity.value = 1;
+    group1Card3TranslateY.value = 0;
+  }
+
+  // Group 2 - Card 1: slides in from bottom (second row)
+  if (progress < 0.40) {
+    group2Card1Opacity.value = 0;
+    group2Card1TranslateY.value = 120;
+  } else if (progress >= 0.40 && progress < 0.45) {
+    const fadeProgress = (progress - 0.40) / 0.05;
+    group2Card1Opacity.value = fadeProgress;
+    group2Card1TranslateY.value = 120 - (fadeProgress * 120);
+  } else {
+    group2Card1Opacity.value = 1;
+    group2Card1TranslateY.value = 0;
+  }
+
+  // Group 2 - Card 2: slides in from bottom, slightly later
+  if (progress < 0.43) {
+    group2Card2Opacity.value = 0;
+    group2Card2TranslateY.value = 120;
+  } else if (progress >= 0.43 && progress < 0.48) {
+    const fadeProgress = (progress - 0.43) / 0.05;
+    group2Card2Opacity.value = fadeProgress;
+    group2Card2TranslateY.value = 120 - (fadeProgress * 120);
+  } else {
+    group2Card2Opacity.value = 1;
+    group2Card2TranslateY.value = 0;
+  }
+
+  // Group 2 - Card 3: slides in from bottom, last of all six cards
+  if (progress < 0.46) {
+    group2Card3Opacity.value = 0;
+    group2Card3TranslateY.value = 120;
+  } else if (progress >= 0.46 && progress < 0.51) {
+    const fadeProgress = (progress - 0.46) / 0.05;
+    group2Card3Opacity.value = fadeProgress;
+    group2Card3TranslateY.value = 120 - (fadeProgress * 120);
+  } else {
+    group2Card3Opacity.value = 1;
+    group2Card3TranslateY.value = 0;
+  }
 };
+
+onMounted(() => {
+  window.addEventListener('scroll', handleScroll, { passive: true });
+  handleScroll();
+});
+
+onUnmounted(() => {
+  window.removeEventListener('scroll', handleScroll);
+});
 </script>
 
 <template>
   <section
     id="partners-section"
-    class="scroll-mt-[7rem] h-auto px-12 sm:px-16 lg:px-20 text-gray-100 flex flex-col justify-center py-20"
+    class="scroll-mt-[7rem] relative"
+    style="min-height: 400vh;"
   >
-    <div class="max-w-6xl mx-auto w-full">
-      <div class="text-center mb-12">
-        <h2 class="text-5xl font-bold mb-4 animate-char-reveal">Partnership Opportunities</h2>
-        <p class="text-gray-300 text-xl animate-fade-up">
-          We're building a comprehensive ecosystem that requires diverse
-          expertise. Find your role in the future of supply chain transparency.
-        </p>
-      </div>
+    <!-- Fixed container that stays in viewport -->
+    <div class="sticky top-0 h-screen flex flex-col items-center justify-center px-8 md:px-16 lg:px-20">
+      <div class="w-full max-w-7xl">
 
-      <ul
-        class="list-disc list-outside pl-6 text-gray-300 marker:text-gray-500 text-lg marker:text-2xl space-y-3 max-w-xl mx-auto mb-18 animate-stagger-group"
-      >
-        <li class="animate-stagger">Integrate to the platform</li>
-        <li class="animate-stagger">Be part of market development</li>
-        <li class="animate-stagger">
-          Join to a shared innovation ecosystem to co-create scalable solutions
-        </li>
-        <li class="animate-stagger">Reliable and verified data ecosystem</li>
-      </ul>
-
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 animate-stagger-group">
+        <!-- Title and subtitle - stays visible at top -->
         <div
-          v-for="(feature, index) in partnerFeatures"
-          :key="index"
-          class="h-full animate-stagger"
+          class="text-center mb-12"
+          :style="{
+            opacity: titleOpacity,
+            transform: `translateY(${titleTranslateY}px)`,
+            transition: 'opacity 0.3s ease-out, transform 0.3s ease-out'
+          }"
         >
-          <MainCard
-            :hoverEffect="'none'"
-            :icon="feature.icon"
-            :bullet="feature.bullet"
-            :color="feature.color"
-            :title="feature.title"
-            :description="feature.description"
-          />
+          <h2 class="text-4xl md:text-5xl font-bold text-gray-100 mb-4">
+            Partnership Opportunities
+          </h2>
+          <p class="text-lg text-gray-300 leading-relaxed max-w-3xl mx-auto">
+            We're building a comprehensive ecosystem that requires diverse
+            expertise. Find your role in the future of supply chain transparency.
+          </p>
         </div>
-      </div>
 
-      <div
-        class="max-w-4xl mx-auto text-center p-6 mt-20 rounded-md animate-fade-up"
-      >
-        <h2 class="text-4xl md:text-3xl font-bold text-gray-100 mt-4 animate-word-reveal">
-          Collaboration Models
-        </h2>
-        <div class="grid gap-4 grid-cols-1 sm:grid-cols-3 pt-8 animate-stagger-group">
-          <div v-for="(model, index) in collabModels" :key="index" class="p-6 animate-stagger">
-            <div class="flex justify-center mb-4">
-              <div :class="iconClass(model.color)">
-                <component :is="model.icon" class="w-8 h-8 text-white" />
-              </div>
-            </div>
-            <h3 class="text-xl font-semibold text-gray-200 mb-4">
-              {{ model.title }}
-            </h3>
-            <h4 class="text-gray-300">{{ model.desc }}</h4>
-          </div>
-        </div>
-      </div>
-
-      <div class="w-full mx-auto text-center py-6 mt-20 animate-fade-up">
-        <h2 class="text-4xl md:text-3xl font-bold text-gray-100 mb-10 animate-word-reveal">
-          Trusted by Global Leaders
-        </h2>
-
-        <div class="relative">
+        <!-- Cards container - 2 rows x 3 columns grid -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 w-full">
+          <!-- Row 1 - Card 1 - Sourcing Companies -->
           <div
-            class="pointer-events-none absolute inset-y-0 left-0 w-16 z-10"
-            style="background: linear-gradient(to right, #393a3d, transparent)"
-          ></div>
-          <div
-            class="pointer-events-none absolute inset-y-0 right-0 w-16 z-10"
-            style="background: linear-gradient(to left, #393a3d, transparent)"
-          ></div>
-
-          <div
-            class="bg-dark py-10 rounded-xl shadow-inner shadow-black/10 border border-gray-300/60 relative z-0 overflow-hidden animate-scale"
+            :style="{
+              opacity: group1Card1Opacity,
+              transform: `translateY(${group1Card1TranslateY}px)`,
+              transition: 'opacity 0.4s ease-out, transform 0.4s ease-out',
+              pointerEvents: group1Card1Opacity > 0 ? 'auto' : 'none'
+            }"
           >
-            <div
-              class="max-w-6xl mx-auto flex flex-wrap justify-center items-center gap-8 px-4"
-            >
-              <a
-                href="https://www.bracu.ac.bd/"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <img
-                  src="@/assets/BRACU.png"
-                  alt="brac-logo"
-                  class="h-20 max-h-24 w-auto opacity-80 brightness-200 grayscale invert hover:grayscale-0 hover:invert-0 hover:brightness-100 hover:opacity-100 transition duration-300"
-                />
-              </a>
-              <a
-                href="https://cirpass2.eu/"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <img
-                  src="@/assets/CIRPASS-2.png"
-                  alt="cirpass2-logo"
-                  class="h-20 max-h-24 w-auto opacity-80 brightness-200 grayscale invert hover:grayscale-0 hover:invert-0 hover:brightness-100 hover:opacity-100 transition duration-300"
-                />
-              </a>
-              <a
-                href="https://gaia-x.eu/"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <img
-                  src="@/assets/Gaia-X.webp"
-                  alt="gaiax-logo"
-                  class="h-20 max-h-24 w-auto opacity-80 brightness-200 grayscale hover:grayscale-0 hover:brightness-100 hover:opacity-100 transition duration-300"
-                />
-              </a>
-              <a
-                href="https://www.gs1.org/"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <img
-                  src="@/assets/GS1.png"
-                  alt="gs1-logo"
-                  class="h-20 max-h-24 w-auto opacity-80 brightness-200 grayscale hover:grayscale-0 hover:brightness-100 hover:opacity-100 transition duration-300"
-                />
-              </a>
-            </div>
+            <MainCard
+              :hoverEffect="'none'"
+              :icon="partnerFeatures[0].icon"
+              :bullet="partnerFeatures[0].bullet"
+              :color="partnerFeatures[0].color"
+              :title="partnerFeatures[0].title"
+              :description="partnerFeatures[0].description"
+            />
+          </div>
+
+          <!-- Row 1 - Card 2 - Tech providers -->
+          <div
+            :style="{
+              opacity: group1Card2Opacity,
+              transform: `translateY(${group1Card2TranslateY}px)`,
+              transition: 'opacity 0.4s ease-out, transform 0.4s ease-out',
+              pointerEvents: group1Card2Opacity > 0 ? 'auto' : 'none'
+            }"
+          >
+            <MainCard
+              :hoverEffect="'none'"
+              :icon="partnerFeatures[1].icon"
+              :bullet="partnerFeatures[1].bullet"
+              :color="partnerFeatures[1].color"
+              :title="partnerFeatures[1].title"
+              :description="partnerFeatures[1].description"
+            />
+          </div>
+
+          <!-- Row 1 - Card 3 - Certification agencies -->
+          <div
+            :style="{
+              opacity: group1Card3Opacity,
+              transform: `translateY(${group1Card3TranslateY}px)`,
+              transition: 'opacity 0.4s ease-out, transform 0.4s ease-out',
+              pointerEvents: group1Card3Opacity > 0 ? 'auto' : 'none'
+            }"
+          >
+            <MainCard
+              :hoverEffect="'none'"
+              :icon="partnerFeatures[2].icon"
+              :bullet="partnerFeatures[2].bullet"
+              :color="partnerFeatures[2].color"
+              :title="partnerFeatures[2].title"
+              :description="partnerFeatures[2].description"
+            />
+          </div>
+
+          <!-- Row 2 - Card 1 - Industry associations -->
+          <div
+            :style="{
+              opacity: group2Card1Opacity,
+              transform: `translateY(${group2Card1TranslateY}px)`,
+              transition: 'opacity 0.4s ease-out, transform 0.4s ease-out',
+              pointerEvents: group2Card1Opacity > 0 ? 'auto' : 'none'
+            }"
+          >
+            <MainCard
+              :hoverEffect="'none'"
+              :icon="partnerFeatures[3].icon"
+              :bullet="partnerFeatures[3].bullet"
+              :color="partnerFeatures[3].color"
+              :title="partnerFeatures[3].title"
+              :description="partnerFeatures[3].description"
+            />
+          </div>
+
+          <!-- Row 2 - Card 2 - Sustainability Consulting -->
+          <div
+            :style="{
+              opacity: group2Card2Opacity,
+              transform: `translateY(${group2Card2TranslateY}px)`,
+              transition: 'opacity 0.4s ease-out, transform 0.4s ease-out',
+              pointerEvents: group2Card2Opacity > 0 ? 'auto' : 'none'
+            }"
+          >
+            <MainCard
+              :hoverEffect="'none'"
+              :icon="partnerFeatures[4].icon"
+              :bullet="partnerFeatures[4].bullet"
+              :color="partnerFeatures[4].color"
+              :title="partnerFeatures[4].title"
+              :description="partnerFeatures[4].description"
+            />
+          </div>
+
+          <!-- Row 2 - Card 3 - Label providers -->
+          <div
+            :style="{
+              opacity: group2Card3Opacity,
+              transform: `translateY(${group2Card3TranslateY}px)`,
+              transition: 'opacity 0.4s ease-out, transform 0.4s ease-out',
+              pointerEvents: group2Card3Opacity > 0 ? 'auto' : 'none'
+            }"
+          >
+            <MainCard
+              :hoverEffect="'none'"
+              :icon="partnerFeatures[5].icon"
+              :bullet="partnerFeatures[5].bullet"
+              :color="partnerFeatures[5].color"
+              :title="partnerFeatures[5].title"
+              :description="partnerFeatures[5].description"
+            />
           </div>
         </div>
+
       </div>
     </div>
   </section>

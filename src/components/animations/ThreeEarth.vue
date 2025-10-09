@@ -22,6 +22,8 @@ let dotParticles: THREE.Points;
 let borderPoints: THREE.Points;
 let flightLines: THREE.Group;
 let animationId: number;
+let directionalLight: THREE.DirectionalLight;
+let lightHelper: THREE.DirectionalLightHelper;
 
 // Animation state for smooth transitions
 let targetEarthPosition = { x: 0, y: 0, z: 0 };
@@ -41,12 +43,12 @@ const SCALE_SMOOTHING = 0.02;     // Slower scaling
 const earthConfig = {
   hero: {
     position: { x: -100, y: -50, z: 0 },     // Earth position (x=left/right, y=up/down, z=forward/back)
-    rotation: { x: 0, y: 0, z: 0 },     // Earth rotation in radians (x=pitch, y=yaw, z=roll)
+    rotation: { x: 0, y: 0.55, z: 0 },     // Earth rotation in radians (x=pitch, y=yaw, z=roll)
     scale: 100,                          // Earth scale (100 = default size)
   },
   info: {
     position: { x: -100, y: 50, z: 0 },
-    rotation: { x: 0, y: 0, z: 0 },
+    rotation: { x: 0, y: 0.55, z: 0 },
     scale: 100,
   },
   suppliers: {
@@ -179,6 +181,12 @@ const createEarth = () => {
     time: { value: 100 },
     isHover: { value: false },
     map: { value: null as THREE.Texture | null },
+    // Lighting uniforms - DISABLED FOR NOW (turn back on later!)
+    directionalLightPosition: { value: new THREE.Vector3(0, 50, -150) },
+    directionalLightColor: { value: new THREE.Color(0xffffff) }, // Set to white/neutral
+    directionalLightIntensity: { value: 0.0 }, // DISABLED
+    ambientLightColor: { value: new THREE.Color(0xffffff) },
+    ambientLightIntensity: { value: 1.0 }, // Full ambient = flat lighting (no shadows)
   };
 
   // Load earth texture with shader material
@@ -268,13 +276,67 @@ const createEarth = () => {
   );
   scene.add(earthGlow);
 
-  // Add lighting
-  const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
+  // Add lighting - DISABLED FOR NOW, FULL FLAT LIGHTING
+  const ambientLight = new THREE.AmbientLight(0xffffff, 1.0);
   scene.add(ambientLight);
 
-  const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
-  directionalLight.position.set(5, 3, 5);
+  // Directional light (sun) - DISABLED (intensity = 0)
+  directionalLight = new THREE.DirectionalLight(0xffffff, 0.0);
+  directionalLight.position.set(0, 50, -150);
   scene.add(directionalLight);
+
+  // Light helper - DISABLED FOR NOW (uncomment to re-enable)
+  // lightHelper = new THREE.DirectionalLightHelper(directionalLight, 20, 0xffff00);
+  // scene.add(lightHelper);
+
+  // Add global controls for the light (kept for later use)
+  (window as any).moveLight = (x: number, y: number, z: number) => {
+    if (directionalLight) {
+      directionalLight.position.set(x, y, z);
+      // if (lightHelper) lightHelper.update(); // COMMENTED - lightHelper is disabled
+      if (earth && earth.material) {
+        const material = earth.material as THREE.ShaderMaterial;
+        material.uniforms.directionalLightPosition.value.set(x, y, z);
+      }
+    }
+  };
+
+  (window as any).getLightPos = () => {
+    if (directionalLight) {
+      const pos = directionalLight.position;
+      return { x: pos.x, y: pos.y, z: pos.z };
+    }
+  };
+
+  (window as any).setLightIntensity = (intensity: number) => {
+    if (directionalLight) {
+      directionalLight.intensity = intensity;
+      if (earth && earth.material) {
+        const material = earth.material as THREE.ShaderMaterial;
+        material.uniforms.directionalLightIntensity.value = intensity;
+      }
+    }
+  };
+
+  (window as any).setLightColor = (hexColor: number) => {
+    if (directionalLight) {
+      directionalLight.color.setHex(hexColor);
+      if (earth && earth.material) {
+        const material = earth.material as THREE.ShaderMaterial;
+        material.uniforms.directionalLightColor.value.setHex(hexColor);
+      }
+    }
+  };
+
+  (window as any).setAmbientIntensity = (intensity: number) => {
+    if (ambientLight) {
+      ambientLight.intensity = intensity;
+      if (earth && earth.material) {
+        const material = earth.material as THREE.ShaderMaterial;
+        material.uniforms.ambientLightIntensity.value = intensity;
+      }
+    }
+  };
 };
 
 // Create atmospheric glow (3d-earth style)
@@ -520,30 +582,23 @@ const createFlightLines = () => {
   cities.forEach((city, index) => {
     if (index === 2) return; // Skip Spain itself
 
-    console.log(`Creating flight line from ${city.name} to Spain`);
-
     const originPos = latLonToVector3(city.lat, city.lon, 100 + 0.5, true);
 
     // Create a curved path between two points on the sphere
-    // Calculate control point by finding midpoint and pushing it outward
     const midpoint = new THREE.Vector3(
       (originPos.x + spainPos.x) / 2,
       (originPos.y + spainPos.y) / 2,
       (originPos.z + spainPos.z) / 2
     );
 
-    // Normalize and scale outward to create much taller arc above surface
-    const controlPoint = midpoint.clone().normalize().multiplyScalar(130); // Increased from 115 to 130 for taller arc
+    // Normalize and scale outward to create taller arc above surface
+    const controlPoint = midpoint.clone().normalize().multiplyScalar(130);
 
     const curve = new THREE.QuadraticBezierCurve3(
-      originPos,  // Start at origin country
-      controlPoint, // Arc above surface
-      spainPos    // End at Spain
+      originPos,
+      controlPoint,
+      spainPos
     );
-
-    console.log(`Origin: ${city.name}`, originPos);
-    console.log(`Control point:`, controlPoint);
-    console.log(`Destination: Spain`, spainPos);
 
     // Create geometry from curve
     const points = curve.getPoints(100);
@@ -553,14 +608,25 @@ const createFlightLines = () => {
     const material = new THREE.LineBasicMaterial({
       color: 0x00ffff,
       transparent: true,
-      opacity: 0.7,
+      opacity: 0.8,
       linewidth: 2,
       depthTest: true,
       depthWrite: false,
     });
 
     const line = new THREE.Line(geometry, material);
-    console.log(`Created line for ${city.name}, points:`, points.length);
+
+    // Add subtle outer glow by creating a slightly thicker line behind
+    const glowMaterial = new THREE.LineBasicMaterial({
+      color: 0x00ffff,
+      transparent: true,
+      opacity: 0.15,
+      linewidth: 6,
+      depthTest: true,
+      depthWrite: false,
+    });
+    const glowLine = new THREE.Line(geometry.clone(), glowMaterial);
+    flightLines.add(glowLine);
 
     // Store animation data
     line.userData.fullGeometry = geometry.clone();
@@ -613,7 +679,7 @@ const updateEarthTransform = () => {
   currentEarthRotation.z += (targetEarthRotation.z - currentEarthRotation.z) * ROTATION_SMOOTHING;
 
   // Add very subtle continuous rotation to Y axis (almost imperceptible)
-  continuousRotationY += 0.0001; // Extremely slow rotation
+  continuousRotationY += 0.00002; // Extremely slow rotation
 
   // Smoothly interpolate scale
   currentEarthScale += (targetEarthScale - currentEarthScale) * SCALE_SMOOTHING;
