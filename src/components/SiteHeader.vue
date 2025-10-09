@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted, watch } from "vue";
-import Navicon from "@/assets/navicon-black.svg";
+import { ref, onMounted, onUnmounted, watch} from "vue";
 
 const isBarHidden = ref(false);
 const isMobileMenuOpen = ref(false);

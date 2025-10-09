@@ -131,7 +131,7 @@ const handleScroll = () => {
     card2TranslateX.value = 50;
   }
 
-  // Card 3: fades in from 78% to 83%, stays visible until end (96%), fades out by 100%
+  // Card 3: fades in from 78% to 83%, stays visible until 88%, fades out by 93%
   if (progress < 0.78) {
     card3Opacity.value = 0;
     card3TranslateX.value = -30;
@@ -139,11 +139,11 @@ const handleScroll = () => {
     const fadeProgress = (progress - 0.78) / 0.05;
     card3Opacity.value = fadeProgress;
     card3TranslateX.value = -30 + (fadeProgress * 30);
-  } else if (progress >= 0.83 && progress < 0.96) {
-    card3Opacity.value = 1; // Fully visible longer
+  } else if (progress >= 0.83 && progress < 0.88) {
+    card3Opacity.value = 1; // Fully visible
     card3TranslateX.value = 0;
-  } else if (progress >= 0.96 && progress <= 1.0) {
-    const fadeProgress = (progress - 0.96) / 0.04;
+  } else if (progress >= 0.88 && progress < 0.93) {
+    const fadeProgress = (progress - 0.88) / 0.05;
     card3Opacity.value = 1 - fadeProgress;
     card3TranslateX.value = fadeProgress * 50;
   } else {

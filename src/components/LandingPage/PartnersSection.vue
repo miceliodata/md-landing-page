@@ -110,31 +110,31 @@ const handleScroll = () => {
   if (isMobile) {
     // MOBILE: Sequential animation - title fades out, then first 3 cards, then second 3 cards
 
-    // Title: fades in early, stays visible, then fades out at 28%
-    if (progress < 0.10) {
+    // Title: fades in immediately, stays visible, then fades out at 20%
+    if (progress < 0.05) {
       titleOpacity.value = 0;
-      titleTranslateY.value = -20;
-    } else if (progress >= 0.10 && progress < 0.15) {
-      const fadeProgress = (progress - 0.10) / 0.05;
+      titleTranslateY.value = 0;
+    } else if (progress >= 0.05 && progress < 0.08) {
+      const fadeProgress = (progress - 0.05) / 0.03;
       titleOpacity.value = fadeProgress;
-      titleTranslateY.value = -20 + (fadeProgress * 20);
-    } else if (progress >= 0.15 && progress < 0.28) {
+      titleTranslateY.value = 0;
+    } else if (progress >= 0.08 && progress < 0.20) {
       titleOpacity.value = 1;
       titleTranslateY.value = 0;
-    } else if (progress >= 0.28 && progress < 0.33) {
-      const fadeProgress = (progress - 0.28) / 0.05;
+    } else if (progress >= 0.20 && progress < 0.25) {
+      const fadeProgress = (progress - 0.20) / 0.05;
       titleOpacity.value = 1 - fadeProgress;
-      titleTranslateY.value = fadeProgress * 30;
+      titleTranslateY.value = 0;
     } else {
       titleOpacity.value = 0;
-      titleTranslateY.value = 30;
+      titleTranslateY.value = 0;
     }
 
-    // Group 1 - All 3 cards: slide in at 30%, stay until 52%, fade out by 58%
-    const group1Start = 0.30;
-    const group1FadeIn = 0.35;
-    const group1FadeOutStart = 0.52;
-    const group1FadeOutEnd = 0.58;
+    // Group 1 - All 3 cards: slide in at 23%, stay until 48%, fade out by 53%
+    const group1Start = 0.23;
+    const group1FadeIn = 0.28;
+    const group1FadeOutStart = 0.48;
+    const group1FadeOutEnd = 0.53;
 
     [
       [group1Card1Opacity, group1Card1TranslateY],
@@ -161,9 +161,9 @@ const handleScroll = () => {
       }
     });
 
-    // Group 2 - All 3 cards: slide in at 56%, stay until end
-    const group2Start = 0.56;
-    const group2FadeIn = 0.61;
+    // Group 2 - All 3 cards: slide in at 51%, stay until end
+    const group2Start = 0.51;
+    const group2FadeIn = 0.56;
 
     [
       [group2Card1Opacity, group2Card1TranslateY],
@@ -296,12 +296,15 @@ onUnmounted(() => {
     style="min-height: 400vh;"
   >
     <!-- Fixed container that stays in viewport -->
-    <div class="sticky top-0 h-screen flex flex-col items-center justify-center px-8 md:px-16 lg:px-20">
-      <div class="w-full max-w-7xl">
+    <div class="sticky top-0 h-screen flex items-center justify-center px-6 md:px-16 lg:px-20">
+      <div class="w-full max-w-7xl flex flex-col md:block">
 
-        <!-- Title and subtitle - stays visible at top -->
+        <!-- Title and subtitle - centered on mobile, top on desktop -->
         <div
-          class="text-center mb-12"
+          :class="[
+            'text-center',
+            'md:mb-12'
+          ]"
           :style="{
             opacity: titleOpacity,
             transform: `translateY(${titleTranslateY}px)`,
@@ -311,14 +314,14 @@ onUnmounted(() => {
           <h2 class="text-4xl md:text-5xl font-bold text-gray-100 mb-4">
             Partnership Opportunities
           </h2>
-          <p class="text-lg text-gray-300 leading-relaxed max-w-3xl mx-auto">
+          <p class="text-lg text-gray-300 leading-relaxed max-w-3xl mx-auto px-4">
             We're building a comprehensive ecosystem that requires diverse
             expertise. Find your role in the future of supply chain transparency.
           </p>
         </div>
 
-        <!-- Cards container - 2 rows x 3 columns grid -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 w-full">
+        <!-- Cards container - single column on mobile (centered), grid on desktop -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 w-full max-w-md md:max-w-7xl mx-auto">
           <!-- Row 1 - Card 1 - Sourcing Companies -->
           <div
             :style="{
