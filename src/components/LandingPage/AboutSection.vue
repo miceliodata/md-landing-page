@@ -7,11 +7,11 @@
     id="info-section"
     class="scroll-mt-[7rem] min-h-screen py-20 px-8 sm:px-12 lg:px-20 flex flex-col justify-center"
   >
-    <h1 class="text-4xl md:text-5xl font-bold text-gray-100 mb-16 ml-12 md:ml-16 lg:ml-20 animate-slide-left">
+    <h1 class="text-4xl md:text-5xl font-bold text-gray-100 mb-16 md:ml-16 lg:ml-20 animate-slide-left">
       About Us
     </h1>
 
-    <div class="max-w-5xl ml-12 md:ml-16 lg:ml-20 space-y-8">
+    <div class="max-w-5xl md:ml-16 lg:ml-20 space-y-8">
       <h2 class="text-lg md:text-xl text-gray-300 animate-slide-left">
         MicelioData is a next-generation platform purpose-built to support
         compliance with the EU's Ecodesign for Sustainable Products Regulation

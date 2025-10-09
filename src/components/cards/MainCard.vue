@@ -24,7 +24,7 @@ const props = withDefaults(
 );
 
 const cardClass = computed(() => {
-  const base = "p-4 pb-5 rounded-md h-full flex flex-col";
+  const base = "p-4 pb-5 rounded-md h-full flex flex-col bg-gray-900/40 backdrop-blur-md";
 
   if (props.hoverEffect === "lift") {
     return `${base} hover:-translate-y-1 transition duration-300`;
@@ -57,7 +57,7 @@ const cardClass = computed(() => {
       </h4>
     </div>
 
-    <div class="mt-3">
+    <div class="mt-3 flex-grow">
       <div
         v-if="props.description.length > 1"
         v-for="(desc, index) in props.description"

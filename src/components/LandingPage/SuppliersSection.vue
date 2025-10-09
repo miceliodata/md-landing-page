@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted } from 'vue';
-import MainCard from "@/components/cards/MainCard.vue";
+import TierCard from "@/components/cards/TierCard.vue";
 
 import FactoryIcon from "@/assets/factory.svg";
 import { BoltIcon } from "@heroicons/vue/24/outline";
@@ -207,7 +207,7 @@ onUnmounted(() => {
           }"
         >
           <div class="w-full max-w-md">
-            <MainCard
+            <TierCard
               :hoverEffect="'none'"
               :product="tiers[0].tier"
               :bullet="tiers[0].bullet"
@@ -231,7 +231,7 @@ onUnmounted(() => {
           }"
         >
           <div class="w-full max-w-md">
-            <MainCard
+            <TierCard
               :hoverEffect="'none'"
               :product="tiers[1].tier"
               :bullet="tiers[1].bullet"
@@ -255,7 +255,7 @@ onUnmounted(() => {
           }"
         >
           <div class="w-full max-w-md">
-            <MainCard
+            <TierCard
               :hoverEffect="'none'"
               :product="tiers[2].tier"
               :bullet="tiers[2].bullet"

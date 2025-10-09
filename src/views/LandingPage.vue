@@ -30,8 +30,8 @@ onMounted(() => {
   <!-- 3D Earth Background - Fixed across entire page -->
   <ThreeEarth />
 
-  <!-- Left Side Navigation -->
-  <SectionNavigator />
+  <!-- Left Side Navigation - Hidden on mobile (< md breakpoint) -->
+  <SectionNavigator class="hidden md:block" />
 
   <!-- Back to Top Button -->
   <BackToTop />
