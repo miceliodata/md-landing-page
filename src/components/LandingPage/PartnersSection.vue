@@ -113,27 +113,25 @@ const handleScroll = () => {
   const scrollRange = sectionHeight + viewportHeight;
   const progress = Math.max(0, Math.min(1, -scrollStart / scrollRange));
 
-  // DESKTOP: Title starts centered, moves to top and stays there
-  // Title moves from center (0) to top position (around -150px to -180px)
-  if (progress < 0.05) {
+  // DESKTOP: Title stays centered and fixed, then unlocks and moves to top
+  if (progress < 0.20) {
+    // Title stays centered and stationary for user to read
     desktopTitleOpacity.value = 1;
     desktopTitleTranslateY.value = 0;
-  } else if (progress >= 0.05 && progress < 0.25) {
-    const moveProgress = (progress - 0.05) / 0.20;
-    desktopTitleOpacity.value = 1;
-    desktopTitleTranslateY.value = -150 * moveProgress; // Move up to top position
   } else {
+    // Title stays at same position (no movement needed)
     desktopTitleOpacity.value = 1;
-    desktopTitleTranslateY.value = -150; // Stay at top
+    desktopTitleTranslateY.value = 0;
   }
 
   // Cards appear one by one from left to right (card dealing effect)
+  // Start cards appearing after title has moved up
   // Card 1 (top-left)
-  if (progress < 0.28) {
+  if (progress < 0.32) {
     card1Opacity.value = 0;
     card1TranslateX.value = -50;
-  } else if (progress >= 0.28 && progress < 0.33) {
-    const fadeProgress = (progress - 0.28) / 0.05;
+  } else if (progress >= 0.32 && progress < 0.37) {
+    const fadeProgress = (progress - 0.32) / 0.05;
     card1Opacity.value = fadeProgress;
     card1TranslateX.value = -50 + (fadeProgress * 50);
   } else {
@@ -142,11 +140,11 @@ const handleScroll = () => {
   }
 
   // Card 2 (top-center)
-  if (progress < 0.31) {
+  if (progress < 0.35) {
     card2Opacity.value = 0;
     card2TranslateX.value = -50;
-  } else if (progress >= 0.31 && progress < 0.36) {
-    const fadeProgress = (progress - 0.31) / 0.05;
+  } else if (progress >= 0.35 && progress < 0.40) {
+    const fadeProgress = (progress - 0.35) / 0.05;
     card2Opacity.value = fadeProgress;
     card2TranslateX.value = -50 + (fadeProgress * 50);
   } else {
@@ -155,11 +153,11 @@ const handleScroll = () => {
   }
 
   // Card 3 (top-right)
-  if (progress < 0.34) {
+  if (progress < 0.38) {
     card3Opacity.value = 0;
     card3TranslateX.value = -50;
-  } else if (progress >= 0.34 && progress < 0.39) {
-    const fadeProgress = (progress - 0.34) / 0.05;
+  } else if (progress >= 0.38 && progress < 0.43) {
+    const fadeProgress = (progress - 0.38) / 0.05;
     card3Opacity.value = fadeProgress;
     card3TranslateX.value = -50 + (fadeProgress * 50);
   } else {
@@ -168,11 +166,11 @@ const handleScroll = () => {
   }
 
   // Card 4 (bottom-left)
-  if (progress < 0.37) {
+  if (progress < 0.41) {
     card4Opacity.value = 0;
     card4TranslateX.value = -50;
-  } else if (progress >= 0.37 && progress < 0.42) {
-    const fadeProgress = (progress - 0.37) / 0.05;
+  } else if (progress >= 0.41 && progress < 0.46) {
+    const fadeProgress = (progress - 0.41) / 0.05;
     card4Opacity.value = fadeProgress;
     card4TranslateX.value = -50 + (fadeProgress * 50);
   } else {
@@ -181,11 +179,11 @@ const handleScroll = () => {
   }
 
   // Card 5 (bottom-center)
-  if (progress < 0.40) {
+  if (progress < 0.44) {
     card5Opacity.value = 0;
     card5TranslateX.value = -50;
-  } else if (progress >= 0.40 && progress < 0.45) {
-    const fadeProgress = (progress - 0.40) / 0.05;
+  } else if (progress >= 0.44 && progress < 0.49) {
+    const fadeProgress = (progress - 0.44) / 0.05;
     card5Opacity.value = fadeProgress;
     card5TranslateX.value = -50 + (fadeProgress * 50);
   } else {
@@ -194,11 +192,11 @@ const handleScroll = () => {
   }
 
   // Card 6 (bottom-right)
-  if (progress < 0.43) {
+  if (progress < 0.47) {
     card6Opacity.value = 0;
     card6TranslateX.value = -50;
-  } else if (progress >= 0.43 && progress < 0.48) {
-    const fadeProgress = (progress - 0.43) / 0.05;
+  } else if (progress >= 0.47 && progress < 0.52) {
+    const fadeProgress = (progress - 0.47) / 0.05;
     card6Opacity.value = fadeProgress;
     card6TranslateX.value = -50 + (fadeProgress * 50);
   } else {
@@ -301,7 +299,7 @@ onUnmounted(() => {
         </div>
 
         <!-- 3x2 grid with card-dealing animation -->
-        <div class="grid grid-cols-3 gap-6 w-full max-w-7xl">
+        <div class="grid grid-cols-3 gap-5 w-full max-w-6xl transform scale-95">
           <!-- Row 1 -->
           <div
             :style="{
