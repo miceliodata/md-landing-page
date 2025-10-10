@@ -74,23 +74,32 @@ const partnerFeatures = [
   },
 ];
 
-// Scroll-based opacity controls for scroll animations
-const titleOpacity = ref(0);
-const titleTranslateY = ref(0);
-const group1Card1Opacity = ref(0);
-const group1Card1TranslateY = ref(0);
-const group1Card2Opacity = ref(0);
-const group1Card2TranslateY = ref(0);
-const group1Card3Opacity = ref(0);
-const group1Card3TranslateY = ref(0);
-const group2Card1Opacity = ref(0);
-const group2Card1TranslateY = ref(0);
-const group2Card2Opacity = ref(0);
-const group2Card2TranslateY = ref(0);
-const group2Card3Opacity = ref(0);
-const group2Card3TranslateY = ref(0);
+// Desktop scroll-based controls
+const desktopTitleOpacity = ref(1);
+const desktopTitleTranslateY = ref(0);
 
-// Track scroll position within this section
+// Desktop card animation controls
+const card1Opacity = ref(0);
+const card1TranslateX = ref(0);
+const card2Opacity = ref(0);
+const card2TranslateX = ref(0);
+const card3Opacity = ref(0);
+const card3TranslateX = ref(0);
+const card4Opacity = ref(0);
+const card4TranslateX = ref(0);
+const card5Opacity = ref(0);
+const card5TranslateX = ref(0);
+const card6Opacity = ref(0);
+const card6TranslateX = ref(0);
+
+// Mobile scroll-based controls
+const mobileTitleOpacity = ref(1);
+const mobileTitleTranslateY = ref(0);
+
+// Mobile group opacity
+const group1Opacity = ref(0);
+const group2Opacity = ref(0);
+
 const handleScroll = () => {
   const section = document.getElementById('partners-section');
   if (!section) return;
@@ -104,345 +113,411 @@ const handleScroll = () => {
   const scrollRange = sectionHeight + viewportHeight;
   const progress = Math.max(0, Math.min(1, -scrollStart / scrollRange));
 
-  // Check if mobile (< 768px, which is 'md' breakpoint in Tailwind)
-  const isMobile = window.innerWidth < 768;
-
-  if (isMobile) {
-    // MOBILE: Sequential animation - title fades out, then first 3 cards, then second 3 cards
-
-    // Title: fades in immediately, stays visible, then fades out at 20%
-    if (progress < 0.05) {
-      titleOpacity.value = 0;
-      titleTranslateY.value = 0;
-    } else if (progress >= 0.05 && progress < 0.08) {
-      const fadeProgress = (progress - 0.05) / 0.03;
-      titleOpacity.value = fadeProgress;
-      titleTranslateY.value = 0;
-    } else if (progress >= 0.08 && progress < 0.20) {
-      titleOpacity.value = 1;
-      titleTranslateY.value = 0;
-    } else if (progress >= 0.20 && progress < 0.25) {
-      const fadeProgress = (progress - 0.20) / 0.05;
-      titleOpacity.value = 1 - fadeProgress;
-      titleTranslateY.value = 0;
-    } else {
-      titleOpacity.value = 0;
-      titleTranslateY.value = 0;
-    }
-
-    // Group 1 - All 3 cards: slide in at 23%, stay until 48%, fade out by 53%
-    const group1Start = 0.23;
-    const group1FadeIn = 0.28;
-    const group1FadeOutStart = 0.48;
-    const group1FadeOutEnd = 0.53;
-
-    [
-      [group1Card1Opacity, group1Card1TranslateY],
-      [group1Card2Opacity, group1Card2TranslateY],
-      [group1Card3Opacity, group1Card3TranslateY]
-    ].forEach(([opacity, translateY]) => {
-      if (progress < group1Start) {
-        opacity.value = 0;
-        translateY.value = 80;
-      } else if (progress >= group1Start && progress < group1FadeIn) {
-        const fadeProgress = (progress - group1Start) / 0.05;
-        opacity.value = fadeProgress;
-        translateY.value = 80 - (fadeProgress * 80);
-      } else if (progress >= group1FadeIn && progress < group1FadeOutStart) {
-        opacity.value = 1;
-        translateY.value = 0;
-      } else if (progress >= group1FadeOutStart && progress < group1FadeOutEnd) {
-        const fadeProgress = (progress - group1FadeOutStart) / 0.06;
-        opacity.value = 1 - fadeProgress;
-        translateY.value = fadeProgress * 50;
-      } else {
-        opacity.value = 0;
-        translateY.value = 50;
-      }
-    });
-
-    // Group 2 - All 3 cards: slide in at 51%, stay until end
-    const group2Start = 0.51;
-    const group2FadeIn = 0.56;
-
-    [
-      [group2Card1Opacity, group2Card1TranslateY],
-      [group2Card2Opacity, group2Card2TranslateY],
-      [group2Card3Opacity, group2Card3TranslateY]
-    ].forEach(([opacity, translateY]) => {
-      if (progress < group2Start) {
-        opacity.value = 0;
-        translateY.value = 80;
-      } else if (progress >= group2Start && progress < group2FadeIn) {
-        const fadeProgress = (progress - group2Start) / 0.05;
-        opacity.value = fadeProgress;
-        translateY.value = 80 - (fadeProgress * 80);
-      } else {
-        opacity.value = 1;
-        translateY.value = 0;
-      }
-    });
-
+  // DESKTOP: Title starts centered, moves to top and stays there
+  // Title moves from center (0) to top position (around -150px to -180px)
+  if (progress < 0.05) {
+    desktopTitleOpacity.value = 1;
+    desktopTitleTranslateY.value = 0;
+  } else if (progress >= 0.05 && progress < 0.25) {
+    const moveProgress = (progress - 0.05) / 0.20;
+    desktopTitleOpacity.value = 1;
+    desktopTitleTranslateY.value = -150 * moveProgress; // Move up to top position
   } else {
-    // DESKTOP: Original animation - title stays visible, all cards slide in sequentially
+    desktopTitleOpacity.value = 1;
+    desktopTitleTranslateY.value = -150; // Stay at top
+  }
 
-    // Title: fades in early and stays visible throughout
-    if (progress < 0.10) {
-      titleOpacity.value = 0;
-      titleTranslateY.value = -20;
-    } else if (progress >= 0.10 && progress < 0.15) {
-      const fadeProgress = (progress - 0.10) / 0.05;
-      titleOpacity.value = fadeProgress;
-      titleTranslateY.value = -20 + (fadeProgress * 20);
-    } else {
-      titleOpacity.value = 1;
-      titleTranslateY.value = 0;
-    }
+  // Cards appear one by one from left to right (card dealing effect)
+  // Card 1 (top-left)
+  if (progress < 0.28) {
+    card1Opacity.value = 0;
+    card1TranslateX.value = -50;
+  } else if (progress >= 0.28 && progress < 0.33) {
+    const fadeProgress = (progress - 0.28) / 0.05;
+    card1Opacity.value = fadeProgress;
+    card1TranslateX.value = -50 + (fadeProgress * 50);
+  } else {
+    card1Opacity.value = 1;
+    card1TranslateX.value = 0;
+  }
 
-    // Group 1 - Card 1: slides in from bottom (like dealing cards)
-    if (progress < 0.25) {
-      group1Card1Opacity.value = 0;
-      group1Card1TranslateY.value = 120;
-    } else if (progress >= 0.25 && progress < 0.30) {
-      const fadeProgress = (progress - 0.25) / 0.05;
-      group1Card1Opacity.value = fadeProgress;
-      group1Card1TranslateY.value = 120 - (fadeProgress * 120);
-    } else {
-      group1Card1Opacity.value = 1;
-      group1Card1TranslateY.value = 0;
-    }
+  // Card 2 (top-center)
+  if (progress < 0.31) {
+    card2Opacity.value = 0;
+    card2TranslateX.value = -50;
+  } else if (progress >= 0.31 && progress < 0.36) {
+    const fadeProgress = (progress - 0.31) / 0.05;
+    card2Opacity.value = fadeProgress;
+    card2TranslateX.value = -50 + (fadeProgress * 50);
+  } else {
+    card2Opacity.value = 1;
+    card2TranslateX.value = 0;
+  }
 
-    // Group 1 - Card 2: slides in from bottom, slightly later
-    if (progress < 0.28) {
-      group1Card2Opacity.value = 0;
-      group1Card2TranslateY.value = 120;
-    } else if (progress >= 0.28 && progress < 0.33) {
-      const fadeProgress = (progress - 0.28) / 0.05;
-      group1Card2Opacity.value = fadeProgress;
-      group1Card2TranslateY.value = 120 - (fadeProgress * 120);
-    } else {
-      group1Card2Opacity.value = 1;
-      group1Card2TranslateY.value = 0;
-    }
+  // Card 3 (top-right)
+  if (progress < 0.34) {
+    card3Opacity.value = 0;
+    card3TranslateX.value = -50;
+  } else if (progress >= 0.34 && progress < 0.39) {
+    const fadeProgress = (progress - 0.34) / 0.05;
+    card3Opacity.value = fadeProgress;
+    card3TranslateX.value = -50 + (fadeProgress * 50);
+  } else {
+    card3Opacity.value = 1;
+    card3TranslateX.value = 0;
+  }
 
-    // Group 1 - Card 3: slides in from bottom, last of the three
-    if (progress < 0.31) {
-      group1Card3Opacity.value = 0;
-      group1Card3TranslateY.value = 120;
-    } else if (progress >= 0.31 && progress < 0.36) {
-      const fadeProgress = (progress - 0.31) / 0.05;
-      group1Card3Opacity.value = fadeProgress;
-      group1Card3TranslateY.value = 120 - (fadeProgress * 120);
-    } else {
-      group1Card3Opacity.value = 1;
-      group1Card3TranslateY.value = 0;
-    }
+  // Card 4 (bottom-left)
+  if (progress < 0.37) {
+    card4Opacity.value = 0;
+    card4TranslateX.value = -50;
+  } else if (progress >= 0.37 && progress < 0.42) {
+    const fadeProgress = (progress - 0.37) / 0.05;
+    card4Opacity.value = fadeProgress;
+    card4TranslateX.value = -50 + (fadeProgress * 50);
+  } else {
+    card4Opacity.value = 1;
+    card4TranslateX.value = 0;
+  }
 
-    // Group 2 - Card 1: slides in from bottom (second row)
-    if (progress < 0.40) {
-      group2Card1Opacity.value = 0;
-      group2Card1TranslateY.value = 120;
-    } else if (progress >= 0.40 && progress < 0.45) {
-      const fadeProgress = (progress - 0.40) / 0.05;
-      group2Card1Opacity.value = fadeProgress;
-      group2Card1TranslateY.value = 120 - (fadeProgress * 120);
-    } else {
-      group2Card1Opacity.value = 1;
-      group2Card1TranslateY.value = 0;
-    }
+  // Card 5 (bottom-center)
+  if (progress < 0.40) {
+    card5Opacity.value = 0;
+    card5TranslateX.value = -50;
+  } else if (progress >= 0.40 && progress < 0.45) {
+    const fadeProgress = (progress - 0.40) / 0.05;
+    card5Opacity.value = fadeProgress;
+    card5TranslateX.value = -50 + (fadeProgress * 50);
+  } else {
+    card5Opacity.value = 1;
+    card5TranslateX.value = 0;
+  }
 
-    // Group 2 - Card 2: slides in from bottom, slightly later
-    if (progress < 0.43) {
-      group2Card2Opacity.value = 0;
-      group2Card2TranslateY.value = 120;
-    } else if (progress >= 0.43 && progress < 0.48) {
-      const fadeProgress = (progress - 0.43) / 0.05;
-      group2Card2Opacity.value = fadeProgress;
-      group2Card2TranslateY.value = 120 - (fadeProgress * 120);
-    } else {
-      group2Card2Opacity.value = 1;
-      group2Card2TranslateY.value = 0;
-    }
+  // Card 6 (bottom-right)
+  if (progress < 0.43) {
+    card6Opacity.value = 0;
+    card6TranslateX.value = -50;
+  } else if (progress >= 0.43 && progress < 0.48) {
+    const fadeProgress = (progress - 0.43) / 0.05;
+    card6Opacity.value = fadeProgress;
+    card6TranslateX.value = -50 + (fadeProgress * 50);
+  } else {
+    card6Opacity.value = 1;
+    card6TranslateX.value = 0;
+  }
+};
 
-    // Group 2 - Card 3: slides in from bottom, last of all six cards
-    if (progress < 0.46) {
-      group2Card3Opacity.value = 0;
-      group2Card3TranslateY.value = 120;
-    } else if (progress >= 0.46 && progress < 0.51) {
-      const fadeProgress = (progress - 0.46) / 0.05;
-      group2Card3Opacity.value = fadeProgress;
-      group2Card3TranslateY.value = 120 - (fadeProgress * 120);
-    } else {
-      group2Card3Opacity.value = 1;
-      group2Card3TranslateY.value = 0;
-    }
+const handleScrollMobile = () => {
+  const section = document.getElementById('partners-section-mobile');
+  if (!section) return;
+
+  const rect = section.getBoundingClientRect();
+  const sectionTop = rect.top;
+  const sectionHeight = rect.height;
+  const viewportHeight = window.innerHeight;
+
+  const scrollStart = sectionTop - viewportHeight;
+  const scrollRange = sectionHeight + viewportHeight;
+  const progress = Math.max(0, Math.min(1, -scrollStart / scrollRange));
+
+  // MOBILE: Fade out behavior - matches Data Collection section timing
+  if (progress < 0.30) {
+    mobileTitleOpacity.value = 1;
+    mobileTitleTranslateY.value = 0;
+  } else if (progress >= 0.30 && progress < 0.35) {
+    const fadeProgress = (progress - 0.30) / 0.05;
+    mobileTitleOpacity.value = 1 - fadeProgress;
+    mobileTitleTranslateY.value = 0;
+  } else {
+    mobileTitleOpacity.value = 0;
+    mobileTitleTranslateY.value = 0;
+  }
+
+  // First group of 3 cards: fade in at 33%, stay until 60%, fade out by 65%
+  if (progress < 0.33) {
+    group1Opacity.value = 0;
+  } else if (progress >= 0.33 && progress < 0.38) {
+    const fadeProgress = (progress - 0.33) / 0.05;
+    group1Opacity.value = fadeProgress;
+  } else if (progress >= 0.38 && progress < 0.60) {
+    group1Opacity.value = 1;
+  } else if (progress >= 0.60 && progress < 0.65) {
+    const fadeProgress = (progress - 0.60) / 0.05;
+    group1Opacity.value = 1 - fadeProgress;
+  } else {
+    group1Opacity.value = 0;
+  }
+
+  // Second group of 3 cards: fade in at 63%, stay until end
+  if (progress < 0.63) {
+    group2Opacity.value = 0;
+  } else if (progress >= 0.63 && progress < 0.68) {
+    const fadeProgress = (progress - 0.63) / 0.05;
+    group2Opacity.value = fadeProgress;
+  } else {
+    group2Opacity.value = 1;
   }
 };
 
 onMounted(() => {
   window.addEventListener('scroll', handleScroll, { passive: true });
+  window.addEventListener('scroll', handleScrollMobile, { passive: true });
   handleScroll();
+  handleScrollMobile();
 });
 
 onUnmounted(() => {
   window.removeEventListener('scroll', handleScroll);
+  window.removeEventListener('scroll', handleScrollMobile);
 });
 </script>
 
 <template>
+  <!-- DESKTOP SECTION -->
   <section
     id="partners-section"
-    class="scroll-mt-[7rem] relative"
+    class="scroll-mt-[7rem] relative hidden md:block"
     style="min-height: 400vh;"
   >
     <!-- Fixed container that stays in viewport -->
-    <div class="sticky top-0 h-screen flex items-center justify-center px-6 md:px-16 lg:px-20">
-      <div class="w-full max-w-7xl flex flex-col md:block">
-
-        <!-- Title and subtitle - centered on mobile, top on desktop -->
+    <div class="sticky top-0 h-screen flex items-center justify-center px-16 lg:px-20">
+      <div class="w-full max-w-7xl flex flex-col items-center justify-center">
+        <!-- Title and subtitle - moves to top and stays -->
         <div
-          :class="[
-            'text-center',
-            'md:mb-12'
-          ]"
+          class="text-center mb-8"
           :style="{
-            opacity: titleOpacity,
-            transform: `translateY(${titleTranslateY}px)`,
+            opacity: desktopTitleOpacity,
+            transform: `translateY(${desktopTitleTranslateY}px)`,
             transition: 'opacity 0.3s ease-out, transform 0.3s ease-out'
           }"
         >
-          <h2 class="text-4xl md:text-5xl font-bold text-gray-100 mb-4">
+          <h2 class="text-5xl font-bold text-gray-100 mb-4">
             Partnership Opportunities
           </h2>
-          <p class="text-lg text-gray-300 leading-relaxed max-w-3xl mx-auto px-4">
+          <p class="text-lg text-gray-300 leading-relaxed max-w-3xl mx-auto">
             We're building a comprehensive ecosystem that requires diverse
             expertise. Find your role in the future of supply chain transparency.
           </p>
         </div>
 
-        <!-- Cards container - single column on mobile (centered), grid on desktop -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 w-full max-w-md md:max-w-7xl mx-auto">
-          <!-- Row 1 - Card 1 - Sourcing Companies -->
+        <!-- 3x2 grid with card-dealing animation -->
+        <div class="grid grid-cols-3 gap-6 w-full max-w-7xl">
+          <!-- Row 1 -->
           <div
             :style="{
-              transform: `translateY(${group1Card1TranslateY}px)`,
-              transition: 'transform 0.4s ease-out',
-              pointerEvents: group1Card1Opacity > 0 ? 'auto' : 'none'
+              opacity: card1Opacity,
+              transform: `translateX(${card1TranslateX}px)`,
+              transition: 'opacity 0.3s ease-out, transform 0.3s ease-out'
             }"
           >
-            <div :style="{ opacity: group1Card1Opacity, transition: 'opacity 0.4s ease-out' }">
-              <MainCard
-                :hoverEffect="'none'"
-                :icon="partnerFeatures[0].icon"
-                :bullet="partnerFeatures[0].bullet"
-                :color="partnerFeatures[0].color"
-                :title="partnerFeatures[0].title"
-                :description="partnerFeatures[0].description"
-              />
-            </div>
+            <MainCard
+              :hoverEffect="'none'"
+              :icon="partnerFeatures[0].icon"
+              :bullet="partnerFeatures[0].bullet"
+              :color="partnerFeatures[0].color"
+              :title="partnerFeatures[0].title"
+              :description="partnerFeatures[0].description"
+            />
           </div>
 
-          <!-- Row 1 - Card 2 - Tech providers -->
           <div
             :style="{
-              transform: `translateY(${group1Card2TranslateY}px)`,
-              transition: 'transform 0.4s ease-out',
-              pointerEvents: group1Card2Opacity > 0 ? 'auto' : 'none'
+              opacity: card2Opacity,
+              transform: `translateX(${card2TranslateX}px)`,
+              transition: 'opacity 0.3s ease-out, transform 0.3s ease-out'
             }"
           >
-            <div :style="{ opacity: group1Card2Opacity, transition: 'opacity 0.4s ease-out' }">
-              <MainCard
-                :hoverEffect="'none'"
-                :icon="partnerFeatures[1].icon"
-                :bullet="partnerFeatures[1].bullet"
-                :color="partnerFeatures[1].color"
-                :title="partnerFeatures[1].title"
-                :description="partnerFeatures[1].description"
-              />
-            </div>
+            <MainCard
+              :hoverEffect="'none'"
+              :icon="partnerFeatures[1].icon"
+              :bullet="partnerFeatures[1].bullet"
+              :color="partnerFeatures[1].color"
+              :title="partnerFeatures[1].title"
+              :description="partnerFeatures[1].description"
+            />
           </div>
 
-          <!-- Row 1 - Card 3 - Certification agencies -->
           <div
             :style="{
-              transform: `translateY(${group1Card3TranslateY}px)`,
-              transition: 'transform 0.4s ease-out',
-              pointerEvents: group1Card3Opacity > 0 ? 'auto' : 'none'
+              opacity: card3Opacity,
+              transform: `translateX(${card3TranslateX}px)`,
+              transition: 'opacity 0.3s ease-out, transform 0.3s ease-out'
             }"
           >
-            <div :style="{ opacity: group1Card3Opacity, transition: 'opacity 0.4s ease-out' }">
-              <MainCard
-                :hoverEffect="'none'"
-                :icon="partnerFeatures[2].icon"
-                :bullet="partnerFeatures[2].bullet"
-                :color="partnerFeatures[2].color"
-                :title="partnerFeatures[2].title"
-                :description="partnerFeatures[2].description"
-              />
-            </div>
+            <MainCard
+              :hoverEffect="'none'"
+              :icon="partnerFeatures[2].icon"
+              :bullet="partnerFeatures[2].bullet"
+              :color="partnerFeatures[2].color"
+              :title="partnerFeatures[2].title"
+              :description="partnerFeatures[2].description"
+            />
           </div>
 
-          <!-- Row 2 - Card 1 - Industry associations -->
+          <!-- Row 2 -->
           <div
             :style="{
-              transform: `translateY(${group2Card1TranslateY}px)`,
-              transition: 'transform 0.4s ease-out',
-              pointerEvents: group2Card1Opacity > 0 ? 'auto' : 'none'
+              opacity: card4Opacity,
+              transform: `translateX(${card4TranslateX}px)`,
+              transition: 'opacity 0.3s ease-out, transform 0.3s ease-out'
             }"
           >
-            <div :style="{ opacity: group2Card1Opacity, transition: 'opacity 0.4s ease-out' }">
-              <MainCard
-                :hoverEffect="'none'"
-                :icon="partnerFeatures[3].icon"
-                :bullet="partnerFeatures[3].bullet"
-                :color="partnerFeatures[3].color"
-                :title="partnerFeatures[3].title"
-                :description="partnerFeatures[3].description"
-              />
-            </div>
+            <MainCard
+              :hoverEffect="'none'"
+              :icon="partnerFeatures[3].icon"
+              :bullet="partnerFeatures[3].bullet"
+              :color="partnerFeatures[3].color"
+              :title="partnerFeatures[3].title"
+              :description="partnerFeatures[3].description"
+            />
           </div>
 
-          <!-- Row 2 - Card 2 - Sustainability Consulting -->
           <div
             :style="{
-              transform: `translateY(${group2Card2TranslateY}px)`,
-              transition: 'transform 0.4s ease-out',
-              pointerEvents: group2Card2Opacity > 0 ? 'auto' : 'none'
+              opacity: card5Opacity,
+              transform: `translateX(${card5TranslateX}px)`,
+              transition: 'opacity 0.3s ease-out, transform 0.3s ease-out'
             }"
           >
-            <div :style="{ opacity: group2Card2Opacity, transition: 'opacity 0.4s ease-out' }">
-              <MainCard
-                :hoverEffect="'none'"
-                :icon="partnerFeatures[4].icon"
-                :bullet="partnerFeatures[4].bullet"
-                :color="partnerFeatures[4].color"
-                :title="partnerFeatures[4].title"
-                :description="partnerFeatures[4].description"
-              />
-            </div>
+            <MainCard
+              :hoverEffect="'none'"
+              :icon="partnerFeatures[4].icon"
+              :bullet="partnerFeatures[4].bullet"
+              :color="partnerFeatures[4].color"
+              :title="partnerFeatures[4].title"
+              :description="partnerFeatures[4].description"
+            />
           </div>
 
-          <!-- Row 2 - Card 3 - Label providers -->
           <div
             :style="{
-              transform: `translateY(${group2Card3TranslateY}px)`,
-              transition: 'transform 0.4s ease-out',
-              pointerEvents: group2Card3Opacity > 0 ? 'auto' : 'none'
+              opacity: card6Opacity,
+              transform: `translateX(${card6TranslateX}px)`,
+              transition: 'opacity 0.3s ease-out, transform 0.3s ease-out'
             }"
           >
-            <div :style="{ opacity: group2Card3Opacity, transition: 'opacity 0.4s ease-out' }">
-              <MainCard
-                :hoverEffect="'none'"
-                :icon="partnerFeatures[5].icon"
-                :bullet="partnerFeatures[5].bullet"
-                :color="partnerFeatures[5].color"
-                :title="partnerFeatures[5].title"
-                :description="partnerFeatures[5].description"
-              />
-            </div>
+            <MainCard
+              :hoverEffect="'none'"
+              :icon="partnerFeatures[5].icon"
+              :bullet="partnerFeatures[5].bullet"
+              :color="partnerFeatures[5].color"
+              :title="partnerFeatures[5].title"
+              :description="partnerFeatures[5].description"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MOBILE SECTION -->
+  <section
+    id="partners-section-mobile"
+    class="scroll-mt-[7rem] relative md:hidden"
+    style="min-height: 400vh;"
+  >
+    <!-- Fixed container that stays in viewport -->
+    <div class="sticky top-0 h-screen flex items-center justify-center px-8 py-8">
+      <div class="w-full max-w-sm">
+        <!-- Title and subtitle - fades out -->
+        <div
+          class="text-center mb-12"
+          :style="{
+            opacity: mobileTitleOpacity,
+            transform: `translateY(${mobileTitleTranslateY}px)`,
+            transition: 'opacity 0.3s ease-out, transform 0.3s ease-out'
+          }"
+        >
+          <h2 class="text-4xl font-bold text-gray-100 mb-4">
+            Partnership Opportunities
+          </h2>
+          <p class="text-lg text-gray-300 leading-relaxed px-4">
+            We're building a comprehensive ecosystem that requires diverse
+            expertise. Find your role in the future of supply chain transparency.
+          </p>
+        </div>
+
+        <!-- First group of 3 cards (vertical stack) -->
+        <div
+          class="flex flex-col gap-4 w-full absolute inset-0 justify-center px-8 py-8"
+          :style="{
+            opacity: group1Opacity,
+            transition: 'opacity 0.3s ease-out',
+            pointerEvents: group1Opacity > 0 ? 'auto' : 'none'
+          }"
+        >
+          <div class="transform scale-90">
+            <MainCard
+              :hoverEffect="'none'"
+              :icon="partnerFeatures[0].icon"
+              :bullet="partnerFeatures[0].bullet"
+              :color="partnerFeatures[0].color"
+              :title="partnerFeatures[0].title"
+              :description="partnerFeatures[0].description"
+            />
+          </div>
+          <div class="transform scale-90">
+            <MainCard
+              :hoverEffect="'none'"
+              :icon="partnerFeatures[1].icon"
+              :bullet="partnerFeatures[1].bullet"
+              :color="partnerFeatures[1].color"
+              :title="partnerFeatures[1].title"
+              :description="partnerFeatures[1].description"
+            />
+          </div>
+          <div class="transform scale-90">
+            <MainCard
+              :hoverEffect="'none'"
+              :icon="partnerFeatures[2].icon"
+              :bullet="partnerFeatures[2].bullet"
+              :color="partnerFeatures[2].color"
+              :title="partnerFeatures[2].title"
+              :description="partnerFeatures[2].description"
+            />
           </div>
         </div>
 
+        <!-- Second group of 3 cards (vertical stack) -->
+        <div
+          class="flex flex-col gap-4 w-full absolute inset-0 justify-center px-8 py-8"
+          :style="{
+            opacity: group2Opacity,
+            transition: 'opacity 0.3s ease-out',
+            pointerEvents: group2Opacity > 0 ? 'auto' : 'none'
+          }"
+        >
+          <div class="transform scale-90">
+            <MainCard
+              :hoverEffect="'none'"
+              :icon="partnerFeatures[3].icon"
+              :bullet="partnerFeatures[3].bullet"
+              :color="partnerFeatures[3].color"
+              :title="partnerFeatures[3].title"
+              :description="partnerFeatures[3].description"
+            />
+          </div>
+          <div class="transform scale-90">
+            <MainCard
+              :hoverEffect="'none'"
+              :icon="partnerFeatures[4].icon"
+              :bullet="partnerFeatures[4].bullet"
+              :color="partnerFeatures[4].color"
+              :title="partnerFeatures[4].title"
+              :description="partnerFeatures[4].description"
+            />
+          </div>
+          <div class="transform scale-90">
+            <MainCard
+              :hoverEffect="'none'"
+              :icon="partnerFeatures[5].icon"
+              :bullet="partnerFeatures[5].bullet"
+              :color="partnerFeatures[5].color"
+              :title="partnerFeatures[5].title"
+              :description="partnerFeatures[5].description"
+            />
+          </div>
+        </div>
       </div>
     </div>
   </section>
