@@ -4,7 +4,7 @@
   .text-primary {
     color: #267a6aff;
   }
-  
+
 
   .hover\:text-primary:hover {
     color: #267a6aff;
@@ -33,4 +33,17 @@
   .hover\:bg-primary-dark:hover {
     background-color: #025b46ff;
   }
+}
+
+/* Ensure all content appears above fixed Earth background */
+.stacked-section {
+  position: relative;
+  z-index: 1;
+}
+
+/* Dark space gradient background for entire page */
+body {
+  background: radial-gradient(ellipse at top, #1a1a2e 0%, #0a0a15 50%, #000000 100%);
+  background-attachment: fixed;
+  min-height: 100vh;
 }

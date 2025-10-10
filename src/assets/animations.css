@@ -1,0 +1,76 @@
+/* Mont-Fort Style Text Animations */
+
+/* Character reveal animation setup */
+.animate-char-reveal .char {
+  display: inline-block;
+  transform-origin: bottom;
+}
+
+/* Word reveal animation setup */
+.animate-word-reveal .word-wrapper {
+  display: inline-block;
+  overflow: hidden;
+  padding: 0 0.05em;
+}
+
+.animate-word-reveal .word {
+  display: inline-block;
+  transform-origin: bottom;
+}
+
+/* Line reveal animation setup */
+.animate-line-reveal {
+  overflow: hidden;
+}
+
+/* Smooth transitions for all animated elements */
+.animate-fade-up,
+.animate-slide-left,
+.animate-slide-right,
+.animate-scale,
+.animate-stagger,
+.animate-blur-in,
+.animate-clip-reveal,
+.animate-flip {
+  will-change: transform, opacity;
+}
+
+/* Perspective for 3D transforms */
+.animate-flip,
+.animate-char-reveal,
+.animate-word-reveal {
+  transform-style: preserve-3d;
+  perspective: 1000px;
+}
+
+/* Stagger group setup */
+.animate-stagger-group {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Parallax setup */
+.animate-parallax {
+  will-change: transform;
+}
+
+/* Performance optimizations */
+@media (prefers-reduced-motion: reduce) {
+  .animate-char-reveal,
+  .animate-word-reveal,
+  .animate-line-reveal,
+  .animate-fade-up,
+  .animate-slide-left,
+  .animate-slide-right,
+  .animate-scale,
+  .animate-stagger,
+  .animate-blur-in,
+  .animate-clip-reveal,
+  .animate-parallax,
+  .animate-flip {
+    animation: none !important;
+    transition: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}

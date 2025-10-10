@@ -1,0 +1,18 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm install:*)",
+      "WebFetch(domain:mont-fort.com)",
+      "WebSearch",
+      "WebFetch(domain:github.com)",
+      "Bash(curl:*)",
+      "Bash(git checkout:*)",
+      "Bash(npm run dev:*)",
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "WebFetch(domain:gcat.cc)",
+      "WebFetch(domain:api.github.com)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

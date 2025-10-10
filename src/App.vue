@@ -1,5 +1,6 @@
 <script setup lang="ts">
   import SiteHeader from '@/components/SiteHeader.vue'
+  import '@/assets/animations.css'
 </script>
 
 <template>

@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import { getGradientColors } from "@/utils/colorClasses";
-
+import { ref, onMounted, onUnmounted } from 'vue';
 import MainCard from "@/components/cards/MainCard.vue";
 
 import { GlobeAltIcon } from "@heroicons/vue/24/outline";
@@ -10,10 +9,6 @@ import { UsersIcon } from "@heroicons/vue/24/outline";
 import { ChartBarIcon } from "@heroicons/vue/24/outline";
 import { QrCodeIcon } from "@heroicons/vue/24/outline";
 import { BoltIcon } from "@heroicons/vue/24/outline";
-
-import { ShoppingCartIcon } from "@heroicons/vue/24/outline";
-import { ArrowsPointingInIcon } from "@heroicons/vue/24/outline";
-import { SquaresPlusIcon } from "@heroicons/vue/24/outline";
 
 const partnerFeatures = [
   {
@@ -79,162 +74,446 @@ const partnerFeatures = [
   },
 ];
 
-const collabModels = [
-  {
-    icon: ShoppingCartIcon,
-    color: "emerald",
-    title: "Service Provider",
-    desc: "Offer your specialized services directly through our platform",
-  },
-  {
-    icon: ArrowsPointingInIcon,
-    color: "teal",
-    title: "Integration Partner",
-    desc: "Integrate your systems with our ecosystem for seamless operations",
-  },
-  {
-    icon: SquaresPlusIcon,
-    color: "sky",
-    title: "Strategic Alliance",
-    desc: "Long-term partnership for mutual growth and market expansion",
-  },
-];
+// Desktop scroll-based controls
+const desktopTitleOpacity = ref(1);
+const desktopTitleTranslateY = ref(0);
 
-const iconClass = (color: string) => {
-  const { from, to } = getGradientColors(color);
-  return `rounded-full bg-radial ${from} ${to} w-16 h-16 flex items-center justify-center`;
+// Desktop card animation controls
+const card1Opacity = ref(0);
+const card1TranslateX = ref(0);
+const card2Opacity = ref(0);
+const card2TranslateX = ref(0);
+const card3Opacity = ref(0);
+const card3TranslateX = ref(0);
+const card4Opacity = ref(0);
+const card4TranslateX = ref(0);
+const card5Opacity = ref(0);
+const card5TranslateX = ref(0);
+const card6Opacity = ref(0);
+const card6TranslateX = ref(0);
+
+// Mobile scroll-based controls
+const mobileTitleOpacity = ref(1);
+const mobileTitleTranslateY = ref(0);
+
+// Mobile group opacity
+const group1Opacity = ref(0);
+const group2Opacity = ref(0);
+
+const handleScroll = () => {
+  const section = document.getElementById('partners-section');
+  if (!section) return;
+
+  const rect = section.getBoundingClientRect();
+  const sectionTop = rect.top;
+  const sectionHeight = rect.height;
+  const viewportHeight = window.innerHeight;
+
+  const scrollStart = sectionTop - viewportHeight;
+  const scrollRange = sectionHeight + viewportHeight;
+  const progress = Math.max(0, Math.min(1, -scrollStart / scrollRange));
+
+  // DESKTOP: Title stays centered and fixed, then unlocks and moves to top
+  if (progress < 0.20) {
+    // Title stays centered and stationary for user to read
+    desktopTitleOpacity.value = 1;
+    desktopTitleTranslateY.value = 0;
+  } else {
+    // Title stays at same position (no movement needed)
+    desktopTitleOpacity.value = 1;
+    desktopTitleTranslateY.value = 0;
+  }
+
+  // Cards appear one by one from left to right (card dealing effect)
+  // Start cards appearing after title has moved up
+  // Card 1 (top-left)
+  if (progress < 0.32) {
+    card1Opacity.value = 0;
+    card1TranslateX.value = -50;
+  } else if (progress >= 0.32 && progress < 0.37) {
+    const fadeProgress = (progress - 0.32) / 0.05;
+    card1Opacity.value = fadeProgress;
+    card1TranslateX.value = -50 + (fadeProgress * 50);
+  } else {
+    card1Opacity.value = 1;
+    card1TranslateX.value = 0;
+  }
+
+  // Card 2 (top-center)
+  if (progress < 0.35) {
+    card2Opacity.value = 0;
+    card2TranslateX.value = -50;
+  } else if (progress >= 0.35 && progress < 0.40) {
+    const fadeProgress = (progress - 0.35) / 0.05;
+    card2Opacity.value = fadeProgress;
+    card2TranslateX.value = -50 + (fadeProgress * 50);
+  } else {
+    card2Opacity.value = 1;
+    card2TranslateX.value = 0;
+  }
+
+  // Card 3 (top-right)
+  if (progress < 0.38) {
+    card3Opacity.value = 0;
+    card3TranslateX.value = -50;
+  } else if (progress >= 0.38 && progress < 0.43) {
+    const fadeProgress = (progress - 0.38) / 0.05;
+    card3Opacity.value = fadeProgress;
+    card3TranslateX.value = -50 + (fadeProgress * 50);
+  } else {
+    card3Opacity.value = 1;
+    card3TranslateX.value = 0;
+  }
+
+  // Card 4 (bottom-left)
+  if (progress < 0.41) {
+    card4Opacity.value = 0;
+    card4TranslateX.value = -50;
+  } else if (progress >= 0.41 && progress < 0.46) {
+    const fadeProgress = (progress - 0.41) / 0.05;
+    card4Opacity.value = fadeProgress;
+    card4TranslateX.value = -50 + (fadeProgress * 50);
+  } else {
+    card4Opacity.value = 1;
+    card4TranslateX.value = 0;
+  }
+
+  // Card 5 (bottom-center)
+  if (progress < 0.44) {
+    card5Opacity.value = 0;
+    card5TranslateX.value = -50;
+  } else if (progress >= 0.44 && progress < 0.49) {
+    const fadeProgress = (progress - 0.44) / 0.05;
+    card5Opacity.value = fadeProgress;
+    card5TranslateX.value = -50 + (fadeProgress * 50);
+  } else {
+    card5Opacity.value = 1;
+    card5TranslateX.value = 0;
+  }
+
+  // Card 6 (bottom-right)
+  if (progress < 0.47) {
+    card6Opacity.value = 0;
+    card6TranslateX.value = -50;
+  } else if (progress >= 0.47 && progress < 0.52) {
+    const fadeProgress = (progress - 0.47) / 0.05;
+    card6Opacity.value = fadeProgress;
+    card6TranslateX.value = -50 + (fadeProgress * 50);
+  } else {
+    card6Opacity.value = 1;
+    card6TranslateX.value = 0;
+  }
 };
+
+const handleScrollMobile = () => {
+  const section = document.getElementById('partners-section-mobile');
+  if (!section) return;
+
+  const rect = section.getBoundingClientRect();
+  const sectionTop = rect.top;
+  const sectionHeight = rect.height;
+  const viewportHeight = window.innerHeight;
+
+  const scrollStart = sectionTop - viewportHeight;
+  const scrollRange = sectionHeight + viewportHeight;
+  const progress = Math.max(0, Math.min(1, -scrollStart / scrollRange));
+
+  // MOBILE: Fade out behavior - matches Data Collection section timing
+  if (progress < 0.30) {
+    mobileTitleOpacity.value = 1;
+    mobileTitleTranslateY.value = 0;
+  } else if (progress >= 0.30 && progress < 0.35) {
+    const fadeProgress = (progress - 0.30) / 0.05;
+    mobileTitleOpacity.value = 1 - fadeProgress;
+    mobileTitleTranslateY.value = 0;
+  } else {
+    mobileTitleOpacity.value = 0;
+    mobileTitleTranslateY.value = 0;
+  }
+
+  // First group of 3 cards: fade in at 33%, stay until 60%, fade out by 65%
+  if (progress < 0.33) {
+    group1Opacity.value = 0;
+  } else if (progress >= 0.33 && progress < 0.38) {
+    const fadeProgress = (progress - 0.33) / 0.05;
+    group1Opacity.value = fadeProgress;
+  } else if (progress >= 0.38 && progress < 0.60) {
+    group1Opacity.value = 1;
+  } else if (progress >= 0.60 && progress < 0.65) {
+    const fadeProgress = (progress - 0.60) / 0.05;
+    group1Opacity.value = 1 - fadeProgress;
+  } else {
+    group1Opacity.value = 0;
+  }
+
+  // Second group of 3 cards: fade in at 63%, stay until end
+  if (progress < 0.63) {
+    group2Opacity.value = 0;
+  } else if (progress >= 0.63 && progress < 0.68) {
+    const fadeProgress = (progress - 0.63) / 0.05;
+    group2Opacity.value = fadeProgress;
+  } else {
+    group2Opacity.value = 1;
+  }
+};
+
+onMounted(() => {
+  window.addEventListener('scroll', handleScroll, { passive: true });
+  window.addEventListener('scroll', handleScrollMobile, { passive: true });
+  handleScroll();
+  handleScrollMobile();
+});
+
+onUnmounted(() => {
+  window.removeEventListener('scroll', handleScroll);
+  window.removeEventListener('scroll', handleScrollMobile);
+});
 </script>
 
 <template>
+  <!-- DESKTOP SECTION -->
   <section
     id="partners-section"
-    class="scroll-mt-[7rem] h-auto bg-dark px-6 text-gray-100 flex flex-col justify-center py-20"
+    class="scroll-mt-[7rem] relative hidden md:block"
+    style="min-height: 400vh;"
   >
-    <div class="max-w-6xl mx-auto w-full">
-      <div class="text-center mb-12">
-        <h2 class="text-5xl font-bold mb-4">Partnership Opportunities</h2>
-        <p class="text-gray-300 text-xl">
-          We're building a comprehensive ecosystem that requires diverse
-          expertise. Find your role in the future of supply chain transparency.
-        </p>
-      </div>
-
-      <ul
-        class="list-disc list-outside pl-6 text-gray-300 marker:text-gray-500 text-lg marker:text-2xl space-y-3 max-w-xl mx-auto mb-18"
-      >
-        <li>Integrate to the platform</li>
-        <li>Be part of market development</li>
-        <li>
-          Join to a shared innovation ecosystem to co-create scalable solutions
-        </li>
-        <li>Reliable and verified data ecosystem</li>
-      </ul>
-
-      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+    <!-- Fixed container that stays in viewport -->
+    <div class="sticky top-0 h-screen flex items-center justify-center px-16 lg:px-20">
+      <div class="w-full max-w-7xl flex flex-col items-center justify-center">
+        <!-- Title and subtitle - moves to top and stays -->
         <div
-          v-for="(feature, index) in partnerFeatures"
-          :key="index"
-          class="h-full"
+          class="text-center mb-8"
+          :style="{
+            opacity: desktopTitleOpacity,
+            transform: `translateY(${desktopTitleTranslateY}px)`,
+            transition: 'opacity 0.3s ease-out, transform 0.3s ease-out'
+          }"
         >
-          <MainCard
-            :hoverEffect="'highlight'"
-            :icon="feature.icon"
-            :bullet="feature.bullet"
-            :color="feature.color"
-            :title="feature.title"
-            :description="feature.description"
-          />
+          <h2 class="text-5xl font-bold text-gray-100 mb-4">
+            Partnership Opportunities
+          </h2>
+          <p class="text-lg text-gray-300 leading-relaxed max-w-3xl mx-auto">
+            We're building a comprehensive ecosystem that requires diverse
+            expertise. Find your role in the future of supply chain transparency.
+          </p>
         </div>
-      </div>
 
-      <div
-        class="max-w-4xl mx-auto text-center p-6 mt-20 rounded-md bg-mid shadow-lg shadow-blue-950/20"
-      >
-        <h2 class="text-4xl md:text-3xl font-bold text-gray-100 mt-4">
-          Collaboration Models
-        </h2>
-        <div class="grid gap-4 grid-cols-1 sm:grid-cols-3 pt-8">
-          <div v-for="(model, index) in collabModels" :key="index" class="p-6">
-            <div class="flex justify-center mb-4">
-              <div :class="iconClass(model.color)">
-                <component :is="model.icon" class="w-8 h-8 text-white" />
-              </div>
-            </div>
-            <h3 class="text-xl font-semibold text-gray-200 mb-4">
-              {{ model.title }}
-            </h3>
-            <h4 class="text-gray-300">{{ model.desc }}</h4>
+        <!-- 3x2 grid with card-dealing animation -->
+        <div class="grid grid-cols-3 gap-5 w-full max-w-6xl transform scale-95">
+          <!-- Row 1 -->
+          <div
+            :style="{
+              opacity: card1Opacity,
+              transform: `translateX(${card1TranslateX}px)`,
+              transition: 'opacity 0.3s ease-out, transform 0.3s ease-out'
+            }"
+          >
+            <MainCard
+              :hoverEffect="'none'"
+              :icon="partnerFeatures[0].icon"
+              :bullet="partnerFeatures[0].bullet"
+              :color="partnerFeatures[0].color"
+              :title="partnerFeatures[0].title"
+              :description="partnerFeatures[0].description"
+            />
+          </div>
+
+          <div
+            :style="{
+              opacity: card2Opacity,
+              transform: `translateX(${card2TranslateX}px)`,
+              transition: 'opacity 0.3s ease-out, transform 0.3s ease-out'
+            }"
+          >
+            <MainCard
+              :hoverEffect="'none'"
+              :icon="partnerFeatures[1].icon"
+              :bullet="partnerFeatures[1].bullet"
+              :color="partnerFeatures[1].color"
+              :title="partnerFeatures[1].title"
+              :description="partnerFeatures[1].description"
+            />
+          </div>
+
+          <div
+            :style="{
+              opacity: card3Opacity,
+              transform: `translateX(${card3TranslateX}px)`,
+              transition: 'opacity 0.3s ease-out, transform 0.3s ease-out'
+            }"
+          >
+            <MainCard
+              :hoverEffect="'none'"
+              :icon="partnerFeatures[2].icon"
+              :bullet="partnerFeatures[2].bullet"
+              :color="partnerFeatures[2].color"
+              :title="partnerFeatures[2].title"
+              :description="partnerFeatures[2].description"
+            />
+          </div>
+
+          <!-- Row 2 -->
+          <div
+            :style="{
+              opacity: card4Opacity,
+              transform: `translateX(${card4TranslateX}px)`,
+              transition: 'opacity 0.3s ease-out, transform 0.3s ease-out'
+            }"
+          >
+            <MainCard
+              :hoverEffect="'none'"
+              :icon="partnerFeatures[3].icon"
+              :bullet="partnerFeatures[3].bullet"
+              :color="partnerFeatures[3].color"
+              :title="partnerFeatures[3].title"
+              :description="partnerFeatures[3].description"
+            />
+          </div>
+
+          <div
+            :style="{
+              opacity: card5Opacity,
+              transform: `translateX(${card5TranslateX}px)`,
+              transition: 'opacity 0.3s ease-out, transform 0.3s ease-out'
+            }"
+          >
+            <MainCard
+              :hoverEffect="'none'"
+              :icon="partnerFeatures[4].icon"
+              :bullet="partnerFeatures[4].bullet"
+              :color="partnerFeatures[4].color"
+              :title="partnerFeatures[4].title"
+              :description="partnerFeatures[4].description"
+            />
+          </div>
+
+          <div
+            :style="{
+              opacity: card6Opacity,
+              transform: `translateX(${card6TranslateX}px)`,
+              transition: 'opacity 0.3s ease-out, transform 0.3s ease-out'
+            }"
+          >
+            <MainCard
+              :hoverEffect="'none'"
+              :icon="partnerFeatures[5].icon"
+              :bullet="partnerFeatures[5].bullet"
+              :color="partnerFeatures[5].color"
+              :title="partnerFeatures[5].title"
+              :description="partnerFeatures[5].description"
+            />
           </div>
         </div>
       </div>
+    </div>
+  </section>
 
-      <div class="w-full mx-auto text-center py-6 mt-20">
-        <h2 class="text-4xl md:text-3xl font-bold text-gray-100 mb-10">
-          Trusted by Global Leaders
-        </h2>
+  <!-- MOBILE SECTION -->
+  <section
+    id="partners-section-mobile"
+    class="scroll-mt-[7rem] relative md:hidden"
+    style="min-height: 400vh;"
+  >
+    <!-- Fixed container that stays in viewport -->
+    <div class="sticky top-0 h-screen flex items-center justify-center px-8 py-8">
+      <div class="w-full max-w-sm">
+        <!-- Title and subtitle - fades out -->
+        <div
+          class="text-center mb-12"
+          :style="{
+            opacity: mobileTitleOpacity,
+            transform: `translateY(${mobileTitleTranslateY}px)`,
+            transition: 'opacity 0.3s ease-out, transform 0.3s ease-out'
+          }"
+        >
+          <h2 class="text-4xl font-bold text-gray-100 mb-4">
+            Partnership Opportunities
+          </h2>
+          <p class="text-lg text-gray-300 leading-relaxed px-4">
+            We're building a comprehensive ecosystem that requires diverse
+            expertise. Find your role in the future of supply chain transparency.
+          </p>
+        </div>
 
-        <div class="relative">
-          <div
-            class="pointer-events-none absolute inset-y-0 left-0 w-16 z-10"
-            style="background: linear-gradient(to right, #393a3d, transparent)"
-          ></div>
-          <div
-            class="pointer-events-none absolute inset-y-0 right-0 w-16 z-10"
-            style="background: linear-gradient(to left, #393a3d, transparent)"
-          ></div>
+        <!-- First group of 3 cards (vertical stack) -->
+        <div
+          class="flex flex-col gap-4 w-full absolute inset-0 justify-center px-8 py-8"
+          :style="{
+            opacity: group1Opacity,
+            transition: 'opacity 0.3s ease-out',
+            pointerEvents: group1Opacity > 0 ? 'auto' : 'none'
+          }"
+        >
+          <div class="transform scale-90">
+            <MainCard
+              :hoverEffect="'none'"
+              :icon="partnerFeatures[0].icon"
+              :bullet="partnerFeatures[0].bullet"
+              :color="partnerFeatures[0].color"
+              :title="partnerFeatures[0].title"
+              :description="partnerFeatures[0].description"
+            />
+          </div>
+          <div class="transform scale-90">
+            <MainCard
+              :hoverEffect="'none'"
+              :icon="partnerFeatures[1].icon"
+              :bullet="partnerFeatures[1].bullet"
+              :color="partnerFeatures[1].color"
+              :title="partnerFeatures[1].title"
+              :description="partnerFeatures[1].description"
+            />
+          </div>
+          <div class="transform scale-90">
+            <MainCard
+              :hoverEffect="'none'"
+              :icon="partnerFeatures[2].icon"
+              :bullet="partnerFeatures[2].bullet"
+              :color="partnerFeatures[2].color"
+              :title="partnerFeatures[2].title"
+              :description="partnerFeatures[2].description"
+            />
+          </div>
+        </div>
 
-          <div
-            class="bg-dark py-10 rounded-xl shadow-inner shadow-black/10 border border-gray-300/60 relative z-0 overflow-hidden"
-          >
-            <div
-              class="max-w-6xl mx-auto flex flex-wrap justify-center items-center gap-8 px-4"
-            >
-              <a
-                href="https://www.bracu.ac.bd/"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <img
-                  src="@/assets/BRACU.png"
-                  alt="brac-logo"
-                  class="h-20 max-h-24 w-auto opacity-80 brightness-200 grayscale invert hover:grayscale-0 hover:invert-0 hover:brightness-100 hover:opacity-100 transition duration-300"
-                />
-              </a>
-              <a
-                href="https://cirpass2.eu/"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <img
-                  src="@/assets/CIRPASS-2.png"
-                  alt="cirpass2-logo"
-                  class="h-20 max-h-24 w-auto opacity-80 brightness-200 grayscale invert hover:grayscale-0 hover:invert-0 hover:brightness-100 hover:opacity-100 transition duration-300"
-                />
-              </a>
-              <a
-                href="https://gaia-x.eu/"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <img
-                  src="@/assets/Gaia-X.webp"
-                  alt="gaiax-logo"
-                  class="h-20 max-h-24 w-auto opacity-80 brightness-200 grayscale hover:grayscale-0 hover:brightness-100 hover:opacity-100 transition duration-300"
-                />
-              </a>
-              <a
-                href="https://www.gs1.org/"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <img
-                  src="@/assets/GS1.png"
-                  alt="gs1-logo"
-                  class="h-20 max-h-24 w-auto opacity-80 brightness-200 grayscale hover:grayscale-0 hover:brightness-100 hover:opacity-100 transition duration-300"
-                />
-              </a>
-            </div>
+        <!-- Second group of 3 cards (vertical stack) -->
+        <div
+          class="flex flex-col gap-4 w-full absolute inset-0 justify-center px-8 py-8"
+          :style="{
+            opacity: group2Opacity,
+            transition: 'opacity 0.3s ease-out',
+            pointerEvents: group2Opacity > 0 ? 'auto' : 'none'
+          }"
+        >
+          <div class="transform scale-90">
+            <MainCard
+              :hoverEffect="'none'"
+              :icon="partnerFeatures[3].icon"
+              :bullet="partnerFeatures[3].bullet"
+              :color="partnerFeatures[3].color"
+              :title="partnerFeatures[3].title"
+              :description="partnerFeatures[3].description"
+            />
+          </div>
+          <div class="transform scale-90">
+            <MainCard
+              :hoverEffect="'none'"
+              :icon="partnerFeatures[4].icon"
+              :bullet="partnerFeatures[4].bullet"
+              :color="partnerFeatures[4].color"
+              :title="partnerFeatures[4].title"
+              :description="partnerFeatures[4].description"
+            />
+          </div>
+          <div class="transform scale-90">
+            <MainCard
+              :hoverEffect="'none'"
+              :icon="partnerFeatures[5].icon"
+              :bullet="partnerFeatures[5].bullet"
+              :color="partnerFeatures[5].color"
+              :title="partnerFeatures[5].title"
+              :description="partnerFeatures[5].description"
+            />
           </div>
         </div>
       </div>

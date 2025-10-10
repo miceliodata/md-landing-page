@@ -28,14 +28,14 @@
 <template>
   <section
     id="brands-section"
-    class="scroll-mt-[7rem] h-auto bg-white py-20 px-6 flex flex-col justify-center items-center"
+    class="scroll-mt-[7rem] min-h-screen py-20 px-6 flex flex-col justify-center items-center"
   >
     <div>
       <div class="max-w-4xl mx-auto text-center mb-16">
-        <h2 class="text-5xl font-bold text-gray-900 mb-4">
+        <h2 class="text-5xl font-bold text-gray-100 mb-4 animate-char-reveal">
           Everything You Need for DPP
         </h2>
-        <p class="text-gray-700 text-lg">
+        <p class="text-gray-300 text-lg animate-fade-up">
           Our platform provides complete visibility into your Asian supply
           chain, ensuring full compliance with EU Digital Product Passport
           regulations.
@@ -48,7 +48,7 @@
           :key="index"
           class="flex"
         >
-          <div class="p-6 rounded-md shadow-lg bg-gray-50 flex flex-col flex-1 h-full items-center hover:-translate-y-1 hover:transition-all hover:duration-300">
+          <div class="p-6 rounded-md flex flex-col flex-1 h-full items-center hover:-translate-y-1 hover:transition-all hover:duration-300">
             <component :is="feature.icon" :class="`${feature.color} w-10 h-10 mb-4`" />
             <h2 class="text-xl font-semibold text-center mb-4">{{ feature.title }}</h2>
             <p class="font-light text-gray-800 text-center">{{ feature.description }}</p>
@@ -58,18 +58,18 @@
     </div>
 
     <ul
-      class="list-disc list-outside pl-6 text-gray-700 marker:text-emerald-700 text-lg marker:text-2xl space-y-3 max-w-3xl mx-auto mb-18"
+      class="list-disc list-outside pl-6 text-gray-300 marker:text-emerald-500 text-lg marker:text-2xl space-y-3 max-w-3xl mx-auto mb-18 animate-stagger-group"
     >
-      <li>
+      <li class="animate-stagger">
         Ensure end-to-end supply chain visibility with single source of data
       </li>
-      <li>Enhance consumer trust through greater transparency</li>
-      <li>Have access to verified supplier network</li>
+      <li class="animate-stagger">Enhance consumer trust through greater transparency</li>
+      <li class="animate-stagger">Have access to verified supplier network</li>
     </ul>
 
-    <div class="max-w-6xl mx-auto">
+    <div class="max-w-6xl mx-auto animate-stagger-group">
       <div class="flex flex-col md:flex-row">
-        <div class="flex-1 flex flex-col items-center">
+        <div class="flex-1 flex flex-col items-center animate-stagger">
           <div
             class="max-h-24 flex-1 bg-gradient-to-r from-blue-700 to-sky-500 text-white py-8 px-16 relative rounded-lg clip-chevron-start"
           >
@@ -79,7 +79,7 @@
             Connect your supply chain and suppliers
           </p>
         </div>
-        <div class="flex-1 flex flex-col items-center">
+        <div class="flex-1 flex flex-col items-center animate-stagger">
           <div
             class="max-h-24 flex-1 bg-gradient-to-r from-sky-500 to-cyan-600 text-white py-8 px-20 relative clip-chevron-next"
           >
@@ -89,7 +89,7 @@
             Verify data quality of suppliers via accurate, traceable information
           </p>
         </div>
-        <div class="flex-1 flex flex-col items-center">
+        <div class="flex-1 flex flex-col items-center animate-stagger">
           <div
             class="max-h-24 flex-1 bg-gradient-to-r from-cyan-600 to-emerald-500 text-white py-8 px-16 relative clip-chevron-next"
           >
