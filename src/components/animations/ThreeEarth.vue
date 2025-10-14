@@ -23,7 +23,6 @@ let borderPoints: THREE.Points;
 let flightLines: THREE.Group;
 let animationId: number;
 let directionalLight: THREE.DirectionalLight;
-let lightHelper: THREE.DirectionalLightHelper | undefined;
 
 // Animation state for smooth transitions
 let targetEarthPosition = { x: 0, y: 0, z: 0 };
