@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted, watch} from "vue";
+import { ref, onMounted, onUnmounted, watch } from "vue";
 
 const isBarHidden = ref(false);
 const isMobileMenuOpen = ref(false);
@@ -22,7 +22,7 @@ const handleScroll = () => {
       // Within the initial fade zone (0-300px)
       if (currentScroll <= fadeDistance) {
         // Fade out naturally as user scrolls down
-        headerOpacity.value = Math.max(0, 1 - (currentScroll / fadeDistance));
+        headerOpacity.value = Math.max(0, 1 - currentScroll / fadeDistance);
         isBarHidden.value = false;
       }
       // After fade zone
@@ -45,6 +45,25 @@ const handleScroll = () => {
     ticking = true;
   }
 };
+
+const manualScrollIntoSection = (id: string, height: number, delay: number) => {
+  const el = document.getElementById(id);
+  if (!el) return;
+
+  // Scroll to the element
+  el.scrollIntoView({ behavior: "smooth" });
+
+  // Then scroll a bit further down after the animation
+  setTimeout(() => {
+    window.scrollBy({
+      top: window.innerHeight * height,
+      behavior: "smooth",
+    });
+  }, delay);
+};
+
+const goToPartners = () =>
+  manualScrollIntoSection("partners-section", 3.0, 1000);
 
 onMounted(() => {
   lastScroll = window.scrollY;
@@ -74,12 +93,11 @@ watch(isMobileMenuOpen, (isOpen) => {
     ]"
     :style="{
       opacity: headerOpacity,
-      boxShadow: '0 0 10px rgba(12, 209, 235, 0.2), 0 0 20px rgba(12, 209, 235, 0.1)'
+      boxShadow:
+        '0 0 10px rgba(12, 209, 235, 0.2), 0 0 20px rgba(12, 209, 235, 0.1)',
     }"
   >
-    <div
-      class="flex items-center justify-between relative w-full"
-    >
+    <div class="flex items-center justify-between relative w-full">
       <a href="#hero-section" class="flex items-center">
         <img
           class="h-8 md:h-10 w-auto"
@@ -95,12 +113,22 @@ watch(isMobileMenuOpen, (isOpen) => {
       <nav
         class="hidden xl:flex space-x-6 text-sm font-semibold text-gray-300 absolute left-1/2 transform -translate-x-1/2"
       >
-        <a href="#info-section" class="hover:text-white transition-colors duration-150 py-2"
-          >Who We Are</a>
-        <a href="#suppliers-section" class="hover:text-white transition-colors duration-150 py-2"
-          >Our Offering</a>
-        <a href="#partners-section" class="hover:text-white transition-colors duration-150 py-2"
-          >Partners</a>
+        <a
+          href="#info-section"
+          class="hover:text-white transition-colors duration-150 py-2"
+          >Who We Are</a
+        >
+        <a
+          href="#suppliers-section"
+          class="hover:text-white transition-colors duration-150 py-2"
+          >Our Offering</a
+        >
+        <a
+          href="#partners-section"
+          @click.prevent="goToPartners"
+          class="hover:text-white transition-colors duration-150 py-2"
+          >Partners</a
+        >
       </nav>
 
       <a
@@ -110,9 +138,22 @@ watch(isMobileMenuOpen, (isOpen) => {
         Contact
       </a>
 
-      <button @click="toggleMobileMenu" class="xl:hidden focus:outline-none p-1">
-        <svg class="h-6 w-6 text-white opacity-70 hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+      <button
+        @click="toggleMobileMenu"
+        class="xl:hidden focus:outline-none p-1"
+      >
+        <svg
+          class="h-6 w-6 text-white opacity-70 hover:opacity-100 transition-opacity"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M4 6h16M4 12h16M4 18h16"
+          />
         </svg>
       </button>
     </div>
@@ -217,7 +258,9 @@ watch(isMobileMenuOpen, (isOpen) => {
 
       <!-- Footer at bottom -->
       <div class="absolute bottom-8 w-full px-6 text-center">
-        <p class="text-sm text-gray-400">© 2025 MicelioData. All Rights Reserved.</p>
+        <p class="text-sm text-gray-400">
+          © 2025 MicelioData. All Rights Reserved.
+        </p>
       </div>
     </div>
   </transition>

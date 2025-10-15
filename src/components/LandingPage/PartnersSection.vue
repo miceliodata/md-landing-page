@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted } from 'vue';
+import { ref, onMounted, onUnmounted } from "vue";
 import MainCard from "@/components/cards/MainCard.vue";
 
 import { GlobeAltIcon } from "@heroicons/vue/24/outline";
@@ -101,7 +101,7 @@ const group1Opacity = ref(0);
 const group2Opacity = ref(0);
 
 const handleScroll = () => {
-  const section = document.getElementById('partners-section');
+  const section = document.getElementById("partners-section");
   if (!section) return;
 
   const rect = section.getBoundingClientRect();
@@ -114,7 +114,7 @@ const handleScroll = () => {
   const progress = Math.max(0, Math.min(1, -scrollStart / scrollRange));
 
   // DESKTOP: Title stays centered and fixed, then unlocks and moves to top
-  if (progress < 0.20) {
+  if (progress < 0.2) {
     // Title stays centered and stationary for user to read
     desktopTitleOpacity.value = 1;
     desktopTitleTranslateY.value = 0;
@@ -133,7 +133,7 @@ const handleScroll = () => {
   } else if (progress >= 0.32 && progress < 0.37) {
     const fadeProgress = (progress - 0.32) / 0.05;
     card1Opacity.value = fadeProgress;
-    card1TranslateX.value = -50 + (fadeProgress * 50);
+    card1TranslateX.value = -50 + fadeProgress * 50;
   } else {
     card1Opacity.value = 1;
     card1TranslateX.value = 0;
@@ -143,10 +143,10 @@ const handleScroll = () => {
   if (progress < 0.35) {
     card2Opacity.value = 0;
     card2TranslateX.value = -50;
-  } else if (progress >= 0.35 && progress < 0.40) {
+  } else if (progress >= 0.35 && progress < 0.4) {
     const fadeProgress = (progress - 0.35) / 0.05;
     card2Opacity.value = fadeProgress;
-    card2TranslateX.value = -50 + (fadeProgress * 50);
+    card2TranslateX.value = -50 + fadeProgress * 50;
   } else {
     card2Opacity.value = 1;
     card2TranslateX.value = 0;
@@ -159,7 +159,7 @@ const handleScroll = () => {
   } else if (progress >= 0.38 && progress < 0.43) {
     const fadeProgress = (progress - 0.38) / 0.05;
     card3Opacity.value = fadeProgress;
-    card3TranslateX.value = -50 + (fadeProgress * 50);
+    card3TranslateX.value = -50 + fadeProgress * 50;
   } else {
     card3Opacity.value = 1;
     card3TranslateX.value = 0;
@@ -172,7 +172,7 @@ const handleScroll = () => {
   } else if (progress >= 0.41 && progress < 0.46) {
     const fadeProgress = (progress - 0.41) / 0.05;
     card4Opacity.value = fadeProgress;
-    card4TranslateX.value = -50 + (fadeProgress * 50);
+    card4TranslateX.value = -50 + fadeProgress * 50;
   } else {
     card4Opacity.value = 1;
     card4TranslateX.value = 0;
@@ -185,7 +185,7 @@ const handleScroll = () => {
   } else if (progress >= 0.44 && progress < 0.49) {
     const fadeProgress = (progress - 0.44) / 0.05;
     card5Opacity.value = fadeProgress;
-    card5TranslateX.value = -50 + (fadeProgress * 50);
+    card5TranslateX.value = -50 + fadeProgress * 50;
   } else {
     card5Opacity.value = 1;
     card5TranslateX.value = 0;
@@ -198,7 +198,7 @@ const handleScroll = () => {
   } else if (progress >= 0.47 && progress < 0.52) {
     const fadeProgress = (progress - 0.47) / 0.05;
     card6Opacity.value = fadeProgress;
-    card6TranslateX.value = -50 + (fadeProgress * 50);
+    card6TranslateX.value = -50 + fadeProgress * 50;
   } else {
     card6Opacity.value = 1;
     card6TranslateX.value = 0;
@@ -206,7 +206,7 @@ const handleScroll = () => {
 };
 
 const handleScrollMobile = () => {
-  const section = document.getElementById('partners-section-mobile');
+  const section = document.getElementById("partners-section-mobile");
   if (!section) return;
 
   const rect = section.getBoundingClientRect();
@@ -219,11 +219,11 @@ const handleScrollMobile = () => {
   const progress = Math.max(0, Math.min(1, -scrollStart / scrollRange));
 
   // MOBILE: Fade out behavior - matches Data Collection section timing
-  if (progress < 0.30) {
+  if (progress < 0.3) {
     mobileTitleOpacity.value = 1;
     mobileTitleTranslateY.value = 0;
-  } else if (progress >= 0.30 && progress < 0.35) {
-    const fadeProgress = (progress - 0.30) / 0.05;
+  } else if (progress >= 0.3 && progress < 0.35) {
+    const fadeProgress = (progress - 0.3) / 0.05;
     mobileTitleOpacity.value = 1 - fadeProgress;
     mobileTitleTranslateY.value = 0;
   } else {
@@ -237,10 +237,10 @@ const handleScrollMobile = () => {
   } else if (progress >= 0.33 && progress < 0.38) {
     const fadeProgress = (progress - 0.33) / 0.05;
     group1Opacity.value = fadeProgress;
-  } else if (progress >= 0.38 && progress < 0.60) {
+  } else if (progress >= 0.38 && progress < 0.6) {
     group1Opacity.value = 1;
-  } else if (progress >= 0.60 && progress < 0.65) {
-    const fadeProgress = (progress - 0.60) / 0.05;
+  } else if (progress >= 0.6 && progress < 0.65) {
+    const fadeProgress = (progress - 0.6) / 0.05;
     group1Opacity.value = 1 - fadeProgress;
   } else {
     group1Opacity.value = 0;
@@ -258,15 +258,15 @@ const handleScrollMobile = () => {
 };
 
 onMounted(() => {
-  window.addEventListener('scroll', handleScroll, { passive: true });
-  window.addEventListener('scroll', handleScrollMobile, { passive: true });
+  window.addEventListener("scroll", handleScroll, { passive: true });
+  window.addEventListener("scroll", handleScrollMobile, { passive: true });
   handleScroll();
   handleScrollMobile();
 });
 
 onUnmounted(() => {
-  window.removeEventListener('scroll', handleScroll);
-  window.removeEventListener('scroll', handleScrollMobile);
+  window.removeEventListener("scroll", handleScroll);
+  window.removeEventListener("scroll", handleScrollMobile);
 });
 </script>
 
@@ -275,10 +275,12 @@ onUnmounted(() => {
   <section
     id="partners-section"
     class="scroll-mt-[7rem] relative hidden md:block"
-    style="min-height: 400vh;"
+    style="min-height: 400vh"
   >
     <!-- Fixed container that stays in viewport -->
-    <div class="sticky top-0 h-screen flex items-center justify-center px-16 lg:px-20">
+    <div
+      class="sticky top-0 h-screen flex items-center justify-center px-16 lg:px-20"
+    >
       <div class="w-full max-w-7xl flex flex-col items-center justify-center">
         <!-- Title and subtitle - moves to top and stays -->
         <div
@@ -286,7 +288,7 @@ onUnmounted(() => {
           :style="{
             opacity: desktopTitleOpacity,
             transform: `translateY(${desktopTitleTranslateY}px)`,
-            transition: 'opacity 0.3s ease-out, transform 0.3s ease-out'
+            transition: 'opacity 0.3s ease-out, transform 0.3s ease-out',
           }"
         >
           <h2 class="text-5xl font-bold text-gray-100 mb-4">
@@ -294,7 +296,8 @@ onUnmounted(() => {
           </h2>
           <p class="text-lg text-gray-300 leading-relaxed max-w-3xl mx-auto">
             We're building a comprehensive ecosystem that requires diverse
-            expertise. Find your role in the future of supply chain transparency.
+            expertise. Find your role in the future of supply chain
+            transparency.
           </p>
         </div>
 
@@ -305,7 +308,7 @@ onUnmounted(() => {
             :style="{
               opacity: card1Opacity,
               transform: `translateX(${card1TranslateX}px)`,
-              transition: 'opacity 0.3s ease-out, transform 0.3s ease-out'
+              transition: 'opacity 0.3s ease-out, transform 0.3s ease-out',
             }"
           >
             <MainCard
@@ -322,7 +325,7 @@ onUnmounted(() => {
             :style="{
               opacity: card2Opacity,
               transform: `translateX(${card2TranslateX}px)`,
-              transition: 'opacity 0.3s ease-out, transform 0.3s ease-out'
+              transition: 'opacity 0.3s ease-out, transform 0.3s ease-out',
             }"
           >
             <MainCard
@@ -339,7 +342,7 @@ onUnmounted(() => {
             :style="{
               opacity: card3Opacity,
               transform: `translateX(${card3TranslateX}px)`,
-              transition: 'opacity 0.3s ease-out, transform 0.3s ease-out'
+              transition: 'opacity 0.3s ease-out, transform 0.3s ease-out',
             }"
           >
             <MainCard
@@ -357,7 +360,7 @@ onUnmounted(() => {
             :style="{
               opacity: card4Opacity,
               transform: `translateX(${card4TranslateX}px)`,
-              transition: 'opacity 0.3s ease-out, transform 0.3s ease-out'
+              transition: 'opacity 0.3s ease-out, transform 0.3s ease-out',
             }"
           >
             <MainCard
@@ -374,7 +377,7 @@ onUnmounted(() => {
             :style="{
               opacity: card5Opacity,
               transform: `translateX(${card5TranslateX}px)`,
-              transition: 'opacity 0.3s ease-out, transform 0.3s ease-out'
+              transition: 'opacity 0.3s ease-out, transform 0.3s ease-out',
             }"
           >
             <MainCard
@@ -391,7 +394,7 @@ onUnmounted(() => {
             :style="{
               opacity: card6Opacity,
               transform: `translateX(${card6TranslateX}px)`,
-              transition: 'opacity 0.3s ease-out, transform 0.3s ease-out'
+              transition: 'opacity 0.3s ease-out, transform 0.3s ease-out',
             }"
           >
             <MainCard
@@ -412,10 +415,12 @@ onUnmounted(() => {
   <section
     id="partners-section-mobile"
     class="scroll-mt-[7rem] relative md:hidden"
-    style="min-height: 400vh;"
+    style="min-height: 400vh"
   >
     <!-- Fixed container that stays in viewport -->
-    <div class="sticky top-0 h-screen flex items-center justify-center px-8 py-8">
+    <div
+      class="sticky top-0 h-screen flex items-center justify-center px-8 py-8"
+    >
       <div class="w-full max-w-sm">
         <!-- Title and subtitle - fades out -->
         <div
@@ -423,7 +428,7 @@ onUnmounted(() => {
           :style="{
             opacity: mobileTitleOpacity,
             transform: `translateY(${mobileTitleTranslateY}px)`,
-            transition: 'opacity 0.3s ease-out, transform 0.3s ease-out'
+            transition: 'opacity 0.3s ease-out, transform 0.3s ease-out',
           }"
         >
           <h2 class="text-4xl font-bold text-gray-100 mb-4">
@@ -431,7 +436,8 @@ onUnmounted(() => {
           </h2>
           <p class="text-lg text-gray-300 leading-relaxed px-4">
             We're building a comprehensive ecosystem that requires diverse
-            expertise. Find your role in the future of supply chain transparency.
+            expertise. Find your role in the future of supply chain
+            transparency.
           </p>
         </div>
 
@@ -441,7 +447,7 @@ onUnmounted(() => {
           :style="{
             opacity: group1Opacity,
             transition: 'opacity 0.3s ease-out',
-            pointerEvents: group1Opacity > 0 ? 'auto' : 'none'
+            pointerEvents: group1Opacity > 0 ? 'auto' : 'none',
           }"
         >
           <div class="transform scale-90">
@@ -482,7 +488,7 @@ onUnmounted(() => {
           :style="{
             opacity: group2Opacity,
             transition: 'opacity 0.3s ease-out',
-            pointerEvents: group2Opacity > 0 ? 'auto' : 'none'
+            pointerEvents: group2Opacity > 0 ? 'auto' : 'none',
           }"
         >
           <div class="transform scale-90">
