@@ -72,8 +72,7 @@ function toggleText() {
         </transition>
 
         <div
-          class="w-10 h-10 mt-4 rounded-full flex items-center justify-center bg-gradient-to-r from-sky-700 to-emerald-500 hover:from-teal-400 hover:to-teal-400 transition duration-200 cursor-pointer"
-          :class="{ 'mt-9': textShown }"
+          class="w-10 h-10 mt-8 rounded-full flex items-center justify-center bg-gradient-to-r from-sky-700 to-emerald-500 hover:from-teal-400 hover:to-teal-400 transition duration-200 cursor-pointer"
           @click="toggleText"
         >
           <PlusIcon
@@ -98,7 +97,7 @@ function toggleText() {
 .slide-fade-enter-from,
 .slide-fade-leave-to {
   opacity: 0;
-  transform: translateY(-10px);
+  transform: translateY(-20px);
   max-height: 0;
 }
 
