@@ -10,7 +10,8 @@ const success = ref<boolean | null>(null)
 const loading = ref(false)
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
-const googleFormUrl = 'https://docs.google.com/forms/d/e/1FAIpQLSfVqp-s-tflusW__pGrFBoLlF54G4N0Cwva-D_LHQ0uyIpRBw/formResponse'
+const googleFormUrl =
+  'https://docs.google.com/forms/d/e/1FAIpQLSfVqp-s-tflusW__pGrFBoLlF54G4N0Cwva-D_LHQ0uyIpRBw/formResponse'
 const fields = {
   name: 'entry.320585220',
   surname: 'entry.818511890',
@@ -57,15 +58,22 @@ const submitForm = async (e: Event) => {
     loading.value = false
   }
 }
-
 </script>
 
 <template>
-  <section id="contact-section" class="min-h-screen flex items-center justify-center px-6">
+  <section
+    id="contact-section"
+    class="min-h-screen flex items-center justify-center px-6"
+  >
     <div class="max-w-xl w-full text-center">
-      <h2 class="text-4xl md:text-5xl font-bold mb-4 text-gray-100 animate-word-reveal">Let's Connect</h2>
+      <h2
+        class="text-4xl md:text-5xl font-bold mb-4 text-gray-100 animate-word-reveal"
+      >
+        Let's Connect
+      </h2>
       <p class="text-lg text-gray-300 mb-8 animate-fade-up">
-        Whether you're a supplier, partner, or just curious about what we do, we'd love to hear from you.
+        Whether you're a supplier, partner, or just curious about what we do,
+        we'd love to hear from you.
       </p>
 
       <form @submit="submitForm" class="space-y-4 animate-scale w-full">
@@ -112,7 +120,14 @@ const submitForm = async (e: Event) => {
         </button>
       </form>
 
-      <p v-if="message" :class="{'text-green-600': success, 'text-red-600': success === false}" class="mt-4 text-sm">
+      <p
+        v-if="message"
+        :class="{
+          'text-green-600': success,
+          'text-red-600': success === false,
+        }"
+        class="mt-4 text-sm"
+      >
         {{ message }}
       </p>
     </div>

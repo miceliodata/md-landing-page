@@ -1,82 +1,82 @@
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted, watch } from "vue";
+import { ref, onMounted, onUnmounted, watch } from 'vue'
 
-const isBarHidden = ref(false);
-const isMobileMenuOpen = ref(false);
-const headerOpacity = ref(1);
+const isBarHidden = ref(false)
+const isMobileMenuOpen = ref(false)
+const headerOpacity = ref(1)
 
 const toggleMobileMenu = () => {
-  isMobileMenuOpen.value = !isMobileMenuOpen.value;
-};
+  isMobileMenuOpen.value = !isMobileMenuOpen.value
+}
 
-let lastScroll = 0;
-let ticking = false;
+let lastScroll = 0
+let ticking = false
 
 const handleScroll = () => {
-  const currentScroll = window.scrollY;
+  const currentScroll = window.scrollY
 
   if (!ticking) {
     window.requestAnimationFrame(() => {
-      const fadeDistance = 300;
+      const fadeDistance = 300
 
       // Within the initial fade zone (0-300px)
       if (currentScroll <= fadeDistance) {
         // Fade out naturally as user scrolls down
-        headerOpacity.value = Math.max(0, 1 - currentScroll / fadeDistance);
-        isBarHidden.value = false;
+        headerOpacity.value = Math.max(0, 1 - currentScroll / fadeDistance)
+        isBarHidden.value = false
       }
       // After fade zone
       else {
         // Scrolling down - hide navbar
         if (currentScroll > lastScroll + 5) {
-          isBarHidden.value = true;
-          headerOpacity.value = 0;
+          isBarHidden.value = true
+          headerOpacity.value = 0
         }
         // Scrolling up - show navbar with full opacity
         else if (currentScroll < lastScroll - 5) {
-          isBarHidden.value = false;
-          headerOpacity.value = 1;
+          isBarHidden.value = false
+          headerOpacity.value = 1
         }
       }
 
-      lastScroll = currentScroll;
-      ticking = false;
-    });
-    ticking = true;
+      lastScroll = currentScroll
+      ticking = false
+    })
+    ticking = true
   }
-};
+}
 
 const manualScrollIntoSection = (id: string, height: number, delay: number) => {
-  const el = document.getElementById(id);
-  if (!el) return;
+  const el = document.getElementById(id)
+  if (!el) return
 
   // Scroll to the element
-  el.scrollIntoView({ behavior: "smooth" });
+  el.scrollIntoView({ behavior: 'smooth' })
 
   // Then scroll a bit further down after the animation
   setTimeout(() => {
     window.scrollBy({
       top: window.innerHeight * height,
-      behavior: "smooth",
-    });
-  }, delay);
-};
+      behavior: 'smooth',
+    })
+  }, delay)
+}
 
 const goToPartners = () =>
-  manualScrollIntoSection("partners-section", 3.0, 1000);
+  manualScrollIntoSection('partners-section', 3.0, 1000)
 
 onMounted(() => {
-  lastScroll = window.scrollY;
-  window.addEventListener("scroll", handleScroll);
-});
+  lastScroll = window.scrollY
+  window.addEventListener('scroll', handleScroll)
+})
 
 onUnmounted(() => {
-  window.removeEventListener("scroll", handleScroll);
-});
+  window.removeEventListener('scroll', handleScroll)
+})
 
 watch(isMobileMenuOpen, (isOpen) => {
-  document.body.classList.toggle("overflow-hidden", isOpen);
-});
+  document.body.classList.toggle('overflow-hidden', isOpen)
+})
 </script>
 
 <template>
@@ -84,7 +84,7 @@ watch(isMobileMenuOpen, (isOpen) => {
     :class="[
       'fixed top-4 left-1/2 -translate-x-1/2 z-50',
       'bg-gray-900/80 backdrop-blur-md rounded-2xl border border-gray-700/50',
-      'px-6 py-3 transition-all duration-300 ease-out',
+      'px-6 py-2 transition-all duration-300 ease-out',
       'w-[calc(100%-2rem)] sm:w-[calc(100%-4rem)] md:w-[90%] lg:w-[80%] xl:w-[70%]',
       {
         '-translate-y-20 opacity-0 pointer-events-none scale-95': isBarHidden,
@@ -116,12 +116,12 @@ watch(isMobileMenuOpen, (isOpen) => {
         <a
           href="#info-section"
           class="hover:text-white transition-colors duration-150 py-2"
-          >Who We Are</a
+          >Company</a
         >
         <a
           href="#suppliers-section"
           class="hover:text-white transition-colors duration-150 py-2"
-          >Our Offering</a
+          >Solutions</a
         >
         <a
           href="#partners-section"
@@ -135,7 +135,7 @@ watch(isMobileMenuOpen, (isOpen) => {
         href="#contact-section"
         class="ml-4 hidden xl:inline-block bg-teal-600 hover:bg-teal-500 text-white px-3 py-1.5 rounded text-xs font-medium transition-colors duration-150"
       >
-        Contact
+        Get In Touch
       </a>
 
       <button
