@@ -23,6 +23,7 @@ let borderPoints: THREE.Points;
 let flightLines: THREE.Group;
 let animationId: number;
 let directionalLight: THREE.DirectionalLight;
+//let lightHelper: THREE.DirectionalLightHelper | undefined;
 
 // Animation state for smooth transitions
 let targetEarthPosition = { x: 0, y: 0, z: 0 };
@@ -34,16 +35,16 @@ let currentEarthScale = 100;
 let continuousRotationY = 0; // Track continuous rotation separately
 
 // Animation smoothing factor (0-1, higher = faster, lower = more elegant/slower)
-const POSITION_SMOOTHING = 0.02;  // Reduced for slower, more elegant movement
-const ROTATION_SMOOTHING = 0.02;  // Slower rotation
-const SCALE_SMOOTHING = 0.02;     // Slower scaling
+const POSITION_SMOOTHING = 0.02; // Reduced for slower, more elegant movement
+const ROTATION_SMOOTHING = 0.02; // Slower rotation
+const SCALE_SMOOTHING = 0.02; // Slower scaling
 
 // Earth configuration per section - ADJUST THESE VALUES TO CONTROL EARTH POSITION
 const earthConfig = {
   hero: {
-    position: { x: -100, y: -50, z: 0 },     // Earth position (x=left/right, y=up/down, z=forward/back)
-    rotation: { x: 0, y: 0.55, z: 0 },     // Earth rotation in radians (x=pitch, y=yaw, z=roll)
-    scale: 100,                          // Earth scale (100 = default size)
+    position: { x: -100, y: -50, z: 0 }, // Earth position (x=left/right, y=up/down, z=forward/back)
+    rotation: { x: 0, y: 0.55, z: 0 }, // Earth rotation in radians (x=pitch, y=yaw, z=roll)
+    scale: 100, // Earth scale (100 = default size)
   },
   info: {
     position: { x: -100, y: 50, z: 0 },
@@ -165,11 +166,7 @@ const createEarth = () => {
   const textureLoader = new THREE.TextureLoader();
 
   // Earth sphere - base size at 100 scale
-  const earthGeometry = new THREE.SphereGeometry(
-    100,
-    64,
-    64
-  );
+  const earthGeometry = new THREE.SphereGeometry(100, 64, 64);
 
   // Create shader uniforms
   const uniforms = {
@@ -221,7 +218,11 @@ const createEarth = () => {
   earth.rotation.x = currentEarthRotation.x;
   earth.rotation.y = currentEarthRotation.y;
   earth.rotation.z = currentEarthRotation.z;
-  earth.scale.set(currentEarthScale / 100, currentEarthScale / 100, currentEarthScale / 100);
+  earth.scale.set(
+    currentEarthScale / 100,
+    currentEarthScale / 100,
+    currentEarthScale / 100
+  );
   scene.add(earth);
 
   // Add point cloud border for depth effect
@@ -246,7 +247,11 @@ const createEarth = () => {
   borderPoints.rotation.x = currentEarthRotation.x;
   borderPoints.rotation.y = currentEarthRotation.y;
   borderPoints.rotation.z = currentEarthRotation.z;
-  borderPoints.scale.set(currentEarthScale / 100, currentEarthScale / 100, currentEarthScale / 100);
+  borderPoints.scale.set(
+    currentEarthScale / 100,
+    currentEarthScale / 100,
+    currentEarthScale / 100
+  );
   scene.add(borderPoints);
 
   // Create sprite-based glow (like 3d-earth style)
@@ -263,11 +268,7 @@ const createEarth = () => {
 
   earthGlow = new THREE.Sprite(spriteMaterial);
   const initialGlowScale = (currentEarthScale / 100) * 300; // 3x the Earth size
-  earthGlow.scale.set(
-    initialGlowScale,
-    initialGlowScale,
-    1
-  );
+  earthGlow.scale.set(initialGlowScale, initialGlowScale, 1);
   earthGlow.position.set(
     currentEarthPosition.x,
     currentEarthPosition.y,
@@ -392,7 +393,11 @@ const createAtmosphere = () => {
   atmosphere.rotation.x = currentEarthRotation.x;
   atmosphere.rotation.y = currentEarthRotation.y;
   atmosphere.rotation.z = currentEarthRotation.z;
-  atmosphere.scale.set(currentEarthScale / 100, currentEarthScale / 100, currentEarthScale / 100);
+  atmosphere.scale.set(
+    currentEarthScale / 100,
+    currentEarthScale / 100,
+    currentEarthScale / 100
+  );
   scene.add(atmosphere);
 };
 
@@ -515,7 +520,11 @@ const createMarkers = () => {
   markers.rotation.x = currentEarthRotation.x;
   markers.rotation.y = currentEarthRotation.y;
   markers.rotation.z = currentEarthRotation.z;
-  markers.scale.set(currentEarthScale / 100, currentEarthScale / 100, currentEarthScale / 100);
+  markers.scale.set(
+    currentEarthScale / 100,
+    currentEarthScale / 100,
+    currentEarthScale / 100
+  );
   scene.add(markers);
 };
 
@@ -564,7 +573,11 @@ const createDotParticles = () => {
   dotParticles.rotation.x = currentEarthRotation.x;
   dotParticles.rotation.y = currentEarthRotation.y;
   dotParticles.rotation.z = currentEarthRotation.z;
-  dotParticles.scale.set(currentEarthScale / 100, currentEarthScale / 100, currentEarthScale / 100);
+  dotParticles.scale.set(
+    currentEarthScale / 100,
+    currentEarthScale / 100,
+    currentEarthScale / 100
+  );
 
   scene.add(dotParticles);
 };
@@ -575,7 +588,12 @@ const createFlightLines = () => {
 
   // Spain is the destination (index 2 in cities array)
   const spainCity = cities[2]; // Spain
-  const spainPos = latLonToVector3(spainCity.lat, spainCity.lon, 100 + 0.5, true);
+  const spainPos = latLonToVector3(
+    spainCity.lat,
+    spainCity.lon,
+    100 + 0.5,
+    true
+  );
 
   // Create flight lines from other countries to Spain
   cities.forEach((city, index) => {
@@ -658,7 +676,11 @@ const createFlightLines = () => {
   flightLines.rotation.x = currentEarthRotation.x;
   flightLines.rotation.y = currentEarthRotation.y;
   flightLines.rotation.z = currentEarthRotation.z;
-  flightLines.scale.set(currentEarthScale / 100, currentEarthScale / 100, currentEarthScale / 100);
+  flightLines.scale.set(
+    currentEarthScale / 100,
+    currentEarthScale / 100,
+    currentEarthScale / 100
+  );
 
   scene.add(flightLines);
 };
@@ -668,14 +690,20 @@ const updateEarthTransform = () => {
   if (!earth) return;
 
   // Smoothly interpolate position
-  currentEarthPosition.x += (targetEarthPosition.x - currentEarthPosition.x) * POSITION_SMOOTHING;
-  currentEarthPosition.y += (targetEarthPosition.y - currentEarthPosition.y) * POSITION_SMOOTHING;
-  currentEarthPosition.z += (targetEarthPosition.z - currentEarthPosition.z) * POSITION_SMOOTHING;
+  currentEarthPosition.x +=
+    (targetEarthPosition.x - currentEarthPosition.x) * POSITION_SMOOTHING;
+  currentEarthPosition.y +=
+    (targetEarthPosition.y - currentEarthPosition.y) * POSITION_SMOOTHING;
+  currentEarthPosition.z +=
+    (targetEarthPosition.z - currentEarthPosition.z) * POSITION_SMOOTHING;
 
   // Smoothly interpolate rotation
-  currentEarthRotation.x += (targetEarthRotation.x - currentEarthRotation.x) * ROTATION_SMOOTHING;
-  currentEarthRotation.y += (targetEarthRotation.y - currentEarthRotation.y) * ROTATION_SMOOTHING;
-  currentEarthRotation.z += (targetEarthRotation.z - currentEarthRotation.z) * ROTATION_SMOOTHING;
+  currentEarthRotation.x +=
+    (targetEarthRotation.x - currentEarthRotation.x) * ROTATION_SMOOTHING;
+  currentEarthRotation.y +=
+    (targetEarthRotation.y - currentEarthRotation.y) * ROTATION_SMOOTHING;
+  currentEarthRotation.z +=
+    (targetEarthRotation.z - currentEarthRotation.z) * ROTATION_SMOOTHING;
 
   // Add very subtle continuous rotation to Y axis (almost imperceptible)
   continuousRotationY += 0.00002; // Extremely slow rotation
@@ -684,11 +712,19 @@ const updateEarthTransform = () => {
   currentEarthScale += (targetEarthScale - currentEarthScale) * SCALE_SMOOTHING;
 
   // Apply transforms to Earth (add continuous rotation to current rotation)
-  earth.position.set(currentEarthPosition.x, currentEarthPosition.y, currentEarthPosition.z);
+  earth.position.set(
+    currentEarthPosition.x,
+    currentEarthPosition.y,
+    currentEarthPosition.z
+  );
   earth.rotation.x = currentEarthRotation.x;
   earth.rotation.y = currentEarthRotation.y + continuousRotationY; // Add continuous rotation
   earth.rotation.z = currentEarthRotation.z;
-  earth.scale.set(currentEarthScale / 100, currentEarthScale / 100, currentEarthScale / 100);
+  earth.scale.set(
+    currentEarthScale / 100,
+    currentEarthScale / 100,
+    currentEarthScale / 100
+  );
 
   // Sync all other elements with Earth
   if (borderPoints) {
@@ -741,7 +777,10 @@ const animate = () => {
       if (markerGroup instanceof THREE.Group) {
         markerGroup.children.forEach((child) => {
           // Find the ring mesh and animate it
-          if (child instanceof THREE.Mesh && child.geometry instanceof THREE.RingGeometry) {
+          if (
+            child instanceof THREE.Mesh &&
+            child.geometry instanceof THREE.RingGeometry
+          ) {
             const time = Date.now() * 0.0005; // Slower animation
             const phase = child.userData.pulsePhase || 0;
 
@@ -773,9 +812,9 @@ const animate = () => {
         // Fade in/out at start and end
         const fadeDist = 0.1;
         if (progress < fadeDist) {
-          child.material.opacity = progress / fadeDist * 0.9;
+          child.material.opacity = (progress / fadeDist) * 0.9;
         } else if (progress > 1 - fadeDist) {
-          child.material.opacity = (1 - progress) / fadeDist * 0.9;
+          child.material.opacity = ((1 - progress) / fadeDist) * 0.9;
         } else {
           child.material.opacity = 0.9;
         }
@@ -830,16 +869,22 @@ const handleScroll = () => {
 
       // Calculate transition progress if we're in the transition zone
       if (viewportCenter >= transitionStart && i < sections.length - 1) {
-        transitionProgress = (viewportCenter - transitionStart) / transitionZoneLength;
+        transitionProgress =
+          (viewportCenter - transitionStart) / transitionZoneLength;
         transitionProgress = Math.max(0, Math.min(1, transitionProgress)); // Clamp between 0 and 1
         nextSectionIndex = i + 1;
       }
       break;
-    } else if (i < sections.length - 1 && viewportCenter >= elementBottom && viewportCenter < transitionEnd) {
+    } else if (
+      i < sections.length - 1 &&
+      viewportCenter >= elementBottom &&
+      viewportCenter < transitionEnd
+    ) {
       // We're past the section but still in transition zone
       currentSectionIndex = i;
       nextSectionIndex = i + 1;
-      transitionProgress = (viewportCenter - transitionStart) / transitionZoneLength;
+      transitionProgress =
+        (viewportCenter - transitionStart) / transitionZoneLength;
       transitionProgress = Math.max(0, Math.min(1, transitionProgress));
       break;
     }
@@ -851,19 +896,33 @@ const handleScroll = () => {
     const nextConfig = earthConfig[sections[nextSectionIndex].config];
 
     // Ultra-smooth interpolation using cubic ease-in-out for elegant space travel feel
-    const eased = transitionProgress < 0.5
-      ? 4 * transitionProgress * transitionProgress * transitionProgress
-      : 1 - Math.pow(-2 * transitionProgress + 2, 3) / 2;
+    const eased =
+      transitionProgress < 0.5
+        ? 4 * transitionProgress * transitionProgress * transitionProgress
+        : 1 - Math.pow(-2 * transitionProgress + 2, 3) / 2;
 
-    targetEarthPosition.x = currentConfig.position.x + (nextConfig.position.x - currentConfig.position.x) * eased;
-    targetEarthPosition.y = currentConfig.position.y + (nextConfig.position.y - currentConfig.position.y) * eased;
-    targetEarthPosition.z = currentConfig.position.z + (nextConfig.position.z - currentConfig.position.z) * eased;
+    targetEarthPosition.x =
+      currentConfig.position.x +
+      (nextConfig.position.x - currentConfig.position.x) * eased;
+    targetEarthPosition.y =
+      currentConfig.position.y +
+      (nextConfig.position.y - currentConfig.position.y) * eased;
+    targetEarthPosition.z =
+      currentConfig.position.z +
+      (nextConfig.position.z - currentConfig.position.z) * eased;
 
-    targetEarthRotation.x = currentConfig.rotation.x + (nextConfig.rotation.x - currentConfig.rotation.x) * eased;
-    targetEarthRotation.y = currentConfig.rotation.y + (nextConfig.rotation.y - currentConfig.rotation.y) * eased;
-    targetEarthRotation.z = currentConfig.rotation.z + (nextConfig.rotation.z - currentConfig.rotation.z) * eased;
+    targetEarthRotation.x =
+      currentConfig.rotation.x +
+      (nextConfig.rotation.x - currentConfig.rotation.x) * eased;
+    targetEarthRotation.y =
+      currentConfig.rotation.y +
+      (nextConfig.rotation.y - currentConfig.rotation.y) * eased;
+    targetEarthRotation.z =
+      currentConfig.rotation.z +
+      (nextConfig.rotation.z - currentConfig.rotation.z) * eased;
 
-    targetEarthScale = currentConfig.scale + (nextConfig.scale - currentConfig.scale) * eased;
+    targetEarthScale =
+      currentConfig.scale + (nextConfig.scale - currentConfig.scale) * eased;
   } else {
     // No transition, just set to current section
     setEarthSection(sections[currentSectionIndex].config);
