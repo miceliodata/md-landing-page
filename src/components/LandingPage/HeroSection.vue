@@ -30,33 +30,30 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <section
-    id="hero-section"
-    class="relative flex items-center overflow-hidden h-[95vh]"
-  >
+  <section id="hero-section" class="relative flex items-center overflow-hidden h-[95vh]">
     <!-- Logo and Brand Name - Centered on mobile, left aligned on desktop -->
     <div
-      class="flex flex-col items-center translate-y-[-120%] sm:translate-y-[0%]"
-      :style="{ opacity: heroOpacity }"
+      class="flex flex-col items-center justify-center w-full max-w-full translate-y-[-120%] sm:translate-y-[0%] md:items-start md:justify-start md:px-20 lg:px-32"
     >
       <div
-        class="px-6 md:pl-20 lg:pl-32 relative z-10 flex items-center justify-center md:justify-start w-full md:w-auto transition-opacity duration-300"
+        class="flex items-center justify-center md:justify-start w-auto md:w-auto space-x-0 md:space-x-6"
       >
         <img
-          class="h-20 sm:h-20 md:h-32 lg:h-40 xl:h-48 w-auto md:mb-0"
+          class="h-20 sm:h-20 md:h-32 lg:h-40 xl:h-48 w-auto"
           src="@/assets/micelio-newcolor-tr-bg.png"
           alt="Micelio Logo"
         />
         <span
-          class="text-center md:text-left ml-0 md:ml-6 text-3xl sm:text-4xl md:text-6xl lg:text-7xl xl:text-8xl font-bold tracking-tight text-slate-100"
+          class="text-3xl sm:text-4xl md:text-6xl lg:text-7xl xl:text-8xl font-bold tracking-tight text-slate-100 text-center md:text-left"
         >
           MicelioData
         </span>
       </div>
+
       <span
-        class="translate-x-[10%] translate-y-[20%] md:translate-y-[-30%] text-center md:text-left ml-0 md:ml-6 text-l sm:text-xl md:text-2xl lg:text-2xl xl:text-3xl font-semibold italic tracking-tight text-slate-100"
+        class="mt-4 md:translate-x-[8%] text-l sm:text-xl md:text-2xl lg:text-2xl xl:text-3xl font-semibold italic tracking-tight text-slate-100 text-center md:text-left"
       >
-        Your path to Digital Product Passport compliance
+        Your connection to global supply chains
       </span>
     </div>
 
@@ -65,9 +62,7 @@ onUnmounted(() => {
       class="absolute bottom-12 left-1/2 -translate-x-1/2 z-10 text-center transition-all duration-300 cursor-pointer group"
       :style="{ opacity: heroOpacity }"
     >
-      <p
-        class="text-sm text-slate-300 mb-2 group-hover:text-white transition-colors"
-      >
+      <p class="text-sm text-slate-300 mb-2 group-hover:text-white transition-colors">
         Scroll down to continue
       </p>
       <svg
@@ -77,11 +72,7 @@ onUnmounted(() => {
         stroke-width="2"
         viewBox="0 0 24 24"
       >
-        <path
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          d="M19 14l-7 7m0 0l-7-7m7 7V3"
-        />
+        <path stroke-linecap="round" stroke-linejoin="round" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
       </svg>
     </div>
   </section>
