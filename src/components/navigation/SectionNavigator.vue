@@ -9,10 +9,10 @@ interface Section {
 
 const sections = ref<Section[]>([
   { id: 'hero-section', label: 'Home' },
-  { id: 'info-section', label: 'About Us' },
-  { id: 'suppliers-section', label: 'Data Collection' },
+  { id: 'info-section', label: 'Our Mission' },
+  { id: 'suppliers-section', label: 'Our Ecosystem' },
   { id: 'partners-section', label: 'Partners' },
-  { id: 'contact-section', label: 'Contact' },
+  { id: 'contact-section', label: 'Contact' }
 ])
 
 const activeSection = ref('')
@@ -23,14 +23,14 @@ const scrollToSection = (sectionId: string) => {
   if (element) {
     element.scrollIntoView({
       behavior: 'smooth',
-      block: 'start',
+      block: 'start'
     })
 
     if (element.id === 'partners-section') {
       setTimeout(() => {
         window.scrollBy({
           top: window.innerHeight * 3.0,
-          behavior: 'smooth',
+          behavior: 'smooth'
         })
       }, 1000)
     }
@@ -122,16 +122,12 @@ onUnmounted(() => {
       'transition-all duration-300 ease-in-out',
       {
         'opacity-100 translate-x-0': isVisible,
-        'opacity-0 -translate-x-4 pointer-events-none': !isVisible,
-      },
+        'opacity-0 -translate-x-4 pointer-events-none': !isVisible
+      }
     ]"
   >
     <ul class="space-y-4">
-      <li
-        v-for="section in sections"
-        :key="section.id"
-        class="group flex items-center"
-      >
+      <li v-for="section in sections" :key="section.id" class="group flex items-center">
         <!-- Indicator dot -->
         <button
           @click="scrollToSection(section.id)"
@@ -146,7 +142,7 @@ onUnmounted(() => {
             'transition-all duration-300 transform',
             'group-hover:opacity-100 group-hover:translate-x-0',
             'opacity-0 -translate-x-2 pointer-events-none',
-            'relative',
+            'relative'
           ]"
         >
           {{ section.label }}

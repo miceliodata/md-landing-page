@@ -35,27 +35,22 @@
         intelligence—ready for ESPR, CSRD, and beyond.
       </h2> -->
 
-      <h2
-        class="text-lg md:text-lg md:ml-[15%] md:mr-[40%] text-gray-300 animate-slide-left"
-      >
-        We power the global supply chain ecosystem offering reliable, traceable
-        and trusted data — from origin to doorstep. We tackle one of the world's
-        most complex challenges — fragmented and unstandardized supply chain
-        data.
+      <h2 class="text-lg md:text-lg md:ml-[15%] md:mr-[40%] text-gray-300 animate-slide-left">
+        We power the global supply chain ecosystem offering reliable, traceable and trusted data —
+        from origin to doorstep. We tackle one of the world's most complex challenges — fragmented
+        and unstandardized supply chain data.
       </h2>
 
-      <h2
-        class="text-lg md:text-lg md:ml-[15%] md:mr-[40%] text-gray-300 animate-slide-left"
-      >
-        MicelioData connects, standardizes, and digitizes information across the
-        value chain, making it reliable and accessible to everyone.
+      <h2 class="text-lg md:text-lg md:ml-[15%] md:mr-[40%] text-gray-300 animate-slide-left">
+        MicelioData connects, standardizes, and digitizes information across the value chain, making
+        it reliable and accessible to everyone.
       </h2>
 
       <div class="my-12 animate-slide-left">
         <blockquote
-          class="text-center text-xl md:text-2xl font-semibold text-emerald-400 italic border-l-4 border-emerald-500 pl-6"
+          class="text-xl pl-2 md:ml-[15%] md:text-2xl font-semibold text-emerald-400 italic border-l-4 border-emerald-500"
         >
-          "MicelioData is the digital mycelium for sustainability data!"
+          "More visibility. Less complexity. Real results."
         </blockquote>
       </div>
     </div>

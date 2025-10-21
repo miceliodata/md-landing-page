@@ -44,28 +44,28 @@ const earthConfig = {
   hero: {
     position: { x: -100, y: -50, z: 0 }, // Earth position (x=left/right, y=up/down, z=forward/back)
     rotation: { x: 0, y: 0.1, z: -0.35 }, // Earth rotation in radians (x=pitch, y=yaw, z=roll)
-    scale: 100, // Earth scale (100 = default size)
+    scale: 100 // Earth scale (100 = default size)
   },
   info: {
     position: { x: -100, y: 50, z: 0 },
     rotation: { x: 0, y: 0.55, z: 0 },
-    scale: 100,
+    scale: 100
   },
   suppliers: {
     position: { x: -50, y: 0, z: 0 },
     rotation: { x: -0.4, y: -0.15, z: 0 },
-    scale: 40,
+    scale: 40
   },
   partners: {
     position: { x: 0, y: -50, z: 0 },
     rotation: { x: 0, y: 0, z: 0 },
-    scale: 85,
+    scale: 85
   },
   contact: {
     position: { x: 0, y: -50, z: 0 },
     rotation: { x: 0, y: 0, z: 0 },
-    scale: 85,
-  },
+    scale: 85
+  }
 }
 
 // City locations for markers (lat, lon, name) - only showing target countries
@@ -73,7 +73,7 @@ const cities = [
   { lat: 23.8103, lon: 90.4125, name: 'Bangladesh' }, // Dhaka
   { lat: 39.9334, lon: 32.8597, name: 'Turkey' }, // Ankara
   { lat: 40.4168, lon: -3.7038, name: 'Spain' }, // Madrid
-  { lat: 39.9042, lon: 116.4074, name: 'China' }, // Beijing
+  { lat: 39.9042, lon: 116.4074, name: 'China' } // Beijing
   //{ lat: 52.3676, lon: 4.9041, name: 'Netherlands' }, // Amsterdam
   //{ lat: 51.5072, lon: 0.1276, name: 'UK' }, // London
 ]
@@ -86,12 +86,7 @@ const initScene = () => {
   scene = new THREE.Scene()
 
   // Camera - positioned to show upper hemisphere from below
-  camera = new THREE.PerspectiveCamera(
-    45,
-    window.innerWidth / window.innerHeight,
-    1,
-    10000
-  )
+  camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 10000)
   // Position camera below Earth looking up, to show upper hemisphere
   camera.position.set(0, 0, -150)
   camera.lookAt(0, 0, 0) // Look towards upper part of Earth
@@ -100,7 +95,7 @@ const initScene = () => {
   renderer = new THREE.WebGLRenderer({
     canvas: canvasRef.value,
     alpha: true,
-    antialias: true,
+    antialias: true
   })
   renderer.setPixelRatio(window.devicePixelRatio)
   renderer.setSize(window.innerWidth, window.innerHeight)
@@ -124,7 +119,7 @@ const createStars = () => {
     opacity: 0.8,
     sizeAttenuation: true,
     map: createCircleTexture(),
-    blending: THREE.AdditiveBlending,
+    blending: THREE.AdditiveBlending
   })
 
   const starsVertices = []
@@ -135,10 +130,7 @@ const createStars = () => {
     starsVertices.push(x, y, z)
   }
 
-  starsGeometry.setAttribute(
-    'position',
-    new THREE.Float32BufferAttribute(starsVertices, 3)
-  )
+  starsGeometry.setAttribute('position', new THREE.Float32BufferAttribute(starsVertices, 3))
 
   stars = new THREE.Points(starsGeometry, starsMaterial)
   scene.add(stars)
@@ -184,7 +176,7 @@ const createEarth = () => {
     directionalLightColor: { value: new THREE.Color(0xffffff) }, // Set to white/neutral
     directionalLightIntensity: { value: 0.0 }, // DISABLED
     ambientLightColor: { value: new THREE.Color(0xffffff) },
-    ambientLightIntensity: { value: 1.0 }, // Full ambient = flat lighting (no shadows)
+    ambientLightIntensity: { value: 1.0 } // Full ambient = flat lighting (no shadows)
   }
 
   // Load earth texture with shader material
@@ -200,12 +192,12 @@ const createEarth = () => {
   const earthMaterial = new THREE.ShaderMaterial({
     uniforms: uniforms,
     vertexShader: earthVertexShader,
-    fragmentShader: earthFragmentShader,
+    fragmentShader: earthFragmentShader
   })
 
   earthMaterial.polygonOffset = true
-  earthMaterial.polygonOffsetFactor = 2.2
-  earthMaterial.polygonOffsetUnits = 2.2
+  earthMaterial.polygonOffsetFactor = 2.5
+  earthMaterial.polygonOffsetUnits = 2.5
 
   earth = new THREE.Mesh(earthGeometry, earthMaterial)
   // Initialize position, rotation, scale from hero config
@@ -216,19 +208,11 @@ const createEarth = () => {
   targetEarthRotation = { ...earthConfig.hero.rotation }
   targetEarthScale = earthConfig.hero.scale
 
-  earth.position.set(
-    currentEarthPosition.x,
-    currentEarthPosition.y,
-    currentEarthPosition.z
-  )
+  earth.position.set(currentEarthPosition.x, currentEarthPosition.y, currentEarthPosition.z)
   earth.rotation.x = currentEarthRotation.x
   earth.rotation.y = currentEarthRotation.y
   earth.rotation.z = currentEarthRotation.z
-  earth.scale.set(
-    currentEarthScale / 100,
-    currentEarthScale / 100,
-    currentEarthScale / 100
-  )
+  earth.scale.set(currentEarthScale / 100, currentEarthScale / 100, currentEarthScale / 100)
   scene.add(earth)
 
   // Add point cloud border for depth effect
@@ -242,22 +226,14 @@ const createEarth = () => {
     transparent: true,
     sizeAttenuation: true,
     opacity: 0.1,
-    size: 0.5,
+    size: 0.5
   })
   borderPoints = new THREE.Points(borderGeometry, pointMaterial)
-  borderPoints.position.set(
-    currentEarthPosition.x,
-    currentEarthPosition.y,
-    currentEarthPosition.z
-  )
+  borderPoints.position.set(currentEarthPosition.x, currentEarthPosition.y, currentEarthPosition.z)
   borderPoints.rotation.x = currentEarthRotation.x
   borderPoints.rotation.y = currentEarthRotation.y
   borderPoints.rotation.z = currentEarthRotation.z
-  borderPoints.scale.set(
-    currentEarthScale / 100,
-    currentEarthScale / 100,
-    currentEarthScale / 100
-  )
+  borderPoints.scale.set(currentEarthScale / 100, currentEarthScale / 100, currentEarthScale / 100)
   scene.add(borderPoints)
 
   // Create sprite-based glow (like 3d-earth style)
@@ -269,17 +245,13 @@ const createEarth = () => {
     color: 0x4390d1,
     transparent: true,
     opacity: 0.7,
-    depthWrite: false,
+    depthWrite: false
   })
 
   earthGlow = new THREE.Sprite(spriteMaterial)
   const initialGlowScale = (currentEarthScale / 100) * 300 // 3x the Earth size
   earthGlow.scale.set(initialGlowScale, initialGlowScale, 1)
-  earthGlow.position.set(
-    currentEarthPosition.x,
-    currentEarthPosition.y,
-    currentEarthPosition.z
-  )
+  earthGlow.position.set(currentEarthPosition.x, currentEarthPosition.y, currentEarthPosition.z)
   scene.add(earthGlow)
 
   // Add lighting - DISABLED FOR NOW, FULL FLAT LIGHTING
@@ -354,7 +326,7 @@ const createAtmosphere = () => {
     uniforms: {
       coeficient: { value: 1.0 },
       power: { value: 3.0 },
-      glowColor: { value: new THREE.Color(0x4390d1) },
+      glowColor: { value: new THREE.Color(0x4390d1) }
     },
     vertexShader: `
       varying vec3 vVertexWorldPosition;
@@ -383,23 +355,15 @@ const createAtmosphere = () => {
     `,
     blending: THREE.NormalBlending,
     transparent: true,
-    depthWrite: false,
+    depthWrite: false
   })
 
   atmosphere = new THREE.Mesh(atmosphereGeometry, atmosphereMaterial)
-  atmosphere.position.set(
-    currentEarthPosition.x,
-    currentEarthPosition.y,
-    currentEarthPosition.z
-  )
+  atmosphere.position.set(currentEarthPosition.x, currentEarthPosition.y, currentEarthPosition.z)
   atmosphere.rotation.x = currentEarthRotation.x
   atmosphere.rotation.y = currentEarthRotation.y
   atmosphere.rotation.z = currentEarthRotation.z
-  atmosphere.scale.set(
-    currentEarthScale / 100,
-    currentEarthScale / 100,
-    currentEarthScale / 100
-  )
+  atmosphere.scale.set(currentEarthScale / 100, currentEarthScale / 100, currentEarthScale / 100)
   scene.add(atmosphere)
 }
 
@@ -421,11 +385,9 @@ const latLonToVector3 = (
     return new THREE.Vector3(x, y, z)
   } else {
     // World coordinates (with Earth offset)
-    const x =
-      -(radius * Math.sin(phi) * Math.cos(theta)) + earthConfig.hero.position.x
+    const x = -(radius * Math.sin(phi) * Math.cos(theta)) + earthConfig.hero.position.x
     const y = radius * Math.cos(phi) + earthConfig.hero.position.y
-    const z =
-      radius * Math.sin(phi) * Math.sin(theta) + earthConfig.hero.position.z
+    const z = radius * Math.sin(phi) * Math.sin(theta) + earthConfig.hero.position.z
     return new THREE.Vector3(x, y, z)
   }
 }
@@ -443,7 +405,7 @@ const createMarkers = () => {
       color: 0xffffff,
       transparent: true,
       opacity: 0.9,
-      side: THREE.DoubleSide,
+      side: THREE.DoubleSide
     })
     const disk = new THREE.Mesh(diskGeometry, diskMaterial)
 
@@ -453,7 +415,7 @@ const createMarkers = () => {
       color: 0x00ffff,
       transparent: true,
       opacity: 0.6,
-      side: THREE.DoubleSide,
+      side: THREE.DoubleSide
     })
     const ring = new THREE.Mesh(ringGeometry, ringMaterial)
 
@@ -494,7 +456,7 @@ const createMarkers = () => {
     const texture = new THREE.CanvasTexture(canvas)
     const spriteMaterial = new THREE.SpriteMaterial({
       map: texture,
-      transparent: true,
+      transparent: true
     })
     const sprite = new THREE.Sprite(spriteMaterial)
 
@@ -514,19 +476,11 @@ const createMarkers = () => {
   })
 
   // Position and rotate markers group to match Earth
-  markers.position.set(
-    currentEarthPosition.x,
-    currentEarthPosition.y,
-    currentEarthPosition.z
-  )
+  markers.position.set(currentEarthPosition.x, currentEarthPosition.y, currentEarthPosition.z)
   markers.rotation.x = currentEarthRotation.x
   markers.rotation.y = currentEarthRotation.y
   markers.rotation.z = currentEarthRotation.z
-  markers.scale.set(
-    currentEarthScale / 100,
-    currentEarthScale / 100,
-    currentEarthScale / 100
-  )
+  markers.scale.set(currentEarthScale / 100, currentEarthScale / 100, currentEarthScale / 100)
   scene.add(markers)
 }
 
@@ -549,10 +503,7 @@ const createDotParticles = () => {
     dotPositions.push(x, y, z)
   }
 
-  dotGeometry.setAttribute(
-    'position',
-    new THREE.Float32BufferAttribute(dotPositions, 3)
-  )
+  dotGeometry.setAttribute('position', new THREE.Float32BufferAttribute(dotPositions, 3))
 
   const dotMaterial = new THREE.PointsMaterial({
     color: 0x00ffff,
@@ -561,25 +512,17 @@ const createDotParticles = () => {
     opacity: 0.6,
     blending: THREE.AdditiveBlending,
     sizeAttenuation: true,
-    map: createCircleTexture(),
+    map: createCircleTexture()
   })
 
   dotParticles = new THREE.Points(dotGeometry, dotMaterial)
 
   // Position and rotate dots to match Earth
-  dotParticles.position.set(
-    currentEarthPosition.x,
-    currentEarthPosition.y,
-    currentEarthPosition.z
-  )
+  dotParticles.position.set(currentEarthPosition.x, currentEarthPosition.y, currentEarthPosition.z)
   dotParticles.rotation.x = currentEarthRotation.x
   dotParticles.rotation.y = currentEarthRotation.y
   dotParticles.rotation.z = currentEarthRotation.z
-  dotParticles.scale.set(
-    currentEarthScale / 100,
-    currentEarthScale / 100,
-    currentEarthScale / 100
-  )
+  dotParticles.scale.set(currentEarthScale / 100, currentEarthScale / 100, currentEarthScale / 100)
 
   scene.add(dotParticles)
 }
@@ -608,11 +551,7 @@ const createFlightLines = () => {
     // Normalize and scale outward to create taller arc above surface
     const controlPoint = midpoint.clone().normalize().multiplyScalar(130)
 
-    const curve = new THREE.QuadraticBezierCurve3(
-      originPos,
-      controlPoint,
-      spainPos
-    )
+    const curve = new THREE.QuadraticBezierCurve3(originPos, controlPoint, spainPos)
 
     // Create geometry from curve
     const points = curve.getPoints(100)
@@ -626,7 +565,7 @@ const createFlightLines = () => {
       opacity: 0.8,
       linewidth: 2,
       depthTest: true,
-      depthWrite: false,
+      depthWrite: false
     })
 
     const line = new THREE.Line(geometry, material)
@@ -638,7 +577,7 @@ const createFlightLines = () => {
       opacity: 0.15,
       linewidth: 6,
       depthTest: true,
-      depthWrite: false,
+      depthWrite: false
     })
     const glowLine = new THREE.Line(glowGeometry, glowMaterial)
     flightLines.add(glowLine)
@@ -655,7 +594,7 @@ const createFlightLines = () => {
     const particleMaterial = new THREE.MeshBasicMaterial({
       color: 0xffffff,
       transparent: true,
-      opacity: 0.9,
+      opacity: 0.9
     })
     const particle = new THREE.Mesh(particleGeometry, particleMaterial)
 
@@ -666,19 +605,11 @@ const createFlightLines = () => {
   })
 
   // Position and scale flight lines to match Earth
-  flightLines.position.set(
-    currentEarthPosition.x,
-    currentEarthPosition.y,
-    currentEarthPosition.z
-  )
+  flightLines.position.set(currentEarthPosition.x, currentEarthPosition.y, currentEarthPosition.z)
   flightLines.rotation.x = currentEarthRotation.x
   flightLines.rotation.y = currentEarthRotation.y
   flightLines.rotation.z = currentEarthRotation.z
-  flightLines.scale.set(
-    currentEarthScale / 100,
-    currentEarthScale / 100,
-    currentEarthScale / 100
-  )
+  flightLines.scale.set(currentEarthScale / 100, currentEarthScale / 100, currentEarthScale / 100)
 
   scene.add(flightLines)
 }
@@ -688,20 +619,14 @@ const updateEarthTransform = () => {
   if (!earth) return
 
   // Smoothly interpolate position
-  currentEarthPosition.x +=
-    (targetEarthPosition.x - currentEarthPosition.x) * POSITION_SMOOTHING
-  currentEarthPosition.y +=
-    (targetEarthPosition.y - currentEarthPosition.y) * POSITION_SMOOTHING
-  currentEarthPosition.z +=
-    (targetEarthPosition.z - currentEarthPosition.z) * POSITION_SMOOTHING
+  currentEarthPosition.x += (targetEarthPosition.x - currentEarthPosition.x) * POSITION_SMOOTHING
+  currentEarthPosition.y += (targetEarthPosition.y - currentEarthPosition.y) * POSITION_SMOOTHING
+  currentEarthPosition.z += (targetEarthPosition.z - currentEarthPosition.z) * POSITION_SMOOTHING
 
   // Smoothly interpolate rotation
-  currentEarthRotation.x +=
-    (targetEarthRotation.x - currentEarthRotation.x) * ROTATION_SMOOTHING
-  currentEarthRotation.y +=
-    (targetEarthRotation.y - currentEarthRotation.y) * ROTATION_SMOOTHING
-  currentEarthRotation.z +=
-    (targetEarthRotation.z - currentEarthRotation.z) * ROTATION_SMOOTHING
+  currentEarthRotation.x += (targetEarthRotation.x - currentEarthRotation.x) * ROTATION_SMOOTHING
+  currentEarthRotation.y += (targetEarthRotation.y - currentEarthRotation.y) * ROTATION_SMOOTHING
+  currentEarthRotation.z += (targetEarthRotation.z - currentEarthRotation.z) * ROTATION_SMOOTHING
 
   // Add very subtle continuous rotation to Y axis (almost imperceptible)
   continuousRotationY += 0.00002 // Extremely slow rotation
@@ -710,19 +635,11 @@ const updateEarthTransform = () => {
   currentEarthScale += (targetEarthScale - currentEarthScale) * SCALE_SMOOTHING
 
   // Apply transforms to Earth (add continuous rotation to current rotation)
-  earth.position.set(
-    currentEarthPosition.x,
-    currentEarthPosition.y,
-    currentEarthPosition.z
-  )
+  earth.position.set(currentEarthPosition.x, currentEarthPosition.y, currentEarthPosition.z)
   earth.rotation.x = currentEarthRotation.x
   earth.rotation.y = currentEarthRotation.y + continuousRotationY // Add continuous rotation
   earth.rotation.z = currentEarthRotation.z
-  earth.scale.set(
-    currentEarthScale / 100,
-    currentEarthScale / 100,
-    currentEarthScale / 100
-  )
+  earth.scale.set(currentEarthScale / 100, currentEarthScale / 100, currentEarthScale / 100)
 
   // Sync all other elements with Earth
   if (borderPoints) {
@@ -775,10 +692,7 @@ const animate = () => {
       if (markerGroup instanceof THREE.Group) {
         markerGroup.children.forEach((child) => {
           // Find the ring mesh and animate it
-          if (
-            child instanceof THREE.Mesh &&
-            child.geometry instanceof THREE.RingGeometry
-          ) {
+          if (child instanceof THREE.Mesh && child.geometry instanceof THREE.RingGeometry) {
             const time = Date.now() * 0.0005 // Slower animation
             const phase = child.userData.pulsePhase || 0
 
@@ -839,7 +753,7 @@ const handleScroll = () => {
     { id: 'info-section', config: 'info' as const },
     { id: 'suppliers-section', config: 'suppliers' as const },
     { id: 'partners-section', config: 'partners' as const },
-    { id: 'contact-section', config: 'contact' as const },
+    { id: 'contact-section', config: 'contact' as const }
   ]
 
   const viewportCenter = window.scrollY + window.innerHeight * 0.8 // 80% down viewport
@@ -867,8 +781,7 @@ const handleScroll = () => {
 
       // Calculate transition progress if we're in the transition zone
       if (viewportCenter >= transitionStart && i < sections.length - 1) {
-        transitionProgress =
-          (viewportCenter - transitionStart) / transitionZoneLength
+        transitionProgress = (viewportCenter - transitionStart) / transitionZoneLength
         transitionProgress = Math.max(0, Math.min(1, transitionProgress)) // Clamp between 0 and 1
         nextSectionIndex = i + 1
       }
@@ -881,8 +794,7 @@ const handleScroll = () => {
       // We're past the section but still in transition zone
       currentSectionIndex = i
       nextSectionIndex = i + 1
-      transitionProgress =
-        (viewportCenter - transitionStart) / transitionZoneLength
+      transitionProgress = (viewportCenter - transitionStart) / transitionZoneLength
       transitionProgress = Math.max(0, Math.min(1, transitionProgress))
       break
     }
@@ -900,27 +812,20 @@ const handleScroll = () => {
         : 1 - Math.pow(-2 * transitionProgress + 2, 3) / 2
 
     targetEarthPosition.x =
-      currentConfig.position.x +
-      (nextConfig.position.x - currentConfig.position.x) * eased
+      currentConfig.position.x + (nextConfig.position.x - currentConfig.position.x) * eased
     targetEarthPosition.y =
-      currentConfig.position.y +
-      (nextConfig.position.y - currentConfig.position.y) * eased
+      currentConfig.position.y + (nextConfig.position.y - currentConfig.position.y) * eased
     targetEarthPosition.z =
-      currentConfig.position.z +
-      (nextConfig.position.z - currentConfig.position.z) * eased
+      currentConfig.position.z + (nextConfig.position.z - currentConfig.position.z) * eased
 
     targetEarthRotation.x =
-      currentConfig.rotation.x +
-      (nextConfig.rotation.x - currentConfig.rotation.x) * eased
+      currentConfig.rotation.x + (nextConfig.rotation.x - currentConfig.rotation.x) * eased
     targetEarthRotation.y =
-      currentConfig.rotation.y +
-      (nextConfig.rotation.y - currentConfig.rotation.y) * eased
+      currentConfig.rotation.y + (nextConfig.rotation.y - currentConfig.rotation.y) * eased
     targetEarthRotation.z =
-      currentConfig.rotation.z +
-      (nextConfig.rotation.z - currentConfig.rotation.z) * eased
+      currentConfig.rotation.z + (nextConfig.rotation.z - currentConfig.rotation.z) * eased
 
-    targetEarthScale =
-      currentConfig.scale + (nextConfig.scale - currentConfig.scale) * eased
+    targetEarthScale = currentConfig.scale + (nextConfig.scale - currentConfig.scale) * eased
   } else {
     // No transition, just set to current section
     setEarthSection(sections[currentSectionIndex].config)
@@ -977,10 +882,7 @@ onBeforeUnmount(() => {
         <div class="loading-spinner"></div>
         <p class="loading-text">Loading Earth...</p>
         <div class="loading-bar">
-          <div
-            class="loading-bar-fill"
-            :style="{ width: `${loadingProgress}%` }"
-          ></div>
+          <div class="loading-bar-fill" :style="{ width: `${loadingProgress}%` }"></div>
         </div>
         <p class="loading-percent">{{ loadingProgress }}%</p>
       </div>
